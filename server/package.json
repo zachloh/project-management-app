@@ -13,10 +13,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "_moduleAliases": {
+    "config": "build/config"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "module-alias": "^2.2.2"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
