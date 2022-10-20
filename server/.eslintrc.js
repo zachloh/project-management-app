@@ -38,6 +38,8 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    '@typescript-eslint/comma-dangle': 'off',
+    'no-console': 0,
   },
   settings: {
     // Allows us to lint absolute imports within codebase
