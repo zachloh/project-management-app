@@ -14,7 +14,8 @@
   "author": "",
   "license": "ISC",
   "_moduleAliases": {
-    "config": "build/config"
+    "config": "build/config",
+    "models": "build/models"
   },
   "dependencies": {
     "cors": "^2.8.5",
