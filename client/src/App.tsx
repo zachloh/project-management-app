@@ -1,9 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import Dashboard from 'components/Dashboard';
+import AppRoutes from 'routes';
 
 function App() {
-  return <Dashboard />;
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
+  );
 }
 
 export default App;
