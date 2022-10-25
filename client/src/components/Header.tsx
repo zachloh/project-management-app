@@ -1,10 +1,20 @@
 import { Drawer, Button, Stack, NavLink, Container } from '@mantine/core';
 import React, { useState } from 'react';
-import { Menu2, Box } from 'tabler-icons-react';
+import { useLocation } from 'react-router-dom';
+import {
+  Menu2,
+  Box,
+  Home,
+  List,
+  Subtask,
+  FileSettings,
+  Settings,
+} from 'tabler-icons-react';
 
-import styles from 'components/Dashboard.module.css';
+import styles from 'components/Header.module.css';
 
-function Dashboard() {
+function Header() {
+  const location = useLocation();
   const [opened, setOpened] = useState(false);
 
   return (
@@ -26,9 +36,18 @@ function Dashboard() {
         overlayOpacity={0.35}
       >
         <Stack>
-          <NavLink label="Dashboard" active color="violet" />
-          <NavLink label="Projects" />
-          <NavLink label="Project Management" />
+          <NavLink
+            icon={<Home />}
+            label="Dashboard"
+            active={location.pathname === '/'}
+            color="violet"
+          />
+          <NavLink icon={<List />} label="Projects">
+            <NavLink icon={<Subtask />} label="Project 1" />
+            <NavLink icon={<Subtask />} label="Project 2" />
+          </NavLink>
+          <NavLink icon={<FileSettings />} label="Project Management" />
+          <NavLink icon={<Settings />} label="Admin Settings" />
         </Stack>
       </Drawer>
 
@@ -39,4 +58,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default Header;
