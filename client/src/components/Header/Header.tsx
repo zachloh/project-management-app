@@ -11,7 +11,7 @@ import {
   Settings,
 } from 'tabler-icons-react';
 
-import styles from 'components/Header.module.css';
+import styles from 'components/Header/Header.module.css';
 
 function Header() {
   const location = useLocation();
@@ -24,7 +24,7 @@ function Header() {
         onClose={() => setOpened(false)}
         title={
           // eslint-disable-next-line react/jsx-wrap-multilines
-          <Container px="0" className={styles.title}>
+          <Container px="0" className={styles.logo}>
             <Box size={48} color="#845EF7" />
             ProjectHub
           </Container>
@@ -51,9 +51,17 @@ function Header() {
         </Stack>
       </Drawer>
 
-      <Button onClick={() => setOpened(true)}>
-        <Menu2 />
-      </Button>
+      <header className={styles.header}>
+        <Button
+          onClick={() => setOpened(true)}
+          variant="subtle"
+          color="dark"
+          p="0"
+        >
+          <Menu2 />
+        </Button>
+        <h1 className={styles.title}>Dashboard</h1>
+      </header>
     </>
   );
 }

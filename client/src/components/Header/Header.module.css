@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'poppins';
+  src: url('../../assets/fonts/poppins-regular-webfont.woff2') format('woff2'),
+    url('../../assets/fonts/poppins-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'poppins', sans-serif;
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--violet);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  background-color: var(--white);
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+}
+
+.title {
+  justify-self: center;
+  font-size: 1.4rem;
+}

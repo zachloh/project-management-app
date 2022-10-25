@@ -1,3 +1,8 @@
+:root {
+  --violet: #845ef7;
+  --white: #fff;
+}
+
 *,
 *::before,
 *::after {
