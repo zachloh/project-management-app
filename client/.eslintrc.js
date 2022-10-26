@@ -50,6 +50,7 @@ module.exports = {
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     'object-curly-newline': 'off',
+    'no-plusplus': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase
