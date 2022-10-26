@@ -1,13 +1,16 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-import Header from 'components/Header/Header';
+import Layout from 'components/Layout';
+import { Dashboard } from 'features/dashboard';
 
 function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Header />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+      </Routes>
+    </Layout>
   );
 }
 
