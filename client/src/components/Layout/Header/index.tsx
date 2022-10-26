@@ -11,7 +11,7 @@ import {
   Settings,
 } from 'tabler-icons-react';
 
-import styles from 'components/Header/Header.module.css';
+import styles from './Header.module.css';
 
 function Header() {
   const location = useLocation();

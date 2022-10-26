@@ -1,7 +1,8 @@
 @font-face {
   font-family: 'poppins';
-  src: url('../../assets/fonts/poppins-regular-webfont.woff2') format('woff2'),
-    url('../../assets/fonts/poppins-regular-webfont.woff') format('woff');
+  src: url('../../../assets/fonts/poppins-regular-webfont.woff2')
+      format('woff2'),
+    url('../../../assets/fonts/poppins-regular-webfont.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
@@ -27,7 +28,6 @@
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   background-color: var(--white);
   padding: 0.5rem 0;
-  margin-bottom: 1rem;
 }
 
 .title {
