@@ -35,20 +35,22 @@ function Header() {
         transitionTimingFunction="ease"
         overlayOpacity={0.35}
       >
-        <Stack>
-          <NavLink
-            icon={<Home />}
-            label="Dashboard"
-            active={location.pathname === '/'}
-            color="violet"
-          />
-          <NavLink icon={<List />} label="Projects">
-            <NavLink icon={<Subtask />} label="Project 1" />
-            <NavLink icon={<Subtask />} label="Project 2" />
-          </NavLink>
-          <NavLink icon={<FileSettings />} label="Project Management" />
-          <NavLink icon={<Settings />} label="Admin Settings" />
-        </Stack>
+        <nav aria-label="Primary">
+          <Stack>
+            <NavLink
+              icon={<Home />}
+              label="Dashboard"
+              active={location.pathname === '/'}
+              color="violet"
+            />
+            <NavLink icon={<List />} label="Projects">
+              <NavLink icon={<Subtask />} label="Project 1" />
+              <NavLink icon={<Subtask />} label="Project 2" />
+            </NavLink>
+            <NavLink icon={<FileSettings />} label="Project Management" />
+            <NavLink icon={<Settings />} label="Admin Settings" />
+          </Stack>
+        </nav>
       </Drawer>
 
       <header className={styles.header}>
