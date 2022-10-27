@@ -5,7 +5,7 @@
   /* justify-content: center; */
 }
 
-.card-title {
+.card-header {
   font-size: 1.2rem;
   margin-bottom: 0.3rem;
 }
@@ -20,7 +20,7 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, auto));
 }
 
-.progress-title {
+.card-title {
   font-size: 1rem;
   font-weight: 500;
 }
