@@ -11,7 +11,7 @@ type CardProps = {
 
 function Card({ children, title, ...rest }: CardProps) {
   return (
-    <MantineCard shadow="sm" p="sm" radius="sm" withBorder {...rest}>
+    <MantineCard shadow="sm" p="sm" radius="md" withBorder {...rest}>
       {title && <h3 className={styles['card-title']}>{title}</h3>}
       {children}
     </MantineCard>
