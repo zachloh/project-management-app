@@ -51,6 +51,8 @@ module.exports = {
     '@typescript-eslint/comma-dangle': 'off',
     'object-curly-newline': 'off',
     'no-plusplus': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase

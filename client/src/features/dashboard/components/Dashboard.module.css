@@ -5,22 +5,12 @@
   /* justify-content: center; */
 }
 
-.card-header {
-  font-size: 1.2rem;
-  margin-bottom: 0.3rem;
-}
-
-.chart {
-  height: 350px;
-}
-
 .statistics {
   display: grid;
   gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, auto));
 }
 
-.card-title {
-  font-size: 1rem;
-  font-weight: 500;
+.chart {
+  height: 350px;
 }
