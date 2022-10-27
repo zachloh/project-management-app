@@ -19,7 +19,7 @@ export function Dashboard() {
               <IssuesChart />
             </div>
           </Card>
-          <Card title="Overall Progress" sx={{ display: 'grid' }}>
+          <Card title="Overall Progress">
             <IssuesProgress />
           </Card>
         </div>
