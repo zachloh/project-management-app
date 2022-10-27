@@ -1,9 +1,10 @@
 /* eslint-disable import/prefer-default-export */
-import { Card, RingProgress, Text } from '@mantine/core';
+import { Card } from '@mantine/core';
 import React from 'react';
 
 import styles from './Dashboard.module.css';
 import IssuesChart from './IssuesChart';
+import IssuesProgress from './IssuesProgress';
 
 export function Dashboard() {
   return (
@@ -24,25 +25,7 @@ export function Dashboard() {
             sx={{ display: 'grid' }}
           >
             <h3 className={styles['card-title']}>Overall Progress</h3>
-            <RingProgress
-              sections={[
-                { value: 60, color: 'violet.2', tooltip: 'Created issues: 10' },
-                { value: 40, color: 'violet', tooltip: 'Completed issues: 4' },
-              ]}
-              size={200}
-              roundCaps
-              thickness={16}
-              label={
-                // eslint-disable-next-line react/jsx-wrap-multilines
-                <Text size={36} align="center" color="violet" weight="700">
-                  40%
-                </Text>
-              }
-              sx={{ justifySelf: 'center' }}
-            />
-            <Text align="center" color="dark.4" weight="700">
-              40% of 10 issues completed
-            </Text>
+            <IssuesProgress />
           </Card>
         </div>
       </div>
