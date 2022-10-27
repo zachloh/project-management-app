@@ -3,10 +3,10 @@ import React from 'react';
 
 function IssuesProgress() {
   return (
-    <>
+    <div style={{ display: 'grid' }}>
       <RingProgress
         sections={[
-          { value: 60, color: 'violet.2', tooltip: 'Created issues: 10' },
+          { value: 60, color: 'gray.2', tooltip: 'Created issues: 10' },
           { value: 40, color: 'violet', tooltip: 'Completed issues: 4' },
         ]}
         size={200}
@@ -23,7 +23,7 @@ function IssuesProgress() {
       <Text align="center" color="dark.4" weight="700">
         40% of 10 issues completed
       </Text>
-    </>
+    </div>
   );
 }
 
