@@ -1,6 +1,7 @@
 :root {
   --violet: #845ef7;
   --white: #fff;
+  --gray-0: #f8f9fa;
 }
 
 *,
@@ -24,6 +25,7 @@ body {
 body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  background-color: var(--gray-0);
 }
 
 img,
