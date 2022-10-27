@@ -106,7 +106,11 @@ const options = {
 };
 
 function IssuesChart() {
-  return <Bar data={data} options={options} />;
+  return (
+    <div style={{ height: '350px' }}>
+      <Bar data={data} options={options} />
+    </div>
+  );
 }
 
 export default IssuesChart;

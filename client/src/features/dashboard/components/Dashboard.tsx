@@ -15,9 +15,7 @@ export function Dashboard() {
         <CardHeader>Statistics</CardHeader>
         <div className={styles.statistics}>
           <Card>
-            <div className={styles.chart}>
-              <IssuesChart />
-            </div>
+            <IssuesChart />
           </Card>
           <Card title="Overall Progress">
             <IssuesProgress />

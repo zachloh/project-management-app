@@ -10,7 +10,3 @@
   gap: 0.5rem;
   grid-template-columns: repeat(auto-fit, minmax(250px, auto));
 }
-
-.chart {
-  height: 350px;
-}
