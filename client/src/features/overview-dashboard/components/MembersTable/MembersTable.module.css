@@ -21,3 +21,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.table thead tr th {
+  border-bottom-width: 2px;
+}
