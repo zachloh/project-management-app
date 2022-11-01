@@ -2,13 +2,13 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Layout from 'components/Layout';
-import { Dashboard } from 'features/dashboard';
+import { OverviewDashboard } from 'features/overview-dashboard';
 
 function AppRoutes() {
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<Dashboard />} />
+        <Route path="/" element={<OverviewDashboard />} />
       </Routes>
     </Layout>
   );
