@@ -1,25 +1,7 @@
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  ChartEvent,
-} from 'chart.js';
+import { ChartEvent } from 'chart.js';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
 
 const generateDates = () => {
   const today = dayjs();
