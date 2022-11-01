@@ -1,0 +1,23 @@
+@media (max-width: 768px) {
+  .container {
+    /* viewport - main-padding - card-padding */
+    width: calc(100vw - calc(2 * var(--main-padding)) - 24px);
+    overflow-x: auto;
+  }
+}
+
+@media (min-width: 768px) {
+  .table {
+    table-layout: fixed;
+  }
+
+  .table thead th {
+    width: 25%;
+  }
+}
+
+.table td:not(:nth-of-type(3)) {
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

@@ -8,6 +8,7 @@ import CardHeader from 'components/Card/CardHeader';
 import styles from './Dashboard.module.css';
 import IssuesChart from './IssuesChart';
 import IssuesProgress from './IssuesProgress';
+import MembersTable from './MembersTable';
 import ProjectCard from './ProjectCard';
 
 const projects = [1, 2, 3];
@@ -35,6 +36,12 @@ export function Dashboard() {
             </Grid.Col>
           ))}
         </Grid>
+      </div>
+      <div>
+        <CardHeader>Organization Members</CardHeader>
+        <Card>
+          <MembersTable />
+        </Card>
       </div>
     </div>
   );
