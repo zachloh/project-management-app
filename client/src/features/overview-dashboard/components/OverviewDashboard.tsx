@@ -4,12 +4,12 @@ import React from 'react';
 
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
+import ProjectCard from 'components/ProjectCard';
 
 import IssuesChart from './IssuesChart';
 import IssuesProgress from './IssuesProgress';
 import MembersTable from './MembersTable';
 import styles from './OverviewDashboard.module.css';
-import ProjectCard from './ProjectCard';
 
 const projects = [1, 2, 3];
 
