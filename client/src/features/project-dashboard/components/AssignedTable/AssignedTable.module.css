@@ -1,0 +1,38 @@
+.container {
+  overflow: auto;
+  height: 340px;
+}
+
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table thead tr th {
+  border-bottom-width: 2px;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
+
+.table thead th:nth-of-type(3) {
+  width: 60%;
+}
+
+.table td:nth-of-type(2) {
+  white-space: nowrap;
+}
+
+.table td:nth-of-type(3) {
+  white-space: nowrap;
+}
+
+.table tbody tr {
+  cursor: pointer;
+}
+
+.type {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  gap: 3px;
+}
