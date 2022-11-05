@@ -6,12 +6,16 @@ import ProjectMembers from './ProjectMembers';
 import ProjectProgress from './ProjectProgress';
 import ProjectTitle from './ProjectTitle';
 
-function ProjectCard() {
+type ProjectCardProps = {
+  large?: boolean;
+};
+
+function ProjectCard({ large }: ProjectCardProps) {
   return (
     <Card shadow="sm" p="sm" radius="md" withBorder>
       <ProjectTitle />
       <ProjectMembers />
-      <ProjectDescription />
+      <ProjectDescription large={large} />
       <Badge color="violet" size="lg">
         Software
       </Badge>
