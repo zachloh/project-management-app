@@ -3,7 +3,7 @@ import React from 'react';
 import { Pie } from 'react-chartjs-2';
 
 const data = {
-  labels: ['To Do', 'In Progress', 'In Review', 'Completed'],
+  labels: ['TO DO', 'IN PROGRESS', 'IN REVIEW', 'DONE'],
   datasets: [
     {
       data: [4, 1, 3, 2],
@@ -18,8 +18,8 @@ const options = {
     legend: {
       position: 'top' as const,
       labels: {
-        boxWidth: 14,
-        boxHeight: 14,
+        boxWidth: 18,
+        boxHeight: 18,
         font: {
           weight: '700',
           size: 16,
