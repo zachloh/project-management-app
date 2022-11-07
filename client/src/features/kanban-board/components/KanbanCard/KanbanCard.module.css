@@ -1,0 +1,13 @@
+.card {
+  background-color: #e9ecef;
+  min-height: 400px;
+}
+
+.title {
+  color: #5e6c84;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  gap: 15px;
+  padding: 10px;
+}

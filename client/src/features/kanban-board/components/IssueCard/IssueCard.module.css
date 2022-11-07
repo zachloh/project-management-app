@@ -1,0 +1,32 @@
+.card {
+  background-color: #f8f9fa;
+}
+
+.card:hover {
+  background-color: #dee2e6;
+}
+
+.todo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.issue-title {
+  font-size: 0.95rem;
+}
+
+.issue-info {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #7a869a;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-height: 26px;
+}
+
+.priority {
+  margin-left: 5px;
+}
