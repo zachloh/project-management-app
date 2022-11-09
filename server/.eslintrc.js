@@ -40,6 +40,11 @@ module.exports = {
     ],
     '@typescript-eslint/comma-dangle': 'off',
     'no-console': 0,
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/indent': 'off',
+    'operator-linebreak': 'off',
+    'object-curly-newline': 'off',
+    'no-underscore-dangle': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase
