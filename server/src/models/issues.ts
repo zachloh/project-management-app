@@ -9,7 +9,7 @@ interface IIssue {
   description?: string;
   reporter: Types.ObjectId;
   assignee?: Types.ObjectId;
-  dueDate: Date;
+  dueDate?: Date;
   completedAt?: Date;
 }
 
@@ -57,7 +57,6 @@ const issueSchema = new Schema<IIssue>(
     },
     dueDate: {
       type: Date,
-      required: true,
     },
     completedAt: {
       type: Date,
