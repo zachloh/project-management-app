@@ -1,6 +1,8 @@
 import { Schema, model, Types } from 'mongoose';
 
-interface IProject {
+import Issue from './issues';
+
+export interface IProject {
   name: string;
   members: Types.ObjectId[];
   projectIconURL: string;
@@ -51,25 +53,25 @@ const projectSchema = new Schema<IProject>({
   todoIssues: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Issue',
+      ref: Issue,
     },
   ],
   inReviewIssues: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Issue',
+      ref: Issue,
     },
   ],
   inProgressIssues: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Issue',
+      ref: Issue,
     },
   ],
   completedIssues: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Issue',
+      ref: Issue,
     },
   ],
 });

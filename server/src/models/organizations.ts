@@ -1,5 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
+import Project from './projects';
+
 interface IOrganization {
   name: string;
   members: Types.ObjectId[];
@@ -31,7 +33,7 @@ const organizationSchema = new Schema<IOrganization>(
     projects: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: Project,
       },
     ],
   },
