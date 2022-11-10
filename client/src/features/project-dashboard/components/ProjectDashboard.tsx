@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { SimpleGrid } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';

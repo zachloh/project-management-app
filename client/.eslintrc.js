@@ -53,6 +53,8 @@ module.exports = {
     'no-plusplus': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
+    'implicit-arrow-linebreak': 'off',
+    'import/prefer-default-export': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase
