@@ -1,6 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
 import Issue from './issues';
+import User from './users';
 
 export interface IProject {
   name: string;
@@ -24,7 +25,7 @@ const projectSchema = new Schema<IProject>({
     type: [
       {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: User,
         required: true,
       },
     ],
