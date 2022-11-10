@@ -11,13 +11,14 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
     if (!orgId) {
       return res.status(400).json({ message: 'Missing organization ID' });
     }
-    const organization = await Organization.findOne({ _id: orgId }).populate(
-      'projects'
-    );
+    const organization = await Organization.findOne({ _id: orgId }).populate({
+      path: 'projects',
+      populate: { path: 'members' },
+    });
     if (!organization) {
       return res.status(404).json({ message: 'Organization not found' });
     }
-    return res.json({ projects: organization.projects });
+    return res.json(organization.projects);
   } catch (err) {
     return res.status(400).json(err);
   }
