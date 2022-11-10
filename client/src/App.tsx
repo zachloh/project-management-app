@@ -1,14 +1,14 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 
+import AppProviders from 'providers';
 import AppRoutes from 'routes';
 import 'config/chart-js';
 
 function App() {
   return (
-    <BrowserRouter>
+    <AppProviders>
       <AppRoutes />
-    </BrowserRouter>
+    </AppProviders>
   );
 }
 
