@@ -3,6 +3,8 @@ import { ParamsDictionary } from 'express-serve-static-core';
 
 import Organization from 'models/organizations';
 import Project, { IProject } from 'models/projects';
+import { PopulatedProject } from 'types/mongoose';
+import { getIssuesLast7Days } from 'utils';
 
 const getProjectsByOrgId = async (req: Request, res: Response) => {
   const { orgId } = req;
@@ -11,14 +13,28 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
     if (!orgId) {
       return res.status(400).json({ message: 'Missing organization ID' });
     }
-    const organization = await Organization.findOne({ _id: orgId }).populate({
+    const organization = await Organization.findOne({ _id: orgId }).populate<{
+      projects: PopulatedProject[];
+    }>({
       path: 'projects',
-      populate: { path: 'members' },
+      populate: [
+        { path: 'members' },
+        { path: 'todoIssues', select: 'createdAt' },
+        { path: 'inProgressIssues', select: 'createdAt' },
+        { path: 'inReviewIssues', select: 'createdAt' },
+        { path: 'completedIssues', select: 'createdAt' },
+      ],
     });
     if (!organization) {
       return res.status(404).json({ message: 'Organization not found' });
     }
-    return res.json(organization.projects);
+
+    const issuesLast7Days = getIssuesLast7Days(organization.projects);
+    return res.json({
+      projects: organization.projects,
+      createdIssuesLast7Days: issuesLast7Days.createdIssuesLast7Days,
+      completedIssuesLast7Days: issuesLast7Days.completedIssuesLast7Days,
+    });
   } catch (err) {
     return res.status(400).json(err);
   }

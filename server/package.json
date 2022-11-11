@@ -17,11 +17,13 @@
     "config": "build/config",
     "controllers": "build/controllers",
     "models": "build/models",
-    "routes": "build/routes"
+    "routes": "build/routes",
+    "utils": "build/utils"
   },
   "dependencies": {
     "@types/express-serve-static-core": "^4.17.31",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.6",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "module-alias": "^2.2.2",
