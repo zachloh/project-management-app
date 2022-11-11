@@ -1,14 +1,18 @@
 import { Tooltip, Avatar } from '@mantine/core';
 import React from 'react';
 
-const projectMembers = ['John Doe', 'Jane Smith', 'Joe Bloggs'];
+import { Member } from 'features/overview-dashboard/types';
 
-function ProjectMembers() {
+type ProjectMembersProps = {
+  members: Member[];
+};
+
+function ProjectMembers({ members }: ProjectMembersProps) {
   return (
     <Tooltip.Group>
       <Avatar.Group spacing="sm">
-        {projectMembers.map((member) => (
-          <Tooltip key={member} label={member} withArrow>
+        {members.map((member) => (
+          <Tooltip key={member._id} label={member.name} withArrow>
             <Avatar radius="xl" color="indigo" />
           </Tooltip>
         ))}

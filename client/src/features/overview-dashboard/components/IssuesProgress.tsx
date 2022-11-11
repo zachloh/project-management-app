@@ -1,13 +1,39 @@
 import { RingProgress, Text } from '@mantine/core';
 import React from 'react';
 
-function IssuesProgress() {
+import { Project } from '../types';
+
+type IssuesProgressProps = {
+  projects: Project[];
+};
+
+function IssuesProgress({ projects }: IssuesProgressProps) {
+  let totalCreatedIssues = 0;
+  let totalCompletedIssues = 0;
+
+  projects.forEach((project) => {
+    totalCreatedIssues +=
+      project.todoIssues.length +
+      project.inProgressIssues.length +
+      project.inReviewIssues.length +
+      project.completedIssues.length;
+    totalCompletedIssues += project.completedIssues.length;
+  });
+
   return (
     <div style={{ display: 'grid' }}>
       <RingProgress
         sections={[
-          { value: 60, color: 'gray.2', tooltip: 'Created issues: 10' },
-          { value: 40, color: 'violet', tooltip: 'Completed issues: 4' },
+          {
+            value: 100 - (totalCompletedIssues / totalCreatedIssues) * 100,
+            color: 'gray.2',
+            tooltip: `Created issues: ${totalCreatedIssues}`,
+          },
+          {
+            value: (totalCompletedIssues / totalCreatedIssues) * 100,
+            color: 'violet',
+            tooltip: `Completed issues: ${totalCompletedIssues}`,
+          },
         ]}
         size={200}
         roundCaps
@@ -15,13 +41,15 @@ function IssuesProgress() {
         label={
           // eslint-disable-next-line react/jsx-wrap-multilines
           <Text size={36} align="center" color="violet" weight="700">
-            40%
+            {`${(totalCompletedIssues / totalCreatedIssues) * 100}%`}
           </Text>
         }
-        sx={{ justifySelf: 'center' }}
+        sx={{ placeSelf: 'center' }}
       />
       <Text align="center" color="dark.4" weight="700">
-        40% of 10 issues completed
+        {`${
+          (totalCompletedIssues / totalCreatedIssues) * 100
+        }% of ${totalCreatedIssues} issues completed`}
       </Text>
     </div>
   );

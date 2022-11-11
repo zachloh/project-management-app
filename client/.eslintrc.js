@@ -55,6 +55,8 @@ module.exports = {
     'react/require-default-props': 'off',
     'implicit-arrow-linebreak': 'off',
     'import/prefer-default-export': 'off',
+    'no-underscore-dangle': 'off',
+    'operator-linebreak': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase

@@ -1,6 +1,8 @@
 import { Card, Badge, Divider } from '@mantine/core';
 import React from 'react';
 
+import { Project } from 'features/overview-dashboard/types';
+
 import ProjectDescription from './ProjectDescription';
 import ProjectMembers from './ProjectMembers';
 import ProjectProgress from './ProjectProgress';
@@ -8,19 +10,20 @@ import ProjectTitle from './ProjectTitle';
 
 type ProjectCardProps = {
   large?: boolean;
+  project: Project;
 };
 
-function ProjectCard({ large }: ProjectCardProps) {
+function ProjectCard({ large, project }: ProjectCardProps) {
   return (
     <Card shadow="sm" p="sm" radius="md" withBorder>
-      <ProjectTitle />
-      <ProjectMembers />
-      <ProjectDescription large={large} />
+      <ProjectTitle title={project.name} />
+      <ProjectMembers members={project.members} />
+      <ProjectDescription large={large} description={project.description} />
       <Badge color="violet" size="lg">
-        Software
+        {project.category}
       </Badge>
       <Divider my="md" />
-      <ProjectProgress />
+      <ProjectProgress project={project} />
     </Card>
   );
 }

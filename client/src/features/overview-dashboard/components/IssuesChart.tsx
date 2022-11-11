@@ -14,22 +14,6 @@ const generateDates = () => {
   return dates.reverse();
 };
 
-const data = {
-  labels: generateDates(),
-  datasets: [
-    {
-      label: 'Created issues',
-      data: [4, 2, 3, 2, 5, 6, 4],
-      backgroundColor: '#845ef7',
-    },
-    {
-      label: 'Completed issues',
-      data: [2, 1, 2, 1, 3, 4, 3],
-      backgroundColor: '#d0bfff',
-    },
-  ],
-};
-
 const options = {
   maintainAspectRatio: false,
   plugins: {
@@ -87,7 +71,28 @@ const options = {
   },
 };
 
-function IssuesChart() {
+type IssueChartProps = {
+  createdIssues: number[];
+  completedIssues: number[];
+};
+
+function IssuesChart({ createdIssues, completedIssues }: IssueChartProps) {
+  const data = {
+    labels: generateDates(),
+    datasets: [
+      {
+        label: 'Created issues',
+        data: createdIssues,
+        backgroundColor: '#845ef7',
+      },
+      {
+        label: 'Completed issues',
+        data: completedIssues,
+        backgroundColor: '#d0bfff',
+      },
+    ],
+  };
+
   return (
     <div style={{ height: '350px' }}>
       <Bar data={data} options={options} />

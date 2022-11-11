@@ -2,14 +2,27 @@ import { Progress, Grid } from '@mantine/core';
 import React from 'react';
 import { ClipboardCheck } from 'tabler-icons-react';
 
-function ProjectProgress() {
+import { Project } from 'features/overview-dashboard/types';
+
+type ProjectProgressProps = {
+  project: Project;
+};
+
+function ProjectProgress({ project }: ProjectProgressProps) {
+  const createdIssues =
+    project.todoIssues.length +
+    project.inProgressIssues.length +
+    project.inReviewIssues.length +
+    project.completedIssues.length;
+  const completedIssues = project.completedIssues.length;
+
   return (
     <Grid align="center">
       <Grid.Col span="content" pr={0}>
         <ClipboardCheck />
       </Grid.Col>
       <Grid.Col span="content" pl={2}>
-        2/10
+        {`${completedIssues}/${createdIssues}`}
       </Grid.Col>
       <Grid.Col span="auto">
         <Progress
@@ -17,15 +30,17 @@ function ProjectProgress() {
           size="md"
           sections={[
             {
-              value: 20,
+              value: (completedIssues / createdIssues) * 100,
               color: 'indigo.5',
-              tooltip: 'Completed issues: 20%',
+              tooltip: `Completed issues: ${
+                (completedIssues / createdIssues) * 100
+              }%`,
             },
           ]}
         />
       </Grid.Col>
       <Grid.Col span="content" sx={{ color: '#5c7cfa' }}>
-        20%
+        {`${(completedIssues / createdIssues) * 100}%`}
       </Grid.Col>
     </Grid>
   );
