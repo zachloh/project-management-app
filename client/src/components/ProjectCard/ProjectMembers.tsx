@@ -1,10 +1,10 @@
 import { Tooltip, Avatar } from '@mantine/core';
 import React from 'react';
 
-import { Member } from 'features/overview-dashboard/types';
+import { User } from 'types';
 
 type ProjectMembersProps = {
-  members: Member[];
+  members: User[];
 };
 
 function ProjectMembers({ members }: ProjectMembersProps) {

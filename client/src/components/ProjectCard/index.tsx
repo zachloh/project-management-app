@@ -1,7 +1,7 @@
 import { Card, Badge, Divider } from '@mantine/core';
 import React from 'react';
 
-import { Project } from 'features/overview-dashboard/types';
+import { Project } from 'types';
 
 import ProjectDescription from './ProjectDescription';
 import ProjectMembers from './ProjectMembers';

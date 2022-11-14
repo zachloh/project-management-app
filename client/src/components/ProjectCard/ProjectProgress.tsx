@@ -2,7 +2,7 @@ import { Progress, Grid } from '@mantine/core';
 import React from 'react';
 import { ClipboardCheck } from 'tabler-icons-react';
 
-import { Project } from 'features/overview-dashboard/types';
+import { Project } from 'types';
 
 type ProjectProgressProps = {
   project: Project;

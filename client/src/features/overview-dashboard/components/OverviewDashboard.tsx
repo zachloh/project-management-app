@@ -1,12 +1,12 @@
 import { Grid } from '@mantine/core';
 import React from 'react';
 
+import { useProjects } from 'api/getProjects';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import DashboardSkeleton from 'components/DashboardSkeleton';
 import ProjectCard from 'components/ProjectCard';
 
-import { useProjects } from '../api/getProjects';
 import IssuesChart from './IssuesChart';
 import IssuesProgress from './IssuesProgress';
 import MembersTable from './MembersTable';

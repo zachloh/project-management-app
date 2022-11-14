@@ -1,7 +1,7 @@
 import { RingProgress, Text } from '@mantine/core';
 import React from 'react';
 
-import { Project } from '../types';
+import { Project } from 'types';
 
 type IssuesProgressProps = {
   projects: Project[];

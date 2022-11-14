@@ -1,18 +1,27 @@
-export type Member = {
+export type User = {
   _id: string;
   name: string;
   iconURL: string;
 };
 
-type Issue = {
+export type Issue = {
   _id: string;
-  createdAt: string;
+  project: string;
+  type: string;
+  priority: string;
+  status: string;
+  title: string;
+  description?: string;
+  reporter: string;
+  assignee?: string;
+  dueDate?: string;
+  completedAt?: string;
 };
 
 export type Project = {
   _id: string;
   name: string;
-  members: Member[];
+  members: User[];
   projectIconURL: string;
   description: string;
   category: string;
@@ -20,10 +29,4 @@ export type Project = {
   inReviewIssues: Issue[];
   inProgressIssues: Issue[];
   completedIssues: Issue[];
-};
-
-export type ProjectResponse = {
-  projects: Project[];
-  createdIssuesLast7Days: number[];
-  completedIssuesLast7Days: number[];
 };
