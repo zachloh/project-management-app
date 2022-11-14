@@ -16,7 +16,7 @@ const getProjects = async (orgId: string): Promise<GetProjectsResponse> => {
   return data;
 };
 
-export const useProjects = (orgId: string) =>
+export const useGetProjects = (orgId: string) =>
   useQuery({
     queryKey: ['org', orgId, 'projects'],
     queryFn: () => getProjects(orgId),

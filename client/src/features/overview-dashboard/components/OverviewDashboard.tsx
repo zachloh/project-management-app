@@ -1,7 +1,7 @@
 import { Grid } from '@mantine/core';
 import React from 'react';
 
-import { useProjects } from 'api/getProjects';
+import { useGetProjects } from 'api/getProjects';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import DashboardSkeleton from 'components/DashboardSkeleton';
@@ -22,7 +22,7 @@ export function OverviewDashboard() {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useProjects('636a10bb1fb9e7a0550389f2');
+  } = useGetProjects('636a10bb1fb9e7a0550389f2');
 
   // return <DashboardSkeleton />;
 
