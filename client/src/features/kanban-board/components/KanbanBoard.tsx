@@ -1,23 +1,31 @@
 import React from 'react';
 
-import IssueCard from './IssueCard';
+import { useGetProject } from 'api/getProject';
+
 import styles from './KanbanBoard.module.css';
 import KanbanCard from './KanbanCard';
 
 export function KanbanBoard() {
+  const {
+    data: project = {
+      todoIssues: [],
+      inProgressIssues: [],
+      inReviewIssues: [],
+      completedIssues: [],
+    },
+    isLoading,
+  } = useGetProject('636b1c6de180fd4878e015f5');
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className={styles.container}>
-      <KanbanCard title="TO DO" totalIssues={1}>
-        <IssueCard />
-      </KanbanCard>
-      <KanbanCard title="IN PROGRESS" totalIssues={2}>
-        <IssueCard />
-        <IssueCard />
-      </KanbanCard>
-      <KanbanCard title="IN REVIEW" totalIssues={1}>
-        <IssueCard />
-      </KanbanCard>
-      <KanbanCard title="DONE" totalIssues={0} />
+      <KanbanCard title="TO DO" issues={project.todoIssues} />
+      <KanbanCard title="IN PROGRESS" issues={project.inProgressIssues} />
+      <KanbanCard title="IN REVIEW" issues={project.inReviewIssues} />
+      <KanbanCard title="DONE" issues={project.completedIssues} />
     </div>
   );
 }
