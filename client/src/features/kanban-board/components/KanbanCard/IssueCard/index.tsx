@@ -17,11 +17,12 @@ type IssueCardProps = {
   title: string;
   type: string;
   priority: string;
+  onClick?: () => void;
 };
 
-function IssueCard({ title, type, priority }: IssueCardProps) {
+function IssueCard({ title, type, priority, onClick }: IssueCardProps) {
   return (
-    <Card shadow="xs" p={8} className={styles.card} mb={4}>
+    <Card shadow="xs" p={8} className={styles.card} mb={4} onClick={onClick}>
       <div className={styles['todo-container']}>
         <p className={styles['issue-title']}>{title}</p>
         <div className={styles['issue-info']}>
@@ -36,7 +37,7 @@ function IssueCard({ title, type, priority }: IssueCardProps) {
               {type === 'bug' && <BugIcon />}
             </div>
           </Tooltip>
-          <p>PROJ-1</p>
+          {/* <p>PROJ-1</p> */}
           <Tooltip
             label={`Priority: ${capitalizeFirstLetter(priority)}`}
             withArrow
