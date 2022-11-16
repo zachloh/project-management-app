@@ -4,6 +4,7 @@ import 'module-alias/register';
 
 import connectDB from 'config/database';
 import env from 'config/env';
+import issueRoutes from 'routes/issues';
 import projectRoutes from 'routes/projects';
 
 const initializeServer = async () => {
@@ -23,6 +24,7 @@ const initializeServer = async () => {
     projectRoutes
   );
   app.use('/api/projects', projectRoutes);
+  app.use('/api/issues', issueRoutes);
 
   // TODO: Error handling
   // const handleError: ErrorRequestHandler = (err, req, res, next) => {

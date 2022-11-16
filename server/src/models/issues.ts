@@ -1,6 +1,6 @@
 import { Schema, model, Types } from 'mongoose';
 
-interface IIssue {
+export interface IIssue {
   project: Types.ObjectId;
   type: string;
   priority: string;
