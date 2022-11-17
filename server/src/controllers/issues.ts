@@ -10,55 +10,32 @@ const createIssue = async (
 ) => {
   const issueData = req.body;
 
+  const mapIssueTypes = {
+    'to do': 'todoIssues',
+    'in progress': 'inProgressIssues',
+    'in review': 'inReviewIssues',
+    done: 'completedIssues',
+  } as const;
+
   try {
     const newIssue = new Issue(issueData);
     const savedIssue = await newIssue.save();
+    const issueStatus = issueData.status.toLowerCase() as
+      | 'to do'
+      | 'in progress'
+      | 'in review'
+      | 'done';
 
-    if (issueData.status.toLowerCase() === 'to do') {
-      await Project.findOneAndUpdate(
-        {
-          _id: issueData.project,
+    await Project.findOneAndUpdate(
+      {
+        _id: issueData.project,
+      },
+      {
+        $push: {
+          [mapIssueTypes[issueStatus]]: newIssue._id,
         },
-        {
-          $push: {
-            todoIssues: newIssue._id,
-          },
-        }
-      );
-    } else if (issueData.status.toLowerCase() === 'in progress') {
-      await Project.findOneAndUpdate(
-        {
-          _id: issueData.project,
-        },
-        {
-          $push: {
-            inProgressIssues: newIssue._id,
-          },
-        }
-      );
-    } else if (issueData.status.toLowerCase() === 'in review') {
-      await Project.findOneAndUpdate(
-        {
-          _id: issueData.project,
-        },
-        {
-          $push: {
-            inReviewIssues: newIssue._id,
-          },
-        }
-      );
-    } else if (issueData.status.toLowerCase() === 'done') {
-      await Project.findOneAndUpdate(
-        {
-          _id: issueData.project,
-        },
-        {
-          $push: {
-            completedIssues: newIssue._id,
-          },
-        }
-      );
-    }
+      }
+    );
 
     return res.json(savedIssue);
   } catch (err) {
