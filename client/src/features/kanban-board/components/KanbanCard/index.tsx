@@ -1,6 +1,7 @@
 import { Card, Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import { useSearchParams } from 'react-router-dom';
 
 import { Issue } from 'types';
@@ -13,9 +14,10 @@ import styles from './KanbanCard.module.css';
 type KanbanCardProps = {
   title: string;
   issues: Issue[];
+  id: string;
 };
 
-function KanbanCard({ title, issues }: KanbanCardProps) {
+function KanbanCard({ title, issues, id }: KanbanCardProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIssue = searchParams.get('selectedIssue');
   const isMobile = useMediaQuery('(max-width: 425px)');
@@ -45,15 +47,24 @@ function KanbanCard({ title, issues }: KanbanCardProps) {
           <span>{title}</span>
           <span>{issues.length}</span>
         </div>
-        {issues.map((issue) => (
-          <IssueCard
-            key={issue._id}
-            title={issue.title}
-            type={issue.type}
-            priority={issue.priority}
-            onClick={() => setSearchParams({ selectedIssue: issue._id })}
-          />
-        ))}
+        <Droppable droppableId={id}>
+          {(provided) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {issues.map((issue, index) => (
+                <IssueCard
+                  key={issue._id}
+                  id={issue._id}
+                  index={index}
+                  title={issue.title}
+                  type={issue.type}
+                  priority={issue.priority}
+                  onClick={() => setSearchParams({ selectedIssue: issue._id })}
+                />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
         <CreateIssueBtn />
       </Card>
     </>
