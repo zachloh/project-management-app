@@ -105,8 +105,81 @@ const deleteIssue = async (req: Request, res: Response) => {
   }
 };
 
+type UpdateIssueStatusReqBody = {
+  source:
+    | 'todoIssues'
+    | 'inProgressIssues'
+    | 'inReviewIssues'
+    | 'completedIssues';
+  destination:
+    | 'todoIssues'
+    | 'inProgressIssues'
+    | 'inReviewIssues'
+    | 'completedIssues';
+  destinationIndex: string;
+};
+
+const updateIssueStatus = async (
+  req: Request<ParamsDictionary, any, UpdateIssueStatusReqBody>,
+  res: Response
+) => {
+  const { source, destination, destinationIndex } = req.body;
+  const { issueId } = req.params;
+
+  const mapIssueTypes = {
+    todoIssues: 'to do',
+    inProgressIssues: 'in progress',
+    inReviewIssues: 'in review',
+    completedIssues: 'done',
+  } as const;
+
+  try {
+    const issue = await Issue.findOneAndUpdate(
+      { _id: issueId },
+      {
+        status: mapIssueTypes[destination],
+      },
+      {
+        new: true,
+      }
+    );
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    await Project.findOneAndUpdate(
+      {
+        _id: issue.project,
+      },
+      {
+        $pull: {
+          [source]: issue._id,
+        },
+      }
+    );
+    await Project.findOneAndUpdate(
+      {
+        _id: issue.project,
+      },
+      {
+        $push: {
+          [destination]: {
+            $each: [issue._id],
+            $position: Number(destinationIndex),
+          },
+        },
+      }
+    );
+
+    return res.json(issue);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 export default {
   createIssue,
   getIssueById,
   deleteIssue,
+  updateIssueStatus,
 };
