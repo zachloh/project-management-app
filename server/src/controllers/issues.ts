@@ -18,13 +18,17 @@ const createIssue = async (
   } as const;
 
   try {
-    const newIssue = new Issue(issueData);
-    const savedIssue = await newIssue.save();
     const issueStatus = issueData.status.toLowerCase() as
       | 'to do'
       | 'in progress'
       | 'in review'
       | 'done';
+
+    const newIssue = new Issue({
+      ...issueData,
+      completedAt: issueStatus === 'done' ? new Date() : undefined,
+    });
+    const savedIssue = await newIssue.save();
 
     await Project.findOneAndUpdate(
       {
@@ -111,18 +115,29 @@ const updateIssueStatus = async (
   } as const;
 
   try {
-    const issue = await Issue.findOneAndUpdate(
-      { _id: issueId },
-      {
-        status: mapIssueTypes[destination],
-      },
-      {
-        new: true,
-      }
-    );
+    // const issue = await Issue.findOneAndUpdate(
+    //   { _id: issueId },
+    //   {
+    //     status: mapIssueTypes[destination],
+    //   },
+    //   {
+    //     new: true,
+    //   }
+    // );
+
+    const issue = await Issue.findOne({ _id: issueId });
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
     }
+
+    issue.status = mapIssueTypes[destination];
+    if (destination === 'completedIssues' && source !== 'completedIssues') {
+      issue.completedAt = new Date();
+    }
+    if (destination !== 'completedIssues' && source === 'completedIssues') {
+      issue.completedAt = undefined;
+    }
+    await issue.save();
 
     await Project.findOneAndUpdate(
       {
