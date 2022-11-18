@@ -7,6 +7,7 @@ interface PopulatedMembers {
 export interface PopulatedIssue {
   _id: string;
   createdAt: Date;
+  completedAt?: Date;
 }
 
 export interface PopulatedProject {

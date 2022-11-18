@@ -22,7 +22,7 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
         { path: 'todoIssues', select: 'createdAt' },
         { path: 'inProgressIssues', select: 'createdAt' },
         { path: 'inReviewIssues', select: 'createdAt' },
-        { path: 'completedIssues', select: 'createdAt' },
+        { path: 'completedIssues', select: 'createdAt completedAt' },
       ],
     });
     if (!organization) {

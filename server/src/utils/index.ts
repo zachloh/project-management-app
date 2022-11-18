@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 
 import { PopulatedIssue, PopulatedProject } from 'types/mongoose';
 
-const filterIssuesByLast7Days = (issues: PopulatedIssue[]) => {
+const filterCreatedIssues = (issues: PopulatedIssue[]) => {
   const issuesLast7Days: Record<string, number> = {};
   const startDate = dayjs().subtract(6, 'day');
   issues.forEach((issue) => {
@@ -12,6 +12,31 @@ const filterIssuesByLast7Days = (issues: PopulatedIssue[]) => {
     // eslint-disable-next-line no-plusplus
     for (let i = 0; i < 7; i++) {
       if (dayjs(issue.createdAt).isSame(dayjs().subtract(i, 'day'), 'day')) {
+        issuesLast7Days[j] = (issuesLast7Days[j] || 0) + 1;
+        break;
+      }
+      j -= 1;
+    }
+  });
+
+  return issuesLast7Days;
+};
+
+const filterCompletedIssues = (issues: PopulatedIssue[]) => {
+  const issuesLast7Days: Record<string, number> = {};
+  const startDate = dayjs().subtract(6, 'day');
+  issues.forEach((issue) => {
+    if (
+      !issue.completedAt ||
+      dayjs(issue.completedAt).isBefore(startDate, 'day')
+    ) {
+      return;
+    }
+
+    let j = 6;
+    // eslint-disable-next-line no-plusplus
+    for (let i = 0; i < 7; i++) {
+      if (dayjs(issue.completedAt).isSame(dayjs().subtract(i, 'day'), 'day')) {
         issuesLast7Days[j] = (issuesLast7Days[j] || 0) + 1;
         break;
       }
@@ -37,14 +62,12 @@ export const getIssuesLast7Days = (projects: PopulatedProject[]) => {
   let completedIssuesLast7DaysObj: Record<string, number> = {};
 
   projects.forEach((project) => {
-    const filteredTodoIssues = filterIssuesByLast7Days(project.todoIssues);
-    const filteredInProgressIssues = filterIssuesByLast7Days(
+    const filteredTodoIssues = filterCreatedIssues(project.todoIssues);
+    const filteredInProgressIssues = filterCreatedIssues(
       project.inProgressIssues
     );
-    const filteredInReviewIssues = filterIssuesByLast7Days(
-      project.inReviewIssues
-    );
-    const filteredCompletedIssues = filterIssuesByLast7Days(
+    const filteredInReviewIssues = filterCreatedIssues(project.inReviewIssues);
+    const filteredCompletedIssues = filterCreatedIssues(
       project.completedIssues
     );
     createdIssuesLast7DaysObj = sumObjectsByKey(
@@ -56,7 +79,7 @@ export const getIssuesLast7Days = (projects: PopulatedProject[]) => {
     );
     completedIssuesLast7DaysObj = sumObjectsByKey(
       completedIssuesLast7DaysObj,
-      filteredCompletedIssues
+      filterCompletedIssues(project.completedIssues)
     );
   });
 
