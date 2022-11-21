@@ -38,15 +38,10 @@ function IssueCard({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          className={styles.draggable}
         >
-          <Card
-            shadow="xs"
-            p={8}
-            className={styles.card}
-            mb={4}
-            onClick={onClick}
-          >
-            <div className={styles['todo-container']}>
+          <Card shadow="xs" p={8} className={styles.card} onClick={onClick}>
+            <div className={styles['issue-container']}>
               <p className={styles['issue-title']}>{title}</p>
               <div className={styles['issue-info']}>
                 <Tooltip

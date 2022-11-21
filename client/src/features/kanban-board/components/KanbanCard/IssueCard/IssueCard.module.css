@@ -1,3 +1,7 @@
+.draggable {
+  margin-bottom: 4px;
+}
+
 .card {
   background-color: #f8f9fa;
 }
@@ -6,7 +10,7 @@
   background-color: #dee2e6;
 }
 
-.todo-container {
+.issue-container {
   display: flex;
   flex-direction: column;
   gap: 8px;

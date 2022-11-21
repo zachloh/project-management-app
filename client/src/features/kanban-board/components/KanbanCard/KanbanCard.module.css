@@ -1,6 +1,5 @@
 .card {
   background-color: #e9ecef;
-  min-height: 400px;
 }
 
 .title {
@@ -10,4 +9,8 @@
   display: flex;
   gap: 15px;
   padding: 10px;
+}
+
+.issues-container {
+  min-height: 350px;
 }

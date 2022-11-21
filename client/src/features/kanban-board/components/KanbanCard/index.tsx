@@ -49,7 +49,11 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
         </div>
         <Droppable droppableId={id}>
           {(provided) => (
-            <div ref={provided.innerRef} {...provided.droppableProps}>
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              className={styles['issues-container']}
+            >
               {issues.map((issue, index) => (
                 <IssueCard
                   key={issue._id}
@@ -62,10 +66,10 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
                 />
               ))}
               {provided.placeholder}
+              <CreateIssueBtn />
             </div>
           )}
         </Droppable>
-        <CreateIssueBtn />
       </Card>
     </>
   );
