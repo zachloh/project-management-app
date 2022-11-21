@@ -2,13 +2,19 @@ import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 
 import { useGetProject } from 'api/getProject';
+import {
+  SourceOrDestination,
+  useUpdateIssueStatus,
+} from 'api/updateIssueStatus';
 
 import styles from './KanbanBoard.module.css';
 import KanbanCard from './KanbanCard';
 
 export function KanbanBoard() {
+  // TODO: get projectId instead of hardcoding
   const {
     data: project = {
+      _id: '636b1c6de180fd4878e015f5',
       todoIssues: [],
       inProgressIssues: [],
       inReviewIssues: [],
@@ -17,9 +23,9 @@ export function KanbanBoard() {
     isLoading,
   } = useGetProject('636b1c6de180fd4878e015f5');
 
-  const onDragEnd = (result: DropResult) => {
-    console.log(result);
+  const updateIssueStatusMutation = useUpdateIssueStatus(project._id);
 
+  const onDragEnd = (result: DropResult) => {
     const { draggableId: issueId, source, destination } = result;
 
     if (!destination) {
@@ -33,9 +39,16 @@ export function KanbanBoard() {
       return;
     }
 
-    console.log(result);
+    updateIssueStatusMutation.mutate({
+      issueId,
+      source: source.droppableId as SourceOrDestination,
+      sourceIndex: source.index,
+      destination: destination.droppableId as SourceOrDestination,
+      destinationIndex: destination.index,
+    });
   };
 
+  // TODO: Add skeleton
   if (isLoading) {
     return <div>Loading...</div>;
   }
