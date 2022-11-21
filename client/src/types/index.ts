@@ -16,6 +16,8 @@ export type Issue = {
   assignee?: string;
   dueDate?: string;
   completedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Project = {
