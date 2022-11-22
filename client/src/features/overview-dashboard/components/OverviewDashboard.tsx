@@ -12,9 +12,8 @@ import IssuesProgress from './IssuesProgress';
 import MembersTable from './MembersTable';
 import styles from './OverviewDashboard.module.css';
 
-// const projects = [1, 2, 3];
-
 export function OverviewDashboard() {
+  // TODO: Get orgId instead of hardcoding
   const {
     data = {
       projects: [],
@@ -27,6 +26,7 @@ export function OverviewDashboard() {
   // return <DashboardSkeleton />;
 
   if (isLoading) {
+    // TODO: Edit skeleton
     return <DashboardSkeleton />;
   }
 
