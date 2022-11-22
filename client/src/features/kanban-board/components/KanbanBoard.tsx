@@ -7,6 +7,7 @@ import {
   useUpdateIssueStatus,
 } from 'api/updateIssueStatus';
 
+import IssueModal from './IssueModal';
 import styles from './KanbanBoard.module.css';
 import KanbanCard from './KanbanCard';
 
@@ -56,6 +57,7 @@ export function KanbanBoard() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className={styles.container}>
+        <IssueModal />
         <KanbanCard title="TO DO" issues={project.todoIssues} id="todoIssues" />
         <KanbanCard
           title="IN PROGRESS"

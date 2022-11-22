@@ -2,6 +2,8 @@ import { Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
+import { useGetIssue } from 'api/getIssue';
+
 import AssigneeOptions from './AssigneeOptions';
 import DescriptionInput from './DescriptionInput';
 import DueDateInput from './DueDateInput';
@@ -15,10 +17,13 @@ import TypeOptions from './TypeOptions';
 import { FormValues } from './types';
 
 type IssueFormProps = {
+  selectedIssue: string;
   onCloseModal: () => void;
 };
 
-function IssueForm({ onCloseModal }: IssueFormProps) {
+function IssueForm({ selectedIssue, onCloseModal }: IssueFormProps) {
+  const { data: issue, isLoading } = useGetIssue(selectedIssue);
+
   const form = useForm<FormValues>({
     initialValues: {
       title: 'Test title',
@@ -31,6 +36,11 @@ function IssueForm({ onCloseModal }: IssueFormProps) {
       dueDate: null,
     },
   });
+
+  // TODO: Add skeleton
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <form

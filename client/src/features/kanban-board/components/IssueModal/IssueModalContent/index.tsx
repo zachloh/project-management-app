@@ -4,7 +4,7 @@ import IssueForm from './IssueForm';
 import ModalTitle from './ModalTitle';
 
 type IssueModalContentProps = {
-  selectedIssue: string | null;
+  selectedIssue: string;
   onCloseModal: () => void;
 };
 
@@ -15,7 +15,7 @@ function IssueModalContent({
   return (
     <>
       <ModalTitle onCloseModal={onCloseModal} />
-      <IssueForm onCloseModal={onCloseModal} />
+      <IssueForm selectedIssue={selectedIssue} onCloseModal={onCloseModal} />
     </>
   );
 }
