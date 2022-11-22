@@ -31,7 +31,7 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
       <Modal
         opened={!!searchParams.get('selectedIssue')}
         onClose={closeModal}
-        overlayOpacity={0.05}
+        overlayOpacity={0.15}
         shadow="xs"
         withCloseButton={false}
         fullScreen={isMobile}
