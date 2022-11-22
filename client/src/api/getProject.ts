@@ -14,8 +14,7 @@ const getProject = async (
 };
 
 export const useGetProject = (projectId: string) =>
-  // TODO: get orgId instead of hardcoding
   useQuery({
-    queryKey: ['org', '636a10bb1fb9e7a0550389f2', 'projects', projectId],
+    queryKey: ['projects', projectId],
     queryFn: ({ signal }) => getProject(projectId, signal),
   });
