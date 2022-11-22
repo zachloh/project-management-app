@@ -1,3 +1,4 @@
+import { MantineProvider } from '@mantine/core';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
@@ -11,10 +12,41 @@ type AppProviderProps = {
 
 function AppProviders({ children }: AppProviderProps) {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>{children}</BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <MantineProvider
+      withCSSVariables
+      theme={{
+        primaryColor: 'violet',
+        components: {
+          InputWrapper: {
+            defaultProps: {
+              inputWrapperOrder: ['label', 'input', 'description', 'error'],
+            },
+            styles: {
+              label: {
+                fontWeight: 700,
+              },
+            },
+          },
+          Select: {
+            styles: (theme) => ({
+              item: {
+                '&[data-selected]': {
+                  '&, &:hover': {
+                    backgroundColor: theme.colors.indigo[1],
+                    color: 'inherit',
+                  },
+                },
+              },
+            }),
+          },
+        },
+      }}
+    >
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>{children}</BrowserRouter>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </MantineProvider>
   );
 }
 
