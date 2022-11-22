@@ -15,7 +15,7 @@ function IssueModalContent({
   return (
     <>
       <ModalTitle onCloseModal={onCloseModal} />
-      <IssueForm />
+      <IssueForm onCloseModal={onCloseModal} />
     </>
   );
 }
