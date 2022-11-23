@@ -18,8 +18,8 @@ type IssueCardProps = {
   id: string;
   index: number;
   title: string;
-  type: string;
-  priority: string;
+  type: 'task' | 'story' | 'bug';
+  priority: 'low' | 'medium' | 'high';
   onClick?: () => void;
 };
 

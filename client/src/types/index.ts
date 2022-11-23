@@ -7,9 +7,9 @@ export type User = {
 export type Issue = {
   _id: string;
   project: string;
-  type: string;
-  priority: string;
-  status: string;
+  type: 'task' | 'story' | 'bug';
+  priority: 'low' | 'medium' | 'high';
+  status: 'to do' | 'in progress' | 'in review' | 'done';
   title: string;
   description?: string;
   reporter: string;
