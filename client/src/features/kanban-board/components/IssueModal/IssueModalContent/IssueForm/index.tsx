@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
-import { useGetIssue } from 'api/getIssue';
+import { Issue } from 'types';
 
 import AssigneeOptions from './AssigneeOptions';
 import DescriptionInput from './DescriptionInput';
@@ -17,30 +17,23 @@ import TypeOptions from './TypeOptions';
 import { FormValues } from './types';
 
 type IssueFormProps = {
-  selectedIssue: string;
+  issue: Issue;
   onCloseModal: () => void;
 };
 
-function IssueForm({ selectedIssue, onCloseModal }: IssueFormProps) {
-  const { data: issue, isLoading } = useGetIssue(selectedIssue);
-
+function IssueForm({ issue, onCloseModal }: IssueFormProps) {
   const form = useForm<FormValues>({
     initialValues: {
-      title: 'Test title',
-      description: 'Test description',
-      type: 'story',
-      status: 'to do',
-      priority: 'low',
-      assignee: null,
-      reporter: '636a106ba2bf04ba0bea7a60',
-      dueDate: null,
+      title: issue.title,
+      description: issue.description || '',
+      type: issue.type,
+      status: issue.status,
+      priority: issue.priority,
+      assignee: issue.assignee || null,
+      reporter: issue.reporter,
+      dueDate: issue.dueDate ? new Date(issue.dueDate) : null,
     },
   });
-
-  // TODO: Add skeleton
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <form
@@ -60,7 +53,11 @@ function IssueForm({ selectedIssue, onCloseModal }: IssueFormProps) {
         <AssigneeOptions form={form} />
         <ReporterOptions form={form} />
         <DueDateInput form={form} />
-        <IssueDates />
+        <IssueDates
+          createdAt={issue.createdAt}
+          updatedAt={issue.updatedAt}
+          completedAt={issue.completedAt}
+        />
         <div className={styles.buttons}>
           <Button variant="outline" onClick={onCloseModal}>
             Cancel
