@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
+import mongoose from 'mongoose';
 
 import Issue, { IIssue } from 'models/issues';
 import Project from 'models/projects';
 
+// TODO: Change request type
 const createIssue = async (
   req: Request<ParamsDictionary, any, IIssue>,
   res: Response
@@ -82,6 +84,90 @@ const deleteIssue = async (req: Request, res: Response) => {
   }
 };
 
+type UpdateIssueReqBody = {
+  type: 'task' | 'story' | 'bug';
+  priority: 'low' | 'medium' | 'high';
+  status: 'to do' | 'in progress' | 'in review' | 'done';
+  title: string;
+  description: string | undefined;
+  reporter: string;
+  assignee: string | undefined;
+  dueDate: string | undefined;
+};
+
+const updateIssue = async (
+  req: Request<ParamsDictionary, any, UpdateIssueReqBody>,
+  res: Response
+) => {
+  const { issueId } = req.params;
+  const {
+    type,
+    priority,
+    status,
+    title,
+    description,
+    reporter,
+    assignee,
+    dueDate,
+  } = req.body;
+
+  try {
+    const issue = await Issue.findOne({
+      _id: issueId,
+    });
+    if (!issue) {
+      return res.status(404).json({ message: 'Issue not found' });
+    }
+
+    const mapIssueTypes = {
+      'to do': 'todoIssues',
+      'in progress': 'inProgressIssues',
+      'in review': 'inReviewIssues',
+      done: 'completedIssues',
+    } as const;
+    const source = issue.status;
+    const destination = status;
+
+    issue.type = type;
+    issue.priority = priority;
+    issue.status = status;
+    issue.title = title;
+    issue.description = description;
+    issue.reporter = new mongoose.Types.ObjectId(reporter);
+    issue.assignee = assignee
+      ? new mongoose.Types.ObjectId(assignee)
+      : undefined;
+    issue.dueDate = dueDate ? new Date(dueDate) : undefined;
+    if (destination === 'done' && source !== 'done') {
+      issue.completedAt = new Date();
+    }
+    if (destination !== 'done' && source === 'done') {
+      issue.completedAt = undefined;
+    }
+    await issue.save();
+
+    if (source !== destination) {
+      await Project.findOneAndUpdate(
+        {
+          _id: issue.project,
+        },
+        {
+          $pull: {
+            [mapIssueTypes[source]]: issue._id,
+          },
+          $push: {
+            [mapIssueTypes[destination]]: issue._id,
+          },
+        }
+      );
+    }
+
+    return res.json(issue);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 type UpdateIssueStatusReqBody = {
   source:
     | 'todoIssues'
@@ -111,16 +197,6 @@ const updateIssueStatus = async (
   } as const;
 
   try {
-    // const issue = await Issue.findOneAndUpdate(
-    //   { _id: issueId },
-    //   {
-    //     status: mapIssueTypes[destination],
-    //   },
-    //   {
-    //     new: true,
-    //   }
-    // );
-
     const issue = await Issue.findOne({ _id: issueId });
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
@@ -169,5 +245,6 @@ export default {
   createIssue,
   getIssueById,
   deleteIssue,
+  updateIssue,
   updateIssueStatus,
 };

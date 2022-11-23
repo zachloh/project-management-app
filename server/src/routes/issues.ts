@@ -13,6 +13,9 @@ router.get('/:issueId', issuesController.getIssueById);
 // DELETE /api/issues/:issueId
 router.delete('/:issueId', issuesController.deleteIssue);
 
+// PATCH /api/issues/:issueId
+router.patch('/:issueId', issuesController.updateIssue);
+
 // PATCH /api/issues/:issueId/status
 router.patch('/:issueId/status', issuesController.updateIssueStatus);
 
