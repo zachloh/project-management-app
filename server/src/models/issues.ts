@@ -2,9 +2,9 @@ import { Schema, model, Types } from 'mongoose';
 
 export interface IIssue {
   project: Types.ObjectId;
-  type: string;
-  priority: string;
-  status: string;
+  type: 'task' | 'story' | 'bug';
+  priority: 'low' | 'medium' | 'high';
+  status: 'to do' | 'in progress' | 'in review' | 'done';
   title: string;
   description?: string;
   reporter: Types.ObjectId;
@@ -25,23 +25,27 @@ const issueSchema = new Schema<IIssue>(
       required: true,
       trim: true,
       lowercase: true,
+      enum: ['task', 'story', 'bug'],
     },
     priority: {
       type: String,
       required: true,
       trim: true,
       lowercase: true,
+      enum: ['low', 'medium', 'high'],
     },
     status: {
       type: String,
       required: true,
       trim: true,
       lowercase: true,
+      enum: ['to do', 'in progress', 'in review', 'done'],
     },
     title: {
       type: String,
       required: true,
       trim: true,
+      minlength: 1,
     },
     description: {
       type: String,

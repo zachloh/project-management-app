@@ -18,11 +18,7 @@ const createIssue = async (
   } as const;
 
   try {
-    const issueStatus = issueData.status.toLowerCase() as
-      | 'to do'
-      | 'in progress'
-      | 'in review'
-      | 'done';
+    const issueStatus = issueData.status;
 
     const newIssue = new Issue({
       ...issueData,
