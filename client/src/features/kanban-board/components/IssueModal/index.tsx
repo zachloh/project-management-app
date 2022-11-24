@@ -18,7 +18,7 @@ function IssueModal() {
     <Modal
       opened={!!searchParams.get('selectedIssue')}
       onClose={closeModal}
-      overlayOpacity={0.15}
+      overlayOpacity={0.5}
       shadow="xs"
       withCloseButton={false}
       fullScreen={isMobile}
