@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
-import { Project } from 'types';
+import { Project, PopulatedIssue } from 'types';
 
 type GetProjectsResponse = {
-  projects: Project[];
+  projects: Project<PopulatedIssue>[];
   createdIssuesLast7Days: number[];
   completedIssuesLast7Days: number[];
 };

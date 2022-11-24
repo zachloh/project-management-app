@@ -1,7 +1,6 @@
 export type User = {
   _id: string;
   name: string;
-  iconURL: string;
 };
 
 export type Issue = {
@@ -20,15 +19,20 @@ export type Issue = {
   updatedAt: string;
 };
 
-export type Project = {
+export type PopulatedIssue = {
+  _id: string;
+  createdAt: string;
+  completedAt?: string;
+};
+
+export type Project<T = Issue> = {
   _id: string;
   name: string;
   members: User[];
-  projectIconURL: string;
   description: string;
   category: string;
-  todoIssues: Issue[];
-  inReviewIssues: Issue[];
-  inProgressIssues: Issue[];
-  completedIssues: Issue[];
+  todoIssues: T[];
+  inReviewIssues: T[];
+  inProgressIssues: T[];
+  completedIssues: T[];
 };

@@ -1,7 +1,7 @@
 import { Card, Badge, Divider } from '@mantine/core';
 import React from 'react';
 
-import { Project } from 'types';
+import { Project, PopulatedIssue } from 'types';
 
 import ProjectDescription from './ProjectDescription';
 import ProjectMembers from './ProjectMembers';
@@ -10,7 +10,7 @@ import ProjectTitle from './ProjectTitle';
 
 type ProjectCardProps = {
   large?: boolean;
-  project: Project;
+  project: Project<PopulatedIssue>;
 };
 
 function ProjectCard({ large, project }: ProjectCardProps) {
