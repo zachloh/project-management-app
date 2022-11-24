@@ -49,6 +49,7 @@ const issueSchema = new Schema<IIssue>(
     },
     description: {
       type: String,
+      trim: true,
     },
     reporter: {
       type: Schema.Types.ObjectId,
