@@ -1,10 +1,10 @@
 import { RingProgress, Text } from '@mantine/core';
 import React from 'react';
 
-import { Project } from 'types';
+import { Project, PopulatedIssue } from 'types';
 
 type IssuesProgressProps = {
-  projects: Project[];
+  projects: Project<PopulatedIssue>[];
 };
 
 function IssuesProgress({ projects }: IssuesProgressProps) {
@@ -25,31 +25,39 @@ function IssuesProgress({ projects }: IssuesProgressProps) {
       <RingProgress
         sections={[
           {
-            value: 100 - (totalCompletedIssues / totalCreatedIssues) * 100,
+            value:
+              totalCreatedIssues === 0
+                ? 100
+                : 100 - (totalCompletedIssues / totalCreatedIssues) * 100,
             color: 'gray.2',
             tooltip: `Created issues: ${totalCreatedIssues}`,
           },
           {
-            value: (totalCompletedIssues / totalCreatedIssues) * 100,
+            value:
+              totalCreatedIssues === 0
+                ? 0
+                : (totalCompletedIssues / totalCreatedIssues) * 100,
             color: 'violet',
             tooltip: `Completed issues: ${totalCompletedIssues}`,
           },
         ]}
         size={200}
-        roundCaps
+        roundCaps={totalCompletedIssues > 0}
         thickness={16}
         label={
           // eslint-disable-next-line react/jsx-wrap-multilines
           <Text size={36} align="center" color="violet" weight="700">
-            {`${(totalCompletedIssues / totalCreatedIssues) * 100}%`}
+            {`${
+              totalCreatedIssues === 0
+                ? 0
+                : Math.round((totalCompletedIssues / totalCreatedIssues) * 100)
+            }%`}
           </Text>
         }
         sx={{ placeSelf: 'center' }}
       />
       <Text align="center" color="dark.4" weight="700">
-        {`${
-          (totalCompletedIssues / totalCreatedIssues) * 100
-        }% of ${totalCreatedIssues} issues completed`}
+        {`Completed issues: ${totalCompletedIssues} / ${totalCreatedIssues}`}
       </Text>
     </div>
   );

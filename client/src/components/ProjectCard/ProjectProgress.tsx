@@ -1,11 +1,11 @@
-import { Progress, Grid } from '@mantine/core';
+import { Progress, Grid, Tooltip } from '@mantine/core';
 import React from 'react';
 import { ClipboardCheck } from 'tabler-icons-react';
 
-import { Project } from 'types';
+import { Project, PopulatedIssue } from 'types';
 
 type ProjectProgressProps = {
-  project: Project;
+  project: Project<PopulatedIssue>;
 };
 
 function ProjectProgress({ project }: ProjectProgressProps) {
@@ -19,7 +19,11 @@ function ProjectProgress({ project }: ProjectProgressProps) {
   return (
     <Grid align="center">
       <Grid.Col span="content" pr={0}>
-        <ClipboardCheck />
+        <Tooltip withArrow label="Completed issues">
+          <div>
+            <ClipboardCheck />
+          </div>
+        </Tooltip>
       </Grid.Col>
       <Grid.Col span="content" pl={2}>
         {`${completedIssues}/${createdIssues}`}
@@ -30,17 +34,21 @@ function ProjectProgress({ project }: ProjectProgressProps) {
           size="md"
           sections={[
             {
-              value: (completedIssues / createdIssues) * 100,
+              value:
+                createdIssues === 0
+                  ? 0
+                  : Math.round((completedIssues / createdIssues) * 100),
               color: 'indigo.5',
-              tooltip: `Completed issues: ${
-                (completedIssues / createdIssues) * 100
-              }%`,
             },
           ]}
         />
       </Grid.Col>
       <Grid.Col span="content" sx={{ color: '#5c7cfa' }}>
-        {`${(completedIssues / createdIssues) * 100}%`}
+        {`${
+          createdIssues === 0
+            ? 0
+            : Math.round((completedIssues / createdIssues) * 100)
+        }%`}
       </Grid.Col>
     </Grid>
   );
