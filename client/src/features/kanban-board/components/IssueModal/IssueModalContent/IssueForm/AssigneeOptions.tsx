@@ -4,6 +4,7 @@ import React, { forwardRef } from 'react';
 
 import { FormValues } from './types';
 
+// TODO: Get members of a project
 const data = [
   {
     icon: (
@@ -43,6 +44,7 @@ function AssigneeOptions({ form }: { form: UseFormReturnType<FormValues> }) {
       {...form.getInputProps('assignee')}
       icon={data.find((item) => item.value === value)?.icon}
       placeholder="Unassigned"
+      clearable
       mb={10}
     />
   );

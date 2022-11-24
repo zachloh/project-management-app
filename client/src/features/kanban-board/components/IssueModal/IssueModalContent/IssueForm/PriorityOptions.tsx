@@ -48,6 +48,7 @@ function PriorityOptions({ form }: { form: UseFormReturnType<FormValues> }) {
   return (
     <Select
       label="Priority"
+      withAsterisk
       itemComponent={SelectItem}
       data={data}
       {...form.getInputProps('priority')}

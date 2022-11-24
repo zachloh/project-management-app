@@ -33,6 +33,14 @@ function IssueForm({ issue, onCloseModal }: IssueFormProps) {
       reporter: issue.reporter,
       dueDate: issue.dueDate ? new Date(issue.dueDate) : null,
     },
+    validate: {
+      title: (value) =>
+        value.trim().length === 0 ? 'Title cannot be empty' : null,
+      description: (value) =>
+        value && !value.trim()
+          ? 'Description cannot contain only blank spaces'
+          : null,
+    },
   });
 
   return (

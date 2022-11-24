@@ -44,6 +44,7 @@ function TypeOptions({ form }: { form: UseFormReturnType<FormValues> }) {
   return (
     <Select
       label="Type"
+      withAsterisk
       itemComponent={SelectItem}
       data={data}
       {...form.getInputProps('type')}

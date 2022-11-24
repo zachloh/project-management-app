@@ -8,6 +8,7 @@ function StatusOptions({ form }: { form: UseFormReturnType<FormValues> }) {
   return (
     <Select
       label="Status"
+      withAsterisk
       data={[
         { value: 'to do', label: 'TO DO' },
         { value: 'in progress', label: 'IN PROGRESS' },

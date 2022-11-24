@@ -4,6 +4,7 @@ import React, { forwardRef } from 'react';
 
 import { FormValues } from './types';
 
+// TODO: Get members of a project
 const data = [
   {
     icon: (
@@ -38,6 +39,7 @@ function ReporterOptions({ form }: { form: UseFormReturnType<FormValues> }) {
   return (
     <Select
       label="Reporter"
+      withAsterisk
       itemComponent={SelectItem}
       data={data}
       {...form.getInputProps('reporter')}
