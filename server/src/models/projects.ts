@@ -6,7 +6,6 @@ import User from './users';
 export interface IProject {
   name: string;
   members: Types.ObjectId[];
-  projectIconURL: string;
   description: string;
   category: string;
   todoIssues: Types.ObjectId[];
@@ -35,11 +34,6 @@ const projectSchema = new Schema<IProject>({
       },
       message: () => 'members should not be empty',
     },
-  },
-  projectIconURL: {
-    type: String,
-    required: true,
-    trim: true,
   },
   description: {
     type: String,

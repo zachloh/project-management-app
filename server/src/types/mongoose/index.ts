@@ -1,7 +1,6 @@
 interface PopulatedMembers {
   _id: string;
   name: string;
-  iconURL: string;
 }
 
 export interface PopulatedIssue {
@@ -13,7 +12,6 @@ export interface PopulatedIssue {
 export interface PopulatedProject {
   name: string;
   members: PopulatedMembers[];
-  projectIconURL: string;
   description: string;
   category: string;
   todoIssues: PopulatedIssue[];

@@ -40,6 +40,7 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
   }
 };
 
+// TODO: Update request body
 const createProject = async (
   req: Request<
     ParamsDictionary,
@@ -48,14 +49,12 @@ const createProject = async (
   >,
   res: Response
 ) => {
-  const { name, projectIconURL, description, category, orgId, userId } =
-    req.body;
+  const { name, description, category, orgId, userId } = req.body;
 
   try {
     const newProject = new Project({
       name,
       members: [userId],
-      projectIconURL,
       description,
       category,
     });
@@ -79,6 +78,7 @@ const getProjectById = async (req: Request, res: Response) => {
     const project = await Project.findOne({
       _id: req.params.projectId,
     })
+      .populate('members')
       .populate('todoIssues')
       .populate('inReviewIssues')
       .populate('inProgressIssues')
