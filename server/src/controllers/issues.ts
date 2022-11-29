@@ -179,7 +179,7 @@ type UpdateIssueStatusReqBody = {
     | 'inProgressIssues'
     | 'inReviewIssues'
     | 'completedIssues';
-  destinationIndex: string;
+  destinationIndex: number;
 };
 
 const updateIssueStatus = async (
