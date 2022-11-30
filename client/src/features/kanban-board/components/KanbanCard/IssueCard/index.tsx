@@ -1,4 +1,5 @@
 import { Avatar, Card, Tooltip } from '@mantine/core';
+import { useIsMutating, useIsFetching } from '@tanstack/react-query';
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
@@ -23,6 +24,18 @@ type IssueCardProps = {
   onClick?: () => void;
 };
 
+const typeIcons: Record<IssueCardProps['type'], React.ReactNode> = {
+  task: <TaskIcon />,
+  story: <StoryIcon />,
+  bug: <BugIcon />,
+};
+
+const priorityIcons: Record<IssueCardProps['priority'], React.ReactNode> = {
+  low: <LowPriorityIcon />,
+  medium: <MediumPriorityIcon />,
+  high: <HighPriorityIcon />,
+};
+
 function IssueCard({
   id,
   index,
@@ -31,8 +44,15 @@ function IssueCard({
   priority,
   onClick,
 }: IssueCardProps) {
+  const isMutating = useIsMutating();
+  const isFetchingProject = useIsFetching({ queryKey: ['projects'] });
+
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable
+      draggableId={id}
+      index={index}
+      isDragDisabled={isMutating > 0 || isFetchingProject > 0}
+    >
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -49,22 +69,15 @@ function IssueCard({
                   withArrow
                   openDelay={300}
                 >
-                  <div>
-                    {type === 'task' && <TaskIcon />}
-                    {type === 'story' && <StoryIcon />}
-                    {type === 'bug' && <BugIcon />}
-                  </div>
+                  <div>{typeIcons[type]}</div>
                 </Tooltip>
-                {/* <p>PROJ-1</p> */}
                 <Tooltip
                   label={`Priority: ${capitalizeFirstLetter(priority)}`}
                   withArrow
                   openDelay={300}
                 >
                   <div className={styles.priority}>
-                    {priority === 'low' && <LowPriorityIcon />}
-                    {priority === 'medium' && <MediumPriorityIcon />}
-                    {priority === 'high' && <HighPriorityIcon />}
+                    {priorityIcons[priority]}
                   </div>
                 </Tooltip>
                 <Tooltip label="John Doe" withArrow openDelay={300}>
