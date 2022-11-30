@@ -1,6 +1,8 @@
+import { Indicator } from '@mantine/core';
 import { DatePicker } from '@mantine/dates';
 import { UseFormReturnType } from '@mantine/form';
 import { useMediaQuery } from '@mantine/hooks';
+import dayjs from 'dayjs';
 import React from 'react';
 import { Calendar } from 'tabler-icons-react';
 
@@ -16,6 +18,19 @@ function DueDateInput({ form }: { form: UseFormReturnType<FormValues> }) {
       icon={<Calendar size={16} />}
       {...form.getInputProps('dueDate')}
       dropdownType={isMobile ? 'modal' : 'popover'}
+      renderDay={(date) => {
+        const day = date.getDate();
+        return (
+          <Indicator
+            size={6}
+            color="red"
+            offset={8}
+            disabled={!dayjs(date).isSame(dayjs(), 'day')}
+          >
+            <div>{day}</div>
+          </Indicator>
+        );
+      }}
       mb={30}
     />
   );
