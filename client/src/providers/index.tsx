@@ -1,4 +1,5 @@
 import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
@@ -42,10 +43,12 @@ function AppProviders({ children }: AppProviderProps) {
         },
       }}
     >
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>{children}</BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <NotificationsProvider autoClose={3000} position="bottom-center">
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>{children}</BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }
