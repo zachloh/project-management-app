@@ -13,17 +13,22 @@
   display: flex;
   gap: 20px;
   justify-content: flex-end;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 @media (min-width: 768px) {
   .container {
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: 2.4fr 1fr;
     gap: 20px;
   }
 
   .options {
     flex-direction: row;
     gap: 20px;
+  }
+
+  .buttons {
+    grid-column: 1 / span 2;
+    margin-top: 10px;
   }
 }
