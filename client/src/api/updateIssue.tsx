@@ -32,7 +32,7 @@ const updateIssue = async ({
   return data;
 };
 
-export const useUpdateIssue = (successCallback?: () => void) => {
+export const useUpdateIssue = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -59,9 +59,6 @@ export const useUpdateIssue = (successCallback?: () => void) => {
         color: 'teal',
         icon: <Check />,
       });
-      if (successCallback) {
-        successCallback();
-      }
     },
     onError: (_, variables) => {
       updateNotification({

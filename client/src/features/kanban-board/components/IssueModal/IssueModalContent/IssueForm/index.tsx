@@ -2,6 +2,7 @@ import { Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
+import { useUpdateIssue } from 'api/updateIssue';
 import { Issue } from 'types';
 
 import AssigneeOptions from './AssigneeOptions';
@@ -43,11 +44,24 @@ function IssueForm({ issue, onCloseModal }: IssueFormProps) {
     },
   });
 
+  const updateIssueMutation = useUpdateIssue();
+
+  const handleSubmit = (values: FormValues) => {
+    onCloseModal();
+    const { description, assignee, dueDate, ...rest } = values;
+    updateIssueMutation.mutate({
+      issueId: issue._id,
+      issueData: {
+        ...rest,
+        description: description || undefined,
+        assignee: assignee || undefined,
+        dueDate: dueDate || undefined,
+      },
+    });
+  };
+
   return (
-    <form
-      className={styles.container}
-      onSubmit={form.onSubmit((values) => console.log(values))}
-    >
+    <form className={styles.container} onSubmit={form.onSubmit(handleSubmit)}>
       <div>
         <TitleInput form={form} />
         <DescriptionInput form={form} />
@@ -66,14 +80,19 @@ function IssueForm({ issue, onCloseModal }: IssueFormProps) {
           updatedAt={issue.updatedAt}
           completedAt={issue.completedAt}
         />
-        <div className={styles.buttons}>
-          <Button variant="outline" onClick={onCloseModal}>
-            Cancel
-          </Button>
-          <Button type="submit" variant="filled" disabled={!form.isDirty()}>
-            Update
-          </Button>
-        </div>
+      </div>
+      <div className={styles.buttons}>
+        <Button variant="outline" onClick={onCloseModal}>
+          Cancel
+        </Button>
+        <Button
+          type="submit"
+          variant="filled"
+          disabled={!form.isDirty()}
+          loading={updateIssueMutation.isLoading}
+        >
+          Update
+        </Button>
       </div>
     </form>
   );
