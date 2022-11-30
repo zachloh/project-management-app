@@ -1,4 +1,5 @@
 import { Card } from '@mantine/core';
+import { useIsMutating } from '@tanstack/react-query';
 import React from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { useSearchParams } from 'react-router-dom';
@@ -17,6 +18,7 @@ type KanbanCardProps = {
 
 function KanbanCard({ title, issues, id }: KanbanCardProps) {
   const setSearchParams = useSearchParams()[1];
+  const isMutating = useIsMutating();
 
   return (
     <Card p={5} radius="md" className={styles.card}>
@@ -39,7 +41,10 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
                 title={issue.title}
                 type={issue.type}
                 priority={issue.priority}
-                onClick={() => setSearchParams({ selectedIssue: issue._id })}
+                onClick={() => {
+                  if (isMutating > 0) return;
+                  setSearchParams({ selectedIssue: issue._id });
+                }}
               />
             ))}
             {provided.placeholder}
