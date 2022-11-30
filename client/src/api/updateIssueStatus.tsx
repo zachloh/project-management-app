@@ -1,4 +1,8 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { showNotification } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import React from 'react';
+import { ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
@@ -17,17 +21,19 @@ type UpdateIssueData = {
   destinationIndex: number;
 };
 
-const updateIssueStatus = ({
+const updateIssueStatus = async ({
   issueId,
   source,
   destination,
   destinationIndex,
-}: UpdateIssueData): Promise<Issue> =>
-  customAxios.patch(`/issues/${issueId}/status`, {
+}: UpdateIssueData): Promise<Issue> => {
+  const { data } = await customAxios.patch<Issue>(`/issues/${issueId}/status`, {
     source,
     destination,
     destinationIndex,
   });
+  return data;
+};
 
 export const useUpdateIssueStatus = (projectId: string) => {
   const queryClient = useQueryClient();
@@ -80,16 +86,24 @@ export const useUpdateIssueStatus = (projectId: string) => {
       return { previousProjectData };
     },
 
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(['issues', variables.issueId], data);
+    },
+
     onError: (_, __, context) => {
-      // TODO: Add a toast
       queryClient.setQueryData(
         ['projects', projectId],
         context?.previousProjectData
       );
+      showNotification({
+        title: 'Error',
+        message: 'Update failed. Please try again later.',
+        color: 'red',
+        icon: <ExclamationMark />,
+      });
     },
 
     onSettled: () => {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       queryClient.invalidateQueries({
         queryKey: ['projects', projectId],
       });
