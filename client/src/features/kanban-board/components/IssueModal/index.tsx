@@ -9,6 +9,7 @@ function IssueModal() {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIssue = searchParams.get('selectedIssue');
   const isMobile = useMediaQuery('(max-width: 425px)');
+  const isLaptop = useMediaQuery('(min-width: 768px)');
 
   const closeModal = () => {
     setSearchParams();
@@ -22,7 +23,9 @@ function IssueModal() {
       shadow="xs"
       withCloseButton={false}
       fullScreen={isMobile}
-      size={1000}
+      size={isLaptop ? 800 : 400}
+      transitionDuration={300}
+      exitTransitionDuration={isMobile ? 300 : 0}
     >
       {selectedIssue && (
         <IssueModalContent
