@@ -58,6 +58,7 @@ module.exports = {
     'no-underscore-dangle': 'off',
     'operator-linebreak': 'off',
     'no-confusing-arrow': 'off',
+    '@typescript-eslint/indent': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase
