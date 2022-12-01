@@ -19,10 +19,10 @@ import { FormValues } from './types';
 
 type IssueFormProps = {
   issue: Issue;
-  onCloseModal: () => void;
+  onCloseIssueModal: () => void;
 };
 
-function IssueForm({ issue, onCloseModal }: IssueFormProps) {
+function IssueForm({ issue, onCloseIssueModal }: IssueFormProps) {
   const form = useForm<FormValues>({
     initialValues: {
       title: issue.title,
@@ -47,7 +47,7 @@ function IssueForm({ issue, onCloseModal }: IssueFormProps) {
   const updateIssueMutation = useUpdateIssue();
 
   const handleSubmit = (values: FormValues) => {
-    onCloseModal();
+    onCloseIssueModal();
     const { description, assignee, dueDate, ...rest } = values;
     updateIssueMutation.mutate({
       issueId: issue._id,
@@ -82,7 +82,7 @@ function IssueForm({ issue, onCloseModal }: IssueFormProps) {
         />
       </div>
       <div className={styles.buttons}>
-        <Button variant="outline" onClick={onCloseModal}>
+        <Button variant="outline" onClick={onCloseIssueModal}>
           Cancel
         </Button>
         <Button

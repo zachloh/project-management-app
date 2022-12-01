@@ -1,6 +1,6 @@
 import { Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import React from 'react';
+import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import IssueModalContent from './IssueModalContent';
@@ -10,15 +10,24 @@ function IssueModal() {
   const selectedIssue = searchParams.get('selectedIssue');
   const isMobile = useMediaQuery('(max-width: 425px)');
   const isLaptop = useMediaQuery('(min-width: 768px)');
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const closeModal = () => {
+  const onOpenDeleteModal = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const onCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
+  };
+
+  const onCloseIssueModal = () => {
     setSearchParams();
   };
 
   return (
     <Modal
       opened={!!searchParams.get('selectedIssue')}
-      onClose={closeModal}
+      onClose={onCloseIssueModal}
       overlayOpacity={0.5}
       shadow="xs"
       withCloseButton={false}
@@ -26,11 +35,15 @@ function IssueModal() {
       size={isLaptop ? 800 : 400}
       transitionDuration={300}
       exitTransitionDuration={isMobile ? 300 : 0}
+      closeOnEscape={!openDeleteModal}
     >
       {selectedIssue && (
         <IssueModalContent
           selectedIssue={selectedIssue}
-          onCloseModal={closeModal}
+          onCloseIssueModal={onCloseIssueModal}
+          openDeleteModal={openDeleteModal}
+          onOpenDeleteModal={onOpenDeleteModal}
+          onCloseDeleteModal={onCloseDeleteModal}
         />
       )}
     </Modal>

@@ -7,12 +7,18 @@ import ModalTitle from './ModalTitle';
 
 type IssueModalContentProps = {
   selectedIssue: string;
-  onCloseModal: () => void;
+  onCloseIssueModal: () => void;
+  openDeleteModal: boolean;
+  onOpenDeleteModal: () => void;
+  onCloseDeleteModal: () => void;
 };
 
 function IssueModalContent({
   selectedIssue,
-  onCloseModal,
+  onCloseIssueModal,
+  openDeleteModal,
+  onOpenDeleteModal,
+  onCloseDeleteModal,
 }: IssueModalContentProps) {
   const { data: issue, isLoading, isError } = useGetIssue(selectedIssue);
 
@@ -28,8 +34,14 @@ function IssueModalContent({
 
   return (
     <>
-      <ModalTitle onCloseModal={onCloseModal} />
-      <IssueForm issue={issue} onCloseModal={onCloseModal} />
+      <ModalTitle
+        onCloseIssueModal={onCloseIssueModal}
+        openDeleteModal={openDeleteModal}
+        onOpenDeleteModal={onOpenDeleteModal}
+        onCloseDeleteModal={onCloseDeleteModal}
+        issue={issue}
+      />
+      <IssueForm issue={issue} onCloseIssueModal={onCloseIssueModal} />
     </>
   );
 }
