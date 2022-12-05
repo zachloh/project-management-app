@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form';
 import { useClickOutside } from '@mantine/hooks';
 import React from 'react';
 
+import { useCreateIssue } from 'api/createIssue';
 import { Issue } from 'types';
 
 import styles from './CreateIssueForm.module.css';
@@ -13,12 +14,17 @@ import { CreateIssueFormValues } from './types';
 type CreateIssueFormProps = {
   onCloseCreateIssueForm: () => void;
   status: Issue['status'];
+  projectId: string;
 };
 
 function CreateIssueForm({
   onCloseCreateIssueForm,
   status,
+  projectId,
 }: CreateIssueFormProps) {
+  // TODO: Get userId instead of hardcoding
+  const user = '636a106ba2bf04ba0bea7a60';
+
   const ref = useClickOutside(() => onCloseCreateIssueForm());
 
   const form = useForm<CreateIssueFormValues>({
@@ -33,11 +39,22 @@ function CreateIssueForm({
     },
   });
 
+  const createIssueMutation = useCreateIssue(() => {
+    onCloseCreateIssueForm();
+  });
+
+  const handleSubmit = (values: CreateIssueFormValues) => {
+    createIssueMutation.mutate({
+      ...values,
+      status,
+      project: projectId,
+      reporter: user,
+    });
+  };
+
   return (
     <div ref={ref} className={styles.container}>
-      <form
-        onSubmit={form.onSubmit((values) => console.log({ ...values, status }))}
-      >
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Textarea
           placeholder="What needs to be done?"
           variant="unstyled"
@@ -77,6 +94,7 @@ function CreateIssueForm({
             type="submit"
             variant="subtle"
             px={6}
+            loading={createIssueMutation.isLoading}
             styles={{
               root: {
                 height: 28,

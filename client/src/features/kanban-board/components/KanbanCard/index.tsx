@@ -20,6 +20,7 @@ type KanbanCardProps = {
   title: string;
   issues: Issue[];
   id: ProjectIssues;
+  projectId: string;
 };
 
 const issueStatus: Record<ProjectIssues, Issue['status']> = {
@@ -29,7 +30,7 @@ const issueStatus: Record<ProjectIssues, Issue['status']> = {
   completedIssues: 'done',
 };
 
-function KanbanCard({ title, issues, id }: KanbanCardProps) {
+function KanbanCard({ title, issues, id, projectId }: KanbanCardProps) {
   const setSearchParams = useSearchParams()[1];
   const isMutating = useIsMutating();
   const [openCreateIssueForm, setOpenCreateIssueForm] = useState(false);
@@ -77,6 +78,7 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
               <CreateIssueForm
                 onCloseCreateIssueForm={onCloseCreateIssueForm}
                 status={issueStatus[id]}
+                projectId={projectId}
               />
             )}
           </div>
