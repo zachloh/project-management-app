@@ -2,12 +2,20 @@ import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 import mongoose from 'mongoose';
 
-import Issue, { IIssue } from 'models/issues';
+import Issue from 'models/issues';
 import Project from 'models/projects';
 
-// TODO: Change request type
+type CreateIssueReqBody = {
+  project: string;
+  title: string;
+  type: 'task' | 'story' | 'bug';
+  priority: 'low' | 'medium' | 'high';
+  status: 'to do' | 'in progress' | 'in review' | 'done';
+  reporter: string;
+};
+
 const createIssue = async (
-  req: Request<ParamsDictionary, any, IIssue>,
+  req: Request<ParamsDictionary, any, CreateIssueReqBody>,
   res: Response
 ) => {
   const issueData = req.body;
