@@ -1,24 +1,46 @@
 import { Card } from '@mantine/core';
 import { useIsMutating } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { useSearchParams } from 'react-router-dom';
 
-import { Issue } from 'types';
+import { Issue, Project } from 'types';
 
 import CreateIssueBtn from './CreateIssueBtn';
+import CreateIssueForm from './CreateIssueForm';
 import IssueCard from './IssueCard';
 import styles from './KanbanCard.module.css';
+
+type ProjectIssues = keyof Pick<
+  Project,
+  'todoIssues' | 'inProgressIssues' | 'inReviewIssues' | 'completedIssues'
+>;
 
 type KanbanCardProps = {
   title: string;
   issues: Issue[];
-  id: string;
+  id: ProjectIssues;
+};
+
+const issueStatus: Record<ProjectIssues, Issue['status']> = {
+  todoIssues: 'to do',
+  inProgressIssues: 'in progress',
+  inReviewIssues: 'in review',
+  completedIssues: 'done',
 };
 
 function KanbanCard({ title, issues, id }: KanbanCardProps) {
   const setSearchParams = useSearchParams()[1];
   const isMutating = useIsMutating();
+  const [openCreateIssueForm, setOpenCreateIssueForm] = useState(false);
+
+  const onOpenCreateIssueForm = () => {
+    setOpenCreateIssueForm(true);
+  };
+
+  const onCloseCreateIssueForm = () => {
+    setOpenCreateIssueForm(false);
+  };
 
   return (
     <Card p={5} radius="md" className={styles.card}>
@@ -48,7 +70,15 @@ function KanbanCard({ title, issues, id }: KanbanCardProps) {
               />
             ))}
             {provided.placeholder}
-            <CreateIssueBtn />
+            {!openCreateIssueForm && (
+              <CreateIssueBtn onOpenCreateIssueForm={onOpenCreateIssueForm} />
+            )}
+            {openCreateIssueForm && (
+              <CreateIssueForm
+                onCloseCreateIssueForm={onCloseCreateIssueForm}
+                status={issueStatus[id]}
+              />
+            )}
           </div>
         )}
       </Droppable>

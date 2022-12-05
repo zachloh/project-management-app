@@ -3,9 +3,17 @@ import { Plus } from 'tabler-icons-react';
 
 import styles from './CreateIssueBtn.module.css';
 
-function CreateIssueBtn() {
+type CreateIssueBtnProps = {
+  onOpenCreateIssueForm: () => void;
+};
+
+function CreateIssueBtn({ onOpenCreateIssueForm }: CreateIssueBtnProps) {
   return (
-    <button type="button" className={styles.button}>
+    <button
+      type="button"
+      className={styles.button}
+      onClick={onOpenCreateIssueForm}
+    >
       <span>
         <Plus size={16} />
       </span>
