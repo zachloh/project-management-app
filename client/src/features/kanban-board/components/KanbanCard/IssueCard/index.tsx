@@ -68,13 +68,15 @@ function IssueCard({
                   label={`Type: ${capitalizeFirstLetter(type)}`}
                   withArrow
                   openDelay={300}
+                  offset={2}
                 >
-                  <div>{typeIcons[type]}</div>
+                  <div className={styles.type}>{typeIcons[type]}</div>
                 </Tooltip>
                 <Tooltip
                   label={`Priority: ${capitalizeFirstLetter(priority)}`}
                   withArrow
                   openDelay={300}
+                  offset={2}
                 >
                   <div className={styles.priority}>
                     {priorityIcons[priority]}

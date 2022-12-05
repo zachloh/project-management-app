@@ -31,6 +31,11 @@
   min-height: 26px;
 }
 
+.type {
+  align-self: flex-end;
+}
+
 .priority {
   margin-left: 2px;
+  align-self: flex-end;
 }
