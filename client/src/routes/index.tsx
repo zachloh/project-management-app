@@ -6,16 +6,18 @@ import { KanbanBoard } from 'features/kanban-board';
 import { OverviewDashboard } from 'features/overview-dashboard';
 import { ProjectDashboard } from 'features/project-dashboard';
 
+// TODO: Add catch all 404 routes component
 function AppRoutes() {
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<OverviewDashboard />} />
         <Route path="/dashboard/:projectId" element={<ProjectDashboard />} />
         <Route path="/projects/:projectId" element={<KanbanBoard />} />
-      </Routes>
-    </Layout>
+      </Route>
+      <Route path="*" element={<div>Not found</div>} />
+    </Routes>
   );
 }
 
