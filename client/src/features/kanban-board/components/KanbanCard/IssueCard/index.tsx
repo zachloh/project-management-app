@@ -60,7 +60,7 @@ function IssueCard({
           ref={provided.innerRef}
           className={styles.draggable}
         >
-          <Card shadow="xs" p={8} className={styles.card} onClick={onClick}>
+          <Card shadow="xs" p={12} className={styles.card} onClick={onClick}>
             <div className={styles['issue-container']}>
               <p className={styles['issue-title']}>{title}</p>
               <div className={styles['issue-info']}>
