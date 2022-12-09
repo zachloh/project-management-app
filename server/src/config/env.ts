@@ -8,6 +8,10 @@ const env = {
     username: process.env.MONGO_USERNAME as string,
     password: process.env.MONGO_PASSWORD as string,
   },
+  token: {
+    accessSecret: process.env.ACCESS_TOKEN_SECRET as string,
+    expireTime: process.env.TOKEN_EXPIRE_TIME as string,
+  },
 };
 
 export default env;
