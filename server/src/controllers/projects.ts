@@ -4,7 +4,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 import Organization from 'models/organizations';
 import Project, { IProject } from 'models/projects';
 import { PopulatedProject } from 'types/mongoose';
-import { getIssuesLast7Days } from 'utils';
+import { getIssuesLast7Days } from 'utils/getIssuesLast7Days';
 
 const getProjectsByOrgId = async (req: Request, res: Response) => {
   const { orgId } = req;
