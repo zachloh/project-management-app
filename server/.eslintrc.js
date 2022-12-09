@@ -46,6 +46,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'no-underscore-dangle': 'off',
     'import/prefer-default-export': 'off',
+    'implicit-arrow-linebreak': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase
