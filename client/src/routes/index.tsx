@@ -2,6 +2,7 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import Layout from 'components/Layout';
+import { RegisterForm, LoginForm } from 'features/auth';
 import { KanbanBoard } from 'features/kanban-board';
 import { OverviewDashboard } from 'features/overview-dashboard';
 import { ProjectDashboard } from 'features/project-dashboard';
@@ -10,6 +11,8 @@ import { ProjectDashboard } from 'features/project-dashboard';
 function AppRoutes() {
   return (
     <Routes>
+      <Route path="/register" element={<RegisterForm />} />
+      <Route path="/login" element={<LoginForm />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<OverviewDashboard />} />
