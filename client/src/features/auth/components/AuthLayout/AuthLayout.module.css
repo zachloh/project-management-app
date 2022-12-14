@@ -47,7 +47,7 @@
   }
 }
 
-@media (min-width: 426px) and (max-height: 750px) {
+@media (min-width: 426px) and (max-height: 850px) {
   .container {
     min-height: 100%;
     height: auto;
