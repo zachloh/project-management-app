@@ -11,7 +11,7 @@ import {
   StoryIcon,
   TaskIcon,
 } from 'assets/icons';
-import { capitalizeFirstLetter } from 'utils';
+import { capitalizeFirstLetter } from 'utils/capitalizeFirstLetter';
 
 import styles from './IssueCard.module.css';
 

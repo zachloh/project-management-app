@@ -5,7 +5,7 @@ import { ChevronDown } from 'tabler-icons-react';
 
 import { BugIcon, StoryIcon, TaskIcon } from 'assets/icons';
 import { Issue } from 'types';
-import { capitalizeFirstLetter } from 'utils';
+import { capitalizeFirstLetter } from 'utils/capitalizeFirstLetter';
 
 import { CreateIssueFormValues } from '../types';
 import styles from './TypeOptions.module.css';

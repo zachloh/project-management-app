@@ -9,7 +9,7 @@ import {
   MediumPriorityIcon,
 } from 'assets/icons';
 import { Issue } from 'types';
-import { capitalizeFirstLetter } from 'utils';
+import { capitalizeFirstLetter } from 'utils/capitalizeFirstLetter';
 
 import { CreateIssueFormValues } from '../types';
 import styles from './PriorityOptions.module.css';
