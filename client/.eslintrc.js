@@ -59,6 +59,8 @@ module.exports = {
     'operator-linebreak': 'off',
     'no-confusing-arrow': 'off',
     '@typescript-eslint/indent': 'off',
+    'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
+    'react/jsx-wrap-multilines': 'off',
   },
   settings: {
     // Allows us to lint absolute imports within codebase

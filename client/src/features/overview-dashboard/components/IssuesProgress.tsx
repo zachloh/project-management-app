@@ -45,7 +45,6 @@ function IssuesProgress({ projects }: IssuesProgressProps) {
         roundCaps={totalCompletedIssues > 0}
         thickness={16}
         label={
-          // eslint-disable-next-line react/jsx-wrap-multilines
           <Text size={36} align="center" color="violet" weight="700">
             {`${
               totalCreatedIssues === 0

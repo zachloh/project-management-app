@@ -23,7 +23,6 @@ function Header() {
         opened={opened}
         onClose={() => setOpened(false)}
         title={
-          // eslint-disable-next-line react/jsx-wrap-multilines
           <Container px="0" className={styles.logo}>
             <Box size={48} color="#845EF7" />
             ProjectHub
