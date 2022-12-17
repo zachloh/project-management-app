@@ -1,15 +1,23 @@
 import {
+  Alert,
   Anchor,
   Button,
+  CloseButton,
   Divider,
+  Group,
   PasswordInput,
   Text,
   TextInput,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { showNotification } from '@mantine/notifications';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AlertCircle, ExclamationMark } from 'tabler-icons-react';
 import { z } from 'zod';
+
+import { useAuth } from 'api/auth';
 
 import { LoginFormValues } from '../types';
 import AuthLayout from './AuthLayout';
@@ -26,6 +34,8 @@ const loginSchema = z.object({
 });
 
 export function LoginForm() {
+  const { login, isLoggingIn } = useAuth();
+  const navigate = useNavigate();
   const form = useForm<LoginFormValues>({
     initialValues: {
       email: '',
@@ -33,17 +43,65 @@ export function LoginForm() {
     },
     validate: zodResolver(loginSchema),
   });
+  const [showFormError, setShowFormError] = useState(false);
 
   const handleSubmit = (values: LoginFormValues) => {
-    console.log(values);
+    login(values, {
+      onSuccess: () => {
+        navigate('/dashboard', { replace: true });
+      },
+      onError: (err) => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 401) {
+            setShowFormError(true);
+            return;
+          }
+        }
+        showNotification({
+          title: 'Server Error',
+          message: 'Please try again later',
+          color: 'red',
+          icon: <ExclamationMark />,
+        });
+      },
+    });
   };
 
   return (
     <AuthLayout title="Sign In">
       <form onSubmit={form.onSubmit(handleSubmit)}>
+        {showFormError && (
+          <Alert
+            color="red"
+            icon={<AlertCircle color="#E03131" />}
+            mb={20}
+            styles={{
+              wrapper: {
+                alignItems: 'center',
+              },
+            }}
+          >
+            <Group>
+              <Text color="red.9">Incorrect email or password</Text>
+              <CloseButton
+                color="red.9"
+                ml="auto"
+                aria-label="Close alert"
+                onClick={() => setShowFormError(false)}
+              />
+            </Group>
+          </Alert>
+        )}
         <TextInput label="Email" mb={20} {...form.getInputProps('email')} />
         <PasswordInput label="Password" {...form.getInputProps('password')} />
-        <Button type="submit" w="100%" mt={30} size="md" color="violet.5">
+        <Button
+          type="submit"
+          loading={isLoggingIn}
+          w="100%"
+          mt={30}
+          size="md"
+          color="violet.5"
+        >
           Sign In
         </Button>
       </form>
