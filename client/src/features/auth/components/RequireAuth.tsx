@@ -19,7 +19,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
 
   if (isError) {
     logout();
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" replace />;
   }
 
   if (user) {
@@ -27,5 +27,5 @@ export function RequireAuth({ children }: RequireAuthProps) {
   }
 
   logout();
-  return <Navigate to="/login" />;
+  return <Navigate to="/login" replace />;
 }
