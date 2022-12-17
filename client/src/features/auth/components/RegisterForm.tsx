@@ -8,10 +8,14 @@ import {
   TextInput,
 } from '@mantine/core';
 import { useForm, zodResolver } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
+import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Check } from 'tabler-icons-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Check, ExclamationMark } from 'tabler-icons-react';
 import { z } from 'zod';
+
+import { useAuth } from 'api/auth';
 
 import { RegisterFormValues } from '../types';
 import AuthLayout from './AuthLayout';
@@ -35,6 +39,8 @@ const registerSchema = z.object({
 });
 
 export function RegisterForm() {
+  const { register, isRegistering } = useAuth();
+  const navigate = useNavigate();
   const form = useForm<RegisterFormValues>({
     initialValues: {
       firstName: '',
@@ -47,7 +53,28 @@ export function RegisterForm() {
   });
 
   const handleSubmit = (values: RegisterFormValues) => {
-    console.log(values);
+    register(values, {
+      onSuccess: () => {
+        navigate('/dashboard', { replace: true });
+      },
+      onError: (err) => {
+        if (axios.isAxiosError(err)) {
+          if (err.response?.status === 409) {
+            form.setFieldError(
+              'email',
+              'An account with this email already exists'
+            );
+            return;
+          }
+        }
+        showNotification({
+          title: 'Server Error',
+          message: 'Please try again later',
+          color: 'red',
+          icon: <ExclamationMark />,
+        });
+      },
+    });
   };
 
   return (
@@ -90,7 +117,14 @@ export function RegisterForm() {
             <Box ml={5}>Password must contain at least 6 characters</Box>
           </Text>
         )}
-        <Button type="submit" w="100%" mt={30} size="md" color="violet.5">
+        <Button
+          type="submit"
+          loading={isRegistering}
+          w="100%"
+          mt={30}
+          size="md"
+          color="violet.5"
+        >
           Sign Up
         </Button>
       </form>
