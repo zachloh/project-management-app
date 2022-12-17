@@ -2,6 +2,7 @@ import { Grid } from '@mantine/core';
 import React from 'react';
 
 import { useGetProjects } from 'api/getProjects';
+import { useGetUser } from 'api/users/getUser';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import DashboardSkeleton from 'components/DashboardSkeleton';
@@ -13,7 +14,7 @@ import MembersTable from './MembersTable';
 import styles from './OverviewDashboard.module.css';
 
 export function OverviewDashboard() {
-  // TODO: Get orgId instead of hardcoding
+  const { data: user } = useGetUser();
   const {
     data = {
       projects: [],
@@ -21,7 +22,7 @@ export function OverviewDashboard() {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useGetProjects('636a10bb1fb9e7a0550389f2');
+  } = useGetProjects(user?.org);
 
   // return <DashboardSkeleton />;
 
@@ -29,6 +30,8 @@ export function OverviewDashboard() {
     // TODO: Edit skeleton
     return <DashboardSkeleton />;
   }
+
+  // TODO: Handle error (add 'unexpected error' component)
 
   return (
     <div className={styles.container}>
