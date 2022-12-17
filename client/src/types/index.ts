@@ -1,6 +1,13 @@
 export type User = {
   _id: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role?: 'admin' | 'project manager' | 'member';
+  position?: string;
+  org?: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type Issue = {

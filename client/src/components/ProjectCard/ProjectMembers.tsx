@@ -12,7 +12,11 @@ function ProjectMembers({ members }: ProjectMembersProps) {
     <Tooltip.Group>
       <Avatar.Group spacing="sm">
         {members.map((member) => (
-          <Tooltip key={member._id} label={member.name} withArrow>
+          <Tooltip
+            key={member._id}
+            label={`${member.firstName} ${member.lastName}`}
+            withArrow
+          >
             <Avatar radius="xl" color="indigo" />
           </Tooltip>
         ))}
