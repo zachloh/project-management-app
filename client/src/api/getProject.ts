@@ -7,7 +7,9 @@ const getProject = async (
   projectId: string | undefined,
   signal: AbortSignal | undefined
 ): Promise<Project> => {
-  if (!projectId) throw new Error();
+  if (typeof projectId === 'undefined') {
+    return Promise.reject(new Error('Invalid projectId'));
+  }
   const { data } = await customAxios.get<Project>(`/projects/${projectId}`, {
     signal,
   });
