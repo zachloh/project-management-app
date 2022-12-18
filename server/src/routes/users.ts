@@ -17,6 +17,7 @@ router.post(
 // POST /api/users/login
 router.post('/login', validate(loginSchema), usersController.loginUser);
 
+// GET /api/users/:userId
 router.get('/:userId', verifyToken(), usersController.getUserById);
 
 export default router;
