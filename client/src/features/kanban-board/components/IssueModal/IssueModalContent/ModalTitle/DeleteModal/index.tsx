@@ -3,7 +3,7 @@ import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 import { X, AlertTriangle } from 'tabler-icons-react';
 
-import { useDeleteIssue } from 'api/deleteIssue';
+import { useDeleteIssue } from 'api/issues/deleteIssue';
 import { Issue } from 'types';
 
 import styles from './DeleteModal.module.css';

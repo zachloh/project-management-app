@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { useClickOutside } from '@mantine/hooks';
 import React from 'react';
 
-import { useCreateIssue } from 'api/createIssue';
+import { useCreateIssue } from 'api/issues/createIssue';
 import { Issue } from 'types';
 
 import styles from './CreateIssueForm.module.css';

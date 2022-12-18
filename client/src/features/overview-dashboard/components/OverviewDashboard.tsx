@@ -1,7 +1,7 @@
 import { Grid } from '@mantine/core';
 import React from 'react';
 
-import { useGetProjects } from 'api/getProjects';
+import { useGetProjects } from 'api/projects/getProjects';
 import { useGetUser } from 'api/users/getUser';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';

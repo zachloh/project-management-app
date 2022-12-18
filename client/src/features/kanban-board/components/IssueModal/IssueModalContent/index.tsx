@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useGetIssue } from 'api/getIssue';
+import { useGetIssue } from 'api/issues/getIssue';
 
 import IssueForm from './IssueForm';
 import ModalTitle from './ModalTitle';

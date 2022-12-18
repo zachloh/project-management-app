@@ -2,11 +2,11 @@ import React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 
-import { useGetProject } from 'api/getProject';
 import {
   SourceOrDestination,
   useUpdateIssueStatus,
-} from 'api/updateIssueStatus';
+} from 'api/issues/updateIssueStatus';
+import { useGetProject } from 'api/projects/getProject';
 
 import IssueModal from './IssueModal';
 import styles from './KanbanBoard.module.css';

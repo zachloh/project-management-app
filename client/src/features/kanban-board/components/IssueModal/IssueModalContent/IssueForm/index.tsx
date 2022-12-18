@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import React from 'react';
 
-import { useUpdateIssue } from 'api/updateIssue';
+import { useUpdateIssue } from 'api/issues/updateIssue';
 import { Issue } from 'types';
 
 import AssigneeOptions from './AssigneeOptions';
