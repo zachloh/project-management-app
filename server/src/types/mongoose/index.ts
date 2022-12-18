@@ -1,10 +1,19 @@
+import { Types } from 'mongoose';
+
 interface PopulatedMembers {
-  _id: string;
-  name: string;
+  _id: Types.ObjectId;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role?: 'admin' | 'project manager' | 'member';
+  position?: string;
+  org?: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface PopulatedIssue {
-  _id: string;
+  _id: Types.ObjectId;
   createdAt: Date;
   completedAt?: Date;
 }
