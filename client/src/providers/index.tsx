@@ -19,9 +19,6 @@ function AppProviders({ children }: AppProviderProps) {
         primaryColor: 'violet',
         components: {
           InputWrapper: {
-            defaultProps: {
-              inputWrapperOrder: ['label', 'input', 'description', 'error'],
-            },
             styles: {
               label: {
                 fontWeight: 700,
