@@ -1,7 +1,8 @@
 import { Schema, model, Types } from 'mongoose';
 
 interface IUser {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   role?: 'admin' | 'project manager' | 'member';
@@ -11,7 +12,12 @@ interface IUser {
 
 const userSchema = new Schema<IUser>(
   {
-    name: {
+    firstName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    lastName: {
       type: String,
       required: true,
       trim: true,
