@@ -3,6 +3,7 @@ import express from 'express';
 import usersController from 'controllers/users';
 import { loginSchema, registerSchema } from 'lib/zod';
 import { validate } from 'middleware/validate';
+import { verifyToken } from 'middleware/verifyToken';
 
 const router = express.Router();
 
@@ -15,5 +16,7 @@ router.post(
 
 // POST /api/users/login
 router.post('/login', validate(loginSchema), usersController.loginUser);
+
+router.get('/:userId', verifyToken(), usersController.getUserById);
 
 export default router;

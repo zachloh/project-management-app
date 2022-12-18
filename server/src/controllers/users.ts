@@ -6,7 +6,8 @@ import User from 'models/users';
 import { signToken } from 'utils/signToken';
 
 type RegisterUserReqBody = {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
 };
@@ -16,7 +17,7 @@ const registerUser = async (
   res: Response
 ) => {
   try {
-    const { name, email, password } = req.body;
+    const { firstName, lastName, email, password } = req.body;
 
     const emailExists = await User.findOne({ email });
     if (emailExists) {
@@ -27,15 +28,20 @@ const registerUser = async (
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-      name,
+      firstName,
+      lastName,
       email,
       password: hashedPassword,
     });
 
     const savedUser = await newUser.save();
-    const token = signToken({ _id: savedUser._id.toString() });
 
-    return res.json({ token });
+    const token = signToken({ _id: savedUser._id.toString() });
+    const userWithoutPassword = await User.findOne({ email }).select(
+      '-password'
+    );
+
+    return res.json({ token, user: userWithoutPassword });
   } catch (err) {
     return res.status(400).json(err);
   }
@@ -64,13 +70,32 @@ const loginUser = async (
     }
 
     const token = signToken({ _id: user._id.toString() });
-    return res.json({ token });
+    const userWithoutPassword = await User.findOne({ email }).select(
+      '-password'
+    );
+
+    return res.json({ token, user: userWithoutPassword });
   } catch (err) {
     return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+const getUserById = async (req: Request, res: Response) => {
+  try {
+    const user = await User.findOne({
+      _id: req.params.userId,
+    }).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    return res.json(user);
+  } catch (err) {
+    return res.status(400).json(err);
   }
 };
 
 export default {
   registerUser,
   loginUser,
+  getUserById,
 };
