@@ -13,7 +13,7 @@ import { useForm, zodResolver } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AlertCircle, ExclamationMark } from 'tabler-icons-react';
 import { z } from 'zod';
 
@@ -36,6 +36,7 @@ const loginSchema = z.object({
 export function LoginForm() {
   const { login, isLoggingIn } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const form = useForm<LoginFormValues>({
     initialValues: {
       email: '',
@@ -48,7 +49,8 @@ export function LoginForm() {
   const handleSubmit = (values: LoginFormValues) => {
     login(values, {
       onSuccess: () => {
-        navigate('/dashboard', { replace: true });
+        const state = location.state as { path: string };
+        navigate(state?.path || '/dashboard', { replace: true });
       },
       onError: (err) => {
         if (axios.isAxiosError(err)) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { useAuth } from 'api/auth';
 import { useGetUser } from 'api/users/getUser';
@@ -12,6 +12,7 @@ type RequireAuthProps = {
 export function RequireAuth({ children }: RequireAuthProps) {
   const { data: user, isLoading, isError } = useGetUser();
   const { logout } = useAuth();
+  const location = useLocation();
 
   if (isLoading) {
     return <Loader />;
@@ -19,7 +20,7 @@ export function RequireAuth({ children }: RequireAuthProps) {
 
   if (isError) {
     logout();
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" replace state={{ path: location.pathname }} />;
   }
 
   if (user) {
@@ -27,5 +28,5 @@ export function RequireAuth({ children }: RequireAuthProps) {
   }
 
   logout();
-  return <Navigate to="/login" replace />;
+  return <Navigate to="/login" replace state={{ path: location.pathname }} />;
 }
