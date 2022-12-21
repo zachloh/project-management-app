@@ -1,13 +1,23 @@
-export type User = {
+export type PopulatedOrganization = {
+  _id: string;
+  name: string;
+  members: string[];
+  projects: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type User<T = PopulatedOrganization> = {
   _id: string;
   firstName: string;
   lastName: string;
   email: string;
   role?: 'admin' | 'project manager' | 'member';
   position?: string;
-  org?: string;
+  org?: T;
   createdAt: string;
   updatedAt: string;
+  completedWelcome: boolean;
 };
 
 export type Issue = {
@@ -35,9 +45,9 @@ export type PopulatedIssue = {
 export type Project<T = Issue> = {
   _id: string;
   name: string;
-  members: User[];
+  members: User<string>[];
   description: string;
-  category: string;
+  category: 'business' | 'marketing' | 'software';
   todoIssues: T[];
   inReviewIssues: T[];
   inProgressIssues: T[];

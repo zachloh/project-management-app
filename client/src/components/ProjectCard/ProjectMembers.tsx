@@ -4,7 +4,7 @@ import React from 'react';
 import { User } from 'types';
 
 type ProjectMembersProps = {
-  members: User[];
+  members: User<string>[];
 };
 
 function ProjectMembers({ members }: ProjectMembersProps) {
