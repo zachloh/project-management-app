@@ -10,6 +10,7 @@ interface PopulatedMembers {
   org?: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
+  completedWelcome: boolean;
 }
 
 export interface PopulatedIssue {

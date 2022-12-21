@@ -8,6 +8,7 @@ interface IUser {
   role?: 'admin' | 'project manager' | 'member';
   position?: string;
   org?: Types.ObjectId;
+  completedWelcome: boolean;
 }
 
 const userSchema = new Schema<IUser>(
@@ -36,6 +37,7 @@ const userSchema = new Schema<IUser>(
     role: {
       type: String,
       trim: true,
+      lowercase: true,
       enum: ['admin', 'project manager', 'member'],
     },
     position: {
@@ -45,6 +47,10 @@ const userSchema = new Schema<IUser>(
     org: {
       type: Schema.Types.ObjectId,
       ref: 'Organization',
+    },
+    completedWelcome: {
+      type: Boolean,
+      default: false,
     },
   },
   {
