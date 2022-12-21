@@ -42,7 +42,7 @@ const createIssue = async (
       },
       {
         $push: {
-          [mapIssueTypes[issueStatus]]: newIssue._id,
+          [mapIssueTypes[issueStatus]]: savedIssue._id,
         },
       }
     );
