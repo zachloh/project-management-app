@@ -42,8 +42,8 @@
 
   .card {
     width: auto;
-    min-height: auto;
     min-width: 400px;
+    min-height: auto;
   }
 }
 
