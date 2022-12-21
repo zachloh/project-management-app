@@ -22,7 +22,7 @@ export function OverviewDashboard() {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useGetProjects(user?.org);
+  } = useGetProjects(user?.org?._id);
 
   // return <DashboardSkeleton />;
 
