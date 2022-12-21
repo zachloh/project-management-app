@@ -7,7 +7,7 @@ export interface IProject {
   name: string;
   members: Types.ObjectId[];
   description: string;
-  category: string;
+  category: 'business' | 'marketing' | 'software';
   todoIssues: Types.ObjectId[];
   inReviewIssues: Types.ObjectId[];
   inProgressIssues: Types.ObjectId[];
@@ -19,6 +19,7 @@ const projectSchema = new Schema<IProject>({
     type: String,
     required: true,
     trim: true,
+    minlength: 1,
   },
   members: {
     type: [
@@ -39,11 +40,14 @@ const projectSchema = new Schema<IProject>({
     type: String,
     required: true,
     trim: true,
+    minlength: 1,
   },
   category: {
     type: String,
     required: true,
     trim: true,
+    lowercase: true,
+    enum: ['business', 'marketing', 'software'],
   },
   todoIssues: [
     {
