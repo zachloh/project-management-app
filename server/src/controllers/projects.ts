@@ -2,7 +2,8 @@ import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 import Organization from 'models/organizations';
-import Project, { IProject } from 'models/projects';
+import Project from 'models/projects';
+import User from 'models/users';
 import { PopulatedProject } from 'types/mongoose';
 import { getIssuesLast7Days } from 'utils/getIssuesLast7Days';
 
@@ -40,13 +41,16 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
   }
 };
 
-// TODO: Update request body
+type CreateProjectReqBody = {
+  name: string;
+  orgId: string;
+  userId: string;
+  description: string;
+  category: 'business' | 'marketing' | 'software';
+};
+
 const createProject = async (
-  req: Request<
-    ParamsDictionary,
-    any,
-    IProject & { orgId: string; userId: string }
-  >,
+  req: Request<ParamsDictionary, any, CreateProjectReqBody>,
   res: Response
 ) => {
   const { name, description, category, orgId, userId } = req.body;
@@ -59,15 +63,24 @@ const createProject = async (
       category,
     });
     const savedProject = await newProject.save();
+
+    await User.findOneAndUpdate({ _id: userId }, { completedWelcome: true });
+
+    const populatedProject = await savedProject.populate({
+      path: 'members',
+      select: '-password',
+    });
+
     await Organization.findOneAndUpdate(
       { _id: orgId },
       {
         $push: {
-          projects: newProject._id,
+          projects: savedProject._id,
         },
       }
     );
-    return res.json(savedProject);
+
+    return res.json(populatedProject);
   } catch (err) {
     return res.status(400).json(err);
   }
@@ -78,7 +91,10 @@ const getProjectById = async (req: Request, res: Response) => {
     const project = await Project.findOne({
       _id: req.params.projectId,
     })
-      .populate('members')
+      .populate({
+        path: 'members',
+        select: '-password',
+      })
       .populate('todoIssues')
       .populate('inReviewIssues')
       .populate('inProgressIssues')
