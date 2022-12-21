@@ -24,7 +24,10 @@ export function RequireAuth({ children }: RequireAuthProps) {
   }
 
   if (user) {
-    return <>{children}</>;
+    if (user.completedWelcome) {
+      return <>{children}</>;
+    }
+    return <Navigate to="/welcome" replace />;
   }
 
   logout();
