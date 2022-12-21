@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
+import Organization from 'models/organizations';
 import User from 'models/users';
 import { signToken } from 'utils/signToken';
 
@@ -37,9 +38,9 @@ const registerUser = async (
     const savedUser = await newUser.save();
 
     const token = signToken({ _id: savedUser._id.toString() });
-    const userWithoutPassword = await User.findOne({ email }).select(
-      '-password'
-    );
+    const userWithoutPassword = await User.findOne({ email })
+      .select('-password')
+      .populate('org');
 
     return res.json({ token, user: userWithoutPassword });
   } catch (err) {
@@ -70,9 +71,9 @@ const loginUser = async (
     }
 
     const token = signToken({ _id: user._id.toString() });
-    const userWithoutPassword = await User.findOne({ email }).select(
-      '-password'
-    );
+    const userWithoutPassword = await User.findOne({ email })
+      .select('-password')
+      .populate('org');
 
     return res.json({ token, user: userWithoutPassword });
   } catch (err) {
@@ -84,7 +85,9 @@ const getUserById = async (req: Request, res: Response) => {
   try {
     const user = await User.findOne({
       _id: req.params.userId,
-    }).select('-password');
+    })
+      .select('-password')
+      .populate('org');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -94,8 +97,45 @@ const getUserById = async (req: Request, res: Response) => {
   }
 };
 
+type UpdateUserOrgReqBody = {
+  org: string;
+  position: string;
+  role: 'admin' | 'project manager' | 'member';
+};
+
+const updateUserOrg = async (
+  req: Request<ParamsDictionary, any, UpdateUserOrgReqBody>,
+  res: Response
+) => {
+  const { userId } = req.params;
+  const { org, position, role } = req.body;
+
+  try {
+    const user = await User.findOne({ _id: userId }).select('-password');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const newOrg = new Organization({
+      name: org,
+      members: [userId],
+    });
+    const savedOrg = await newOrg.save();
+
+    user.org = savedOrg._id;
+    user.position = position;
+    user.role = role;
+    const savedUser = await user.save();
+    const populatedUser = await savedUser.populate('org');
+    return res.json(populatedUser);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 export default {
   registerUser,
   loginUser,
   getUserById,
+  updateUserOrg,
 };

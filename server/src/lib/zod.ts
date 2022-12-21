@@ -11,3 +11,9 @@ export const loginSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6),
 });
+
+export const updateUserOrgSchema = z.object({
+  org: z.string().trim().min(1),
+  position: z.string().trim().min(1),
+  role: z.enum(['admin', 'project manager', 'member']),
+});
