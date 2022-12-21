@@ -6,6 +6,7 @@ import { RegisterForm, LoginForm, RequireAuth } from 'features/auth';
 import { KanbanBoard } from 'features/kanban-board';
 import { OverviewDashboard } from 'features/overview-dashboard';
 import { ProjectDashboard } from 'features/project-dashboard';
+import { Welcome } from 'features/user';
 
 // TODO: Add catch all 404 routes component
 function AppRoutes() {
@@ -13,6 +14,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/register" element={<RegisterForm />} />
       <Route path="/login" element={<LoginForm />} />
+      <Route path="/welcome" element={<Welcome />} />
       <Route
         element={
           <RequireAuth>

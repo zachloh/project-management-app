@@ -1,0 +1,13 @@
+.card {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (min-width: 769px) {
+  .card {
+    width: 550px;
+  }
+}
