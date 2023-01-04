@@ -1,16 +1,22 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { showNotification } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import React from 'react';
 import { Check, ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
+import storage from 'utils/storage';
 
 type ProjectIssues = keyof Pick<
   Project,
   'todoIssues' | 'inProgressIssues' | 'inReviewIssues' | 'completedIssues'
 >;
+
+type Payload = JwtPayload & {
+  _id: string;
+};
 
 const mapIssueStatus: Record<Issue['status'], ProjectIssues> = {
   'to do': 'todoIssues',
@@ -20,7 +26,16 @@ const mapIssueStatus: Record<Issue['status'], ProjectIssues> = {
 };
 
 const deleteIssue = async (issue: Issue): Promise<Issue> => {
-  const { data } = await customAxios.delete<Issue>(`/issues/${issue._id}`);
+  const token = storage.getToken();
+  if (!token) {
+    return Promise.reject(new Error('No token found'));
+  }
+
+  const decoded = jwt_decode<Payload>(token);
+  const userId = decoded._id;
+  const { data } = await customAxios.delete<Issue>(
+    `/issues/${issue._id}?userId=${userId}`
+  );
   return data;
 };
 
