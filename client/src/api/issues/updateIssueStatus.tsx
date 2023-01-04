@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import { showNotification } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import jwt_decode, { JwtPayload } from 'jwt-decode';
 import React from 'react';
 import { ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
+import storage from 'utils/storage';
 
 export type SourceOrDestination =
   | 'todoIssues'
@@ -21,16 +23,29 @@ type UpdateIssueData = {
   destinationIndex: number;
 };
 
+type Payload = JwtPayload & {
+  _id: string;
+};
+
 const updateIssueStatus = async ({
   issueId,
   source,
   destination,
   destinationIndex,
 }: UpdateIssueData): Promise<Issue> => {
+  const token = storage.getToken();
+  if (!token) {
+    return Promise.reject(new Error('No token found'));
+  }
+
+  const decoded = jwt_decode<Payload>(token);
+  const userId = decoded._id;
+
   const { data } = await customAxios.patch<Issue>(`/issues/${issueId}/status`, {
     source,
     destination,
     destinationIndex,
+    userId,
   });
   return data;
 };
