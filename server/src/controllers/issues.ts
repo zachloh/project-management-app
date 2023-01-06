@@ -3,6 +3,7 @@ import { ParamsDictionary } from 'express-serve-static-core';
 import mongoose from 'mongoose';
 
 import Issue from 'models/issues';
+import ProjectHistory, { History } from 'models/projectHistory';
 import Project from 'models/projects';
 
 type CreateIssueReqBody = {
@@ -47,6 +48,22 @@ const createIssue = async (
       }
     );
 
+    const projectHistory = await ProjectHistory.findOne({
+      projectId: issueData.project,
+    });
+    const history: History = {
+      issueId: savedIssue._id,
+      issueTitle: savedIssue.title,
+      user: savedIssue.reporter,
+      mutation: 'create',
+      date: new Date(),
+      isDeleted: false,
+    };
+    if (projectHistory) {
+      projectHistory.history = [history, ...projectHistory.history];
+      await projectHistory.save();
+    }
+
     return res.json(savedIssue);
   } catch (err) {
     return res.status(400).json(err);
@@ -69,6 +86,11 @@ const getIssueById = async (req: Request, res: Response) => {
 
 const deleteIssue = async (req: Request, res: Response) => {
   try {
+    const { userId } = req.query;
+    if (!userId || typeof userId !== 'string') {
+      return res.status(400).json({ message: 'Missing userId' });
+    }
+
     const issue = await Issue.findByIdAndDelete(req.params.issueId);
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
@@ -86,6 +108,32 @@ const deleteIssue = async (req: Request, res: Response) => {
       }
     );
 
+    const projectHistory = await ProjectHistory.findOne({
+      projectId: issue.project,
+    });
+    const history: History = {
+      issueId: issue._id,
+      issueTitle: issue.title,
+      user: new mongoose.Types.ObjectId(userId),
+      mutation: 'delete',
+      date: new Date(),
+      isDeleted: true,
+    };
+    if (projectHistory) {
+      projectHistory.history = [history, ...projectHistory.history].map(
+        (item) => {
+          if (item.issueId.equals(issue._id)) {
+            return {
+              ...item,
+              isDeleted: true,
+            };
+          }
+          return item;
+        }
+      );
+      await projectHistory.save();
+    }
+
     return res.json(issue);
   } catch (err) {
     return res.status(400).json(err);
@@ -101,6 +149,8 @@ type UpdateIssueReqBody = {
   reporter: string;
   assignee: string | undefined;
   dueDate: string | undefined;
+  updatedFields: string[];
+  userId: string;
 };
 
 const updateIssue = async (
@@ -117,6 +167,8 @@ const updateIssue = async (
     reporter,
     assignee,
     dueDate,
+    updatedFields,
+    userId,
   } = req.body;
 
   try {
@@ -170,6 +222,23 @@ const updateIssue = async (
       );
     }
 
+    const projectHistory = await ProjectHistory.findOne({
+      projectId: issue.project,
+    });
+    const history: History = {
+      issueId: issue._id,
+      issueTitle: issue.title,
+      user: new mongoose.Types.ObjectId(userId),
+      mutation: 'update',
+      updatedFields,
+      date: new Date(),
+      isDeleted: false,
+    };
+    if (projectHistory) {
+      projectHistory.history = [history, ...projectHistory.history];
+      await projectHistory.save();
+    }
+
     return res.json(issue);
   } catch (err) {
     return res.status(400).json(err);
@@ -188,13 +257,14 @@ type UpdateIssueStatusReqBody = {
     | 'inReviewIssues'
     | 'completedIssues';
   destinationIndex: number;
+  userId: string;
 };
 
 const updateIssueStatus = async (
   req: Request<ParamsDictionary, any, UpdateIssueStatusReqBody>,
   res: Response
 ) => {
-  const { source, destination, destinationIndex } = req.body;
+  const { source, destination, destinationIndex, userId } = req.body;
   const { issueId } = req.params;
 
   const mapIssueTypes = {
@@ -242,6 +312,23 @@ const updateIssueStatus = async (
         },
       }
     );
+
+    const projectHistory = await ProjectHistory.findOne({
+      projectId: issue.project,
+    });
+    const history: History = {
+      issueId: issue._id,
+      issueTitle: issue.title,
+      user: new mongoose.Types.ObjectId(userId),
+      mutation: 'update',
+      updatedFields: ['status'],
+      date: new Date(),
+      isDeleted: false,
+    };
+    if (projectHistory) {
+      projectHistory.history = [history, ...projectHistory.history];
+      await projectHistory.save();
+    }
 
     return res.json(issue);
   } catch (err) {
