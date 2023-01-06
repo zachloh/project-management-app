@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
 import Organization from 'models/organizations';
+import ProjectHistory from 'models/projectHistory';
 import Project from 'models/projects';
 import User from 'models/users';
 import { PopulatedProject } from 'types/mongoose';
@@ -63,6 +64,12 @@ const createProject = async (
       category,
     });
     const savedProject = await newProject.save();
+
+    const newProjectHistory = new ProjectHistory({
+      projectId: savedProject._id,
+      history: [],
+    });
+    await newProjectHistory.save();
 
     await User.findOneAndUpdate({ _id: userId }, { completedWelcome: true });
 
