@@ -61,6 +61,15 @@ module.exports = {
     '@typescript-eslint/indent': 'off',
     'react/jsx-no-useless-fragment': [2, { allowExpressions: true }],
     'react/jsx-wrap-multilines': 'off',
+    'function-paren-newline': 'off',
+    '@typescript-eslint/no-misused-promises': [
+      2,
+      {
+        checksVoidReturn: {
+          attributes: false,
+        },
+      },
+    ],
   },
   settings: {
     // Allows us to lint absolute imports within codebase
