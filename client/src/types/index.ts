@@ -53,3 +53,14 @@ export type Project<T = Issue> = {
   inProgressIssues: T[];
   completedIssues: T[];
 };
+
+export type ProjectHistory = {
+  _id: string;
+  issueId: string;
+  issueTitle: string;
+  user: string;
+  mutation: 'create' | 'update' | 'delete';
+  updatedFields: string[];
+  date: string;
+  isDeleted: boolean;
+};
