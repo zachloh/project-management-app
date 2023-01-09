@@ -1,6 +1,7 @@
 import { SimpleGrid } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
+import { useParams } from 'react-router-dom';
 
 import Card from 'components/Card/Card';
 import ProjectCard from 'components/ProjectCard';
@@ -14,10 +15,12 @@ export function ProjectDashboard() {
   // All devices except mobile
   const matches = useMediaQuery('(min-width: 425px)');
 
+  const { projectId } = useParams();
+
   return (
     <>
       <SimpleGrid breakpoints={[{ minWidth: 768, cols: 2 }]} mb={16}>
-        <ProjectCard large={!!matches} />
+        {/* <ProjectCard large={!!matches} /> */}
         <Card title="Issue Types">
           <IssueTypesPieChart />
         </Card>
@@ -29,7 +32,7 @@ export function ProjectDashboard() {
         </Card>
       </SimpleGrid>
       <Card title="Project History">
-        <ProjectHistory />
+        <ProjectHistory projectId={projectId} />
       </Card>
     </>
   );

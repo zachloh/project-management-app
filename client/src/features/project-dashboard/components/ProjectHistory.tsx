@@ -1,40 +1,112 @@
-/* eslint-disable react/jsx-one-expression-per-line */
-import { Container, Timeline, Text } from '@mantine/core';
+import { Timeline, Text, Anchor, Button, Stack, Card } from '@mantine/core';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
-import { Plus, Minus } from 'tabler-icons-react';
+import { Link } from 'react-router-dom';
+import { Plus, Minus, Pencil } from 'tabler-icons-react';
 
-function ProjectHistory() {
+import { useGetProjectHistory } from 'api/projects/getProjectHistory';
+import { ProjectHistory as ProjectHistoryType } from 'types';
+
+type ProjectHistoryProps = {
+  projectId: string | undefined;
+};
+
+dayjs.extend(relativeTime);
+
+const bulletIcons: Record<ProjectHistoryType['mutation'], React.ReactNode> = {
+  create: <Plus size={12} />,
+  delete: <Minus size={12} />,
+  update: <Pencil size={12} />,
+};
+
+function ProjectHistory({ projectId }: ProjectHistoryProps) {
+  const {
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isLoading,
+    isError,
+  } = useGetProjectHistory(projectId);
+
+  // TODO: Add loader/skeleton
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // TODO: Add error component
+  if (isError) {
+    return <div>Error...</div>;
+  }
+
+  // TODO: Check if its empty
+
   return (
-    <Container p="xl">
-      <Timeline color="violet" active={2} lineWidth={3}>
-        <Timeline.Item bullet={<Minus size={12} />}>
-          <Text span weight="bold">
-            John Doe
-          </Text>
-          <Text color="gray.7" span>
-            {' '}
-            deleted an issue:{' '}
-          </Text>
-          <Text span variant="link" color="violet">
-            PROJ-1: Todo 1
-          </Text>
-          <Text size="sm">2 hours ago</Text>
-        </Timeline.Item>
-        <Timeline.Item bullet={<Plus size={12} />}>
-          <Text span weight="bold">
-            John Doe
-          </Text>
-          <Text color="gray.7" span>
-            {' '}
-            created an issue:{' '}
-          </Text>
-          <Text span variant="link" color="violet">
-            PROJ-1: Todo 1
-          </Text>
-          <Text size="sm">2 hours ago</Text>
-        </Timeline.Item>
+    <Stack align="center" spacing={30} p="xl">
+      <Timeline>
+        {data.pages.map((page) =>
+          page.data.map((history) => (
+            <Timeline.Item
+              key={history._id}
+              bullet={bulletIcons[history.mutation]}
+              active
+              lineActive
+            >
+              <Card withBorder bg="gray.0" p="sm">
+                <Text>
+                  <Text span weight={700}>
+                    {history.user}
+                  </Text>
+                  {` ${history.mutation}d an issue: `}
+                  {!history.isDeleted && (
+                    <Anchor
+                      component={Link}
+                      to={
+                        projectId
+                          ? `/projects/${projectId}?selectedIssue=${history.issueId}`
+                          : '/'
+                      }
+                    >
+                      {history.issueTitle}
+                    </Anchor>
+                  )}
+                  {history.isDeleted && (
+                    <Text color="gray.7" span>
+                      {history.issueTitle}
+                    </Text>
+                  )}
+                  {history.mutation === 'update' && (
+                    <>
+                      <Text span> - </Text>
+                      <Text span italic color="gray.7" transform="capitalize">
+                        {history.updatedFields
+                          .map((field) => {
+                            if (field === 'dueDate') return 'due date';
+                            return field;
+                          })
+                          .join(', ')}
+                      </Text>
+                    </>
+                  )}
+                </Text>
+                <Text size={14} mt={4}>
+                  {dayjs(history.date).fromNow()}
+                </Text>
+              </Card>
+            </Timeline.Item>
+          ))
+        )}
       </Timeline>
-    </Container>
+      <Button
+        size="md"
+        onClick={() => fetchNextPage()}
+        disabled={!hasNextPage}
+        loading={isFetchingNextPage}
+      >
+        Load More
+      </Button>
+    </Stack>
   );
 }
 
