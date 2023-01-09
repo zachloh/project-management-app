@@ -49,6 +49,13 @@ function IssueForm({ issue, onCloseIssueModal }: IssueFormProps) {
   const handleSubmit = (values: FormValues) => {
     onCloseIssueModal();
     const { description, assignee, dueDate, ...rest } = values;
+    const updatedFields = Object.keys(values).filter((value) => {
+      if (form.isDirty(value)) {
+        return true;
+      }
+      return false;
+    });
+
     updateIssueMutation.mutate({
       issueId: issue._id,
       issueData: {
@@ -56,6 +63,7 @@ function IssueForm({ issue, onCloseIssueModal }: IssueFormProps) {
         description: description || undefined,
         assignee: assignee || undefined,
         dueDate: dueDate || undefined,
+        updatedFields,
       },
     });
   };
