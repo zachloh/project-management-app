@@ -1,69 +1,53 @@
-import { Drawer, Button, Stack, NavLink, Container } from '@mantine/core';
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import {
-  Menu2,
-  Box,
-  Home,
-  List,
-  Subtask,
-  FileSettings,
-  Settings,
-} from 'tabler-icons-react';
+  MediaQuery,
+  Burger,
+  Text,
+  Group,
+  Grid,
+  Center,
+  Title,
+} from '@mantine/core';
+import React from 'react';
+import { Box } from 'tabler-icons-react';
 
 import styles from './Header.module.css';
 
-function Header() {
-  const location = useLocation();
-  const [opened, setOpened] = useState(false);
+type HeaderProps = {
+  opened: boolean;
+  onToggleNavbar: () => void;
+};
 
+function Header({ opened, onToggleNavbar }: HeaderProps) {
   return (
-    <>
-      <Drawer
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title={
-          <Container px="0" className={styles.logo}>
-            <Box size={48} color="#845EF7" />
-            ProjectHub
-          </Container>
-        }
-        padding="xl"
-        size="75%"
-        transitionDuration={400}
-        transitionTimingFunction="ease"
-        overlayOpacity={0.35}
-      >
-        <nav aria-label="Primary">
-          <Stack>
-            <NavLink
-              icon={<Home />}
-              label="Dashboard"
-              active={location.pathname === '/'}
-              color="violet"
-            />
-            <NavLink icon={<List />} label="Projects">
-              <NavLink icon={<Subtask />} label="Project 1" />
-              <NavLink icon={<Subtask />} label="Project 2" />
-            </NavLink>
-            <NavLink icon={<FileSettings />} label="Project Management" />
-            <NavLink icon={<Settings />} label="Admin Settings" />
-          </Stack>
-        </nav>
-      </Drawer>
-
-      <header className={styles.header}>
-        <Button
-          onClick={() => setOpened(true)}
-          variant="subtle"
-          color="dark"
-          p="0"
-        >
-          <Menu2 />
-        </Button>
-        <h1 className={styles.title}>Dashboard</h1>
-      </header>
-    </>
+    <Grid align="center" h="100%" m={0}>
+      <Grid.Col span="auto" p={0}>
+        <Group spacing={4}>
+          <Box size={48} color="#845EF7" />
+          <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>
+            <Text className={styles.logo}>ProjectHub</Text>
+          </MediaQuery>
+        </Group>
+      </Grid.Col>
+      <Grid.Col span={4} p={0}>
+        <Center>
+          <Title order={1} size={22} color="dark.5">
+            {/* TODO: Make title dynamic */}
+            Dashboard
+          </Title>
+        </Center>
+      </Grid.Col>
+      <Grid.Col span="auto" p={0} sx={{ textAlign: 'right' }}>
+        <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+          <Burger
+            opened={opened}
+            onClick={onToggleNavbar}
+            size="sm"
+            color="#2C2E33"
+            aria-label="Open navigation"
+          />
+        </MediaQuery>
+      </Grid.Col>
+    </Grid>
   );
 }
 
