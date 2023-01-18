@@ -133,9 +133,38 @@ const updateUserOrg = async (
   }
 };
 
+type UpdateUserProfileReqBody = {
+  firstName: string;
+  lastName: string;
+  position: string;
+};
+
+const updateUserProfile = async (
+  req: Request<ParamsDictionary, any, UpdateUserProfileReqBody>,
+  res: Response
+) => {
+  const { userId } = req.params;
+
+  try {
+    const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
+      new: true,
+    })
+      .select('-password')
+      .populate('org');
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    return res.json(user);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 export default {
   registerUser,
   loginUser,
   getUserById,
   updateUserOrg,
+  updateUserProfile,
 };

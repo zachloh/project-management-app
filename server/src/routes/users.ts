@@ -1,7 +1,12 @@
 import express from 'express';
 
 import usersController from 'controllers/users';
-import { loginSchema, registerSchema, updateUserOrgSchema } from 'lib/zod';
+import {
+  loginSchema,
+  registerSchema,
+  updateUserOrgSchema,
+  updateUserProfileSchema,
+} from 'lib/zod';
 import { validate } from 'middleware/validate';
 import { verifyToken } from 'middleware/verifyToken';
 
@@ -26,6 +31,14 @@ router.patch(
   verifyToken(),
   validate(updateUserOrgSchema),
   usersController.updateUserOrg
+);
+
+// PATCH /api/users/:userId/profile
+router.patch(
+  '/:userId/profile',
+  verifyToken(),
+  validate(updateUserProfileSchema),
+  usersController.updateUserProfile
 );
 
 export default router;
