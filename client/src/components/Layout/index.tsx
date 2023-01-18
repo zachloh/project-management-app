@@ -26,7 +26,7 @@ function Layout() {
           hidden={!opened}
           width={{ sm: 250, lg: 300 }}
         >
-          <NavbarContent />
+          <NavbarContent onClose={() => setOpened(false)} />
         </Navbar>
       }
     >
