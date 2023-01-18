@@ -37,6 +37,7 @@ function ModalTitle({
             color="dark"
             className={styles['action-btn']}
             onClick={onOpenDeleteModal}
+            aria-label="Delete issue"
           >
             <Trash size={20} />
           </ActionIcon>
@@ -44,6 +45,7 @@ function ModalTitle({
             color="dark"
             className={styles['action-btn']}
             onClick={onCloseIssueModal}
+            aria-label="Close issue details modal"
           >
             <X size={20} />
           </ActionIcon>
