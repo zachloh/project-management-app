@@ -1,4 +1,4 @@
-import { Modal } from '@mantine/core';
+import { Box, Modal } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -34,10 +34,11 @@ function IssueModal() {
       fullScreen={isMobile}
       size={isLaptop ? 800 : 400}
       transitionDuration={300}
-      exitTransitionDuration={isMobile ? 300 : 0}
+      exitTransitionDuration={250}
       closeOnEscape={!openDeleteModal}
+      centered
     >
-      {selectedIssue && (
+      {selectedIssue ? (
         <IssueModalContent
           selectedIssue={selectedIssue}
           onCloseIssueModal={onCloseIssueModal}
@@ -45,6 +46,8 @@ function IssueModal() {
           onOpenDeleteModal={onOpenDeleteModal}
           onCloseDeleteModal={onCloseDeleteModal}
         />
+      ) : (
+        <Box mih={isLaptop ? 383 : 800} />
       )}
     </Modal>
   );
