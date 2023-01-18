@@ -17,3 +17,9 @@ export const updateUserOrgSchema = z.object({
   position: z.string().trim().min(1),
   role: z.enum(['admin', 'project manager', 'member']),
 });
+
+export const updateUserProfileSchema = z.object({
+  firstName: z.string().trim().min(1),
+  lastName: z.string().trim().min(1),
+  position: z.string().trim().min(1),
+});
