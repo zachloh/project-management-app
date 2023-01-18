@@ -17,13 +17,19 @@ import styles from './Header.module.css';
 type HeaderProps = {
   opened: boolean;
   onToggleNavbar: () => void;
+  onClose: () => void;
 };
 
-function Header({ opened, onToggleNavbar }: HeaderProps) {
+function Header({ opened, onToggleNavbar, onClose }: HeaderProps) {
   return (
     <Grid align="center" h="100%" m={0}>
       <Grid.Col span="auto" p={0}>
-        <Anchor component={Link} to="/dashboard" underline={false}>
+        <Anchor
+          component={Link}
+          to="/dashboard"
+          underline={false}
+          onClick={onClose}
+        >
           <Group spacing={4}>
             <Box size={48} color="#845EF7" />
             <MediaQuery smallerThan="sm" styles={{ display: 'none' }}>

@@ -16,6 +16,7 @@ function Layout() {
           <HeaderContent
             opened={opened}
             onToggleNavbar={() => setOpened((o) => !o)}
+            onClose={() => setOpened(false)}
           />
         </Header>
       }
