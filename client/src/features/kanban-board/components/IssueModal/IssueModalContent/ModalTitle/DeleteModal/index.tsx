@@ -1,5 +1,4 @@
 import { Modal, Text, Group, Button, ActionIcon } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 import { X, AlertTriangle } from 'tabler-icons-react';
 
@@ -21,7 +20,6 @@ function DeleteModal({
   onCloseDeleteModal,
   issue,
 }: DeleteModalProps) {
-  const isTablet = useMediaQuery('(max-width: 767px)');
   const deleteIssueMutation = useDeleteIssue();
 
   const handleClickDeleteBtn = () => {
@@ -32,12 +30,13 @@ function DeleteModal({
 
   return (
     <Modal
-      centered={isTablet}
       opened={openDeleteModal}
       onClose={onCloseDeleteModal}
       overlayOpacity={0.5}
+      overlayBlur={2}
       shadow="xs"
       withCloseButton={false}
+      centered
     >
       <div className={styles.delete}>
         <AlertTriangle color="#DE350B" size={24} />
@@ -49,6 +48,7 @@ function DeleteModal({
           color="dark"
           className={styles['action-btn']}
           onClick={onCloseDeleteModal}
+          aria-label="Close delete issue modal"
         >
           <X size={20} />
         </ActionIcon>
