@@ -71,6 +71,7 @@ function CreateIssueForm({
               marginBottom: 10,
             },
           })}
+          aria-label="Textarea for issue title"
         />
         <Group noWrap spacing={5}>
           <TypeOptions form={form} />
