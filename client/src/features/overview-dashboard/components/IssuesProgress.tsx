@@ -1,4 +1,5 @@
-import { RingProgress, Text } from '@mantine/core';
+import { RingProgress, Stack, Text } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 
 import { Project, PopulatedIssue } from 'types';
@@ -8,6 +9,8 @@ type IssuesProgressProps = {
 };
 
 function IssuesProgress({ projects }: IssuesProgressProps) {
+  const isMobile = useMediaQuery('(max-width: 425px)');
+
   let totalCreatedIssues = 0;
   let totalCompletedIssues = 0;
 
@@ -21,7 +24,12 @@ function IssuesProgress({ projects }: IssuesProgressProps) {
   });
 
   return (
-    <div style={{ display: 'grid' }}>
+    <Stack
+      align="center"
+      h={isMobile ? 'auto' : 320}
+      spacing={0}
+      pt={isMobile ? 5 : 15}
+    >
       <RingProgress
         sections={[
           {
@@ -41,11 +49,16 @@ function IssuesProgress({ projects }: IssuesProgressProps) {
             tooltip: `Completed issues: ${totalCompletedIssues}`,
           },
         ]}
-        size={200}
+        size={isMobile ? 200 : 250}
         roundCaps={totalCompletedIssues > 0}
-        thickness={16}
+        thickness={isMobile ? 16 : 20}
         label={
-          <Text size={36} align="center" color="violet" weight="700">
+          <Text
+            size={isMobile ? 36 : 44}
+            align="center"
+            color="violet"
+            weight="700"
+          >
             {`${
               totalCreatedIssues === 0
                 ? 0
@@ -53,12 +66,17 @@ function IssuesProgress({ projects }: IssuesProgressProps) {
             }%`}
           </Text>
         }
-        sx={{ placeSelf: 'center' }}
       />
-      <Text align="center" color="dark.4" weight="700">
+      <Text
+        size={isMobile ? 16 : 18}
+        align="center"
+        color="dark.4"
+        weight="700"
+        mt={10}
+      >
         {`Completed issues: ${totalCompletedIssues} / ${totalCreatedIssues}`}
       </Text>
-    </div>
+    </Stack>
   );
 }
 
