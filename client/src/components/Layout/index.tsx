@@ -10,7 +10,7 @@ function Layout() {
 
   return (
     <AppShell
-      padding={16}
+      padding={24}
       header={
         <Header height={70} px="md">
           <HeaderContent
