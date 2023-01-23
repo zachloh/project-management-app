@@ -4,6 +4,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import Card from 'components/Card/Card';
+import DashboardTabs from 'components/DashboardTabs';
+import MainHeading from 'components/MainHeading';
 import ProjectCard from 'components/ProjectCard';
 
 import AssignedTable from './AssignedTable';
@@ -19,6 +21,8 @@ export function ProjectDashboard() {
 
   return (
     <>
+      <MainHeading title="Dashboard" />
+      <DashboardTabs />
       <SimpleGrid breakpoints={[{ minWidth: 768, cols: 2 }]} mb={16}>
         {/* <ProjectCard large={!!matches} /> */}
         <Card title="Issue Types">

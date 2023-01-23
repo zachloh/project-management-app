@@ -37,7 +37,7 @@ export function OverviewDashboard() {
 
   return (
     <>
-      <MainHeading />
+      <MainHeading title="Dashboard" />
       <DashboardTabs />
       <div className={styles.container}>
         <div>
@@ -70,7 +70,9 @@ export function OverviewDashboard() {
           >
             {/* TODO: check if projects array is empty */}
             {data.projects.map((project) => (
-              <ProjectCard project={project} />
+              <div key={project._id}>
+                <ProjectCard project={project} />
+              </div>
             ))}
           </SimpleGrid>
         </div>

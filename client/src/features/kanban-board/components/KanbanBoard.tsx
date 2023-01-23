@@ -7,6 +7,7 @@ import {
   useUpdateIssueStatus,
 } from 'api/issues/updateIssueStatus';
 import { useGetProject } from 'api/projects/getProject';
+import MainHeading from 'components/MainHeading';
 
 import IssueModal from './IssueModal';
 import styles from './KanbanBoard.module.css';
@@ -53,34 +54,37 @@ export function KanbanBoard() {
   }
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className={styles.container}>
-        <IssueModal />
-        <KanbanCard
-          title="TO DO"
-          issues={project.todoIssues}
-          id="todoIssues"
-          projectId={project._id}
-        />
-        <KanbanCard
-          title="IN PROGRESS"
-          issues={project.inProgressIssues}
-          id="inProgressIssues"
-          projectId={project._id}
-        />
-        <KanbanCard
-          title="IN REVIEW"
-          issues={project.inReviewIssues}
-          id="inReviewIssues"
-          projectId={project._id}
-        />
-        <KanbanCard
-          title="DONE"
-          issues={project.completedIssues}
-          id="completedIssues"
-          projectId={project._id}
-        />
-      </div>
-    </DragDropContext>
+    <>
+      <MainHeading title={project.name} />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className={styles.container}>
+          <IssueModal />
+          <KanbanCard
+            title="TO DO"
+            issues={project.todoIssues}
+            id="todoIssues"
+            projectId={project._id}
+          />
+          <KanbanCard
+            title="IN PROGRESS"
+            issues={project.inProgressIssues}
+            id="inProgressIssues"
+            projectId={project._id}
+          />
+          <KanbanCard
+            title="IN REVIEW"
+            issues={project.inReviewIssues}
+            id="inReviewIssues"
+            projectId={project._id}
+          />
+          <KanbanCard
+            title="DONE"
+            issues={project.completedIssues}
+            id="completedIssues"
+            projectId={project._id}
+          />
+        </div>
+      </DragDropContext>
+    </>
   );
 }
