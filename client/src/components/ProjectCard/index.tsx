@@ -16,7 +16,7 @@ type ProjectCardProps = {
 function ProjectCard({ large, project }: ProjectCardProps) {
   return (
     <Card shadow="sm" p="sm" radius="md" withBorder>
-      <ProjectTitle title={project.name} />
+      <ProjectTitle title={project.name} projectId={project._id} />
       <ProjectMembers members={project.members} />
       <ProjectDescription large={large} description={project.description} />
       <Badge color="violet" size="lg">

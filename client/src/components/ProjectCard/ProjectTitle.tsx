@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 
 type ProjectTitleProps = {
   title: string;
+  projectId: string;
 };
 
-function ProjectTitle({ title }: ProjectTitleProps) {
+function ProjectTitle({ title, projectId }: ProjectTitleProps) {
   return (
-    // TODO: Change path
-    <Anchor component={Link} to="/" color="dark">
+    <Anchor component={Link} to={`/projects/${projectId}`} color="dark">
       <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>{title}</h3>
     </Anchor>
   );
