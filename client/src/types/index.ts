@@ -64,3 +64,12 @@ export type ProjectHistory = {
   date: string;
   isDeleted: boolean;
 };
+
+export type Organization = {
+  _id: string;
+  name: string;
+  members: User<string>[];
+  projects: string[];
+  createdAt: string;
+  updatedAt: string;
+};
