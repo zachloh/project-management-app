@@ -2,12 +2,30 @@ import { Table, Badge } from '@mantine/core';
 import dayjs from 'dayjs';
 import React from 'react';
 
+import { useGetOrg } from 'api/organizations/getOrg';
+
 import styles from './MembersTable.module.css';
 
-function MembersTable() {
+type MembersTableProps = {
+  orgId: string | undefined;
+};
+
+function MembersTable({ orgId }: MembersTableProps) {
+  const { data: org, isLoading, isError } = useGetOrg(orgId);
+
+  if (isLoading) {
+    // TODO: Add skeleton
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    // TODO: Add error
+    return <div>Error...</div>;
+  }
+
   return (
     <div className={styles.container}>
-      <Table verticalSpacing="sm" fontSize={16} className={styles.table}>
+      <Table verticalSpacing="md" fontSize={16} className={styles.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -17,36 +35,18 @@ function MembersTable() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>John Doe</td>
-            <td>Lead Developer</td>
-            <td>
-              <Badge color="violet" size="lg">
-                Admin
-              </Badge>
-            </td>
-            <td>{dayjs().format('DD MMM YYYY')}</td>
-          </tr>
-          <tr>
-            <td>Jane Smith</td>
-            <td>Senior Software Engineer</td>
-            <td>
-              <Badge color="violet" size="lg">
-                Project Manager
-              </Badge>
-            </td>
-            <td>{dayjs().format('DD MMM YYYY')}</td>
-          </tr>
-          <tr>
-            <td>Joe Bloggs</td>
-            <td>Junior Software Engineer</td>
-            <td>
-              <Badge color="violet" size="lg">
-                Member
-              </Badge>
-            </td>
-            <td>{dayjs().format('DD MMM YYYY')}</td>
-          </tr>
+          {org.members.map((member) => (
+            <tr key={member._id}>
+              <td>{`${member.firstName} ${member.lastName}`}</td>
+              <td>{member.position}</td>
+              <td>
+                <Badge color="violet" size="lg">
+                  {member.role}
+                </Badge>
+              </td>
+              <td>{dayjs(member.createdAt).format('DD MMM YYYY')}</td>
+            </tr>
+          ))}
         </tbody>
       </Table>
     </div>
