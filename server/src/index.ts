@@ -8,6 +8,7 @@ import env from 'config/env';
 import { jwtStrategy } from 'lib/passport';
 import { verifyToken } from 'middleware/verifyToken';
 import issueRoutes from 'routes/issues';
+import organizationRoutes from 'routes/organizations';
 import projectRoutes from 'routes/projects';
 import userRoutes from 'routes/users';
 
@@ -34,6 +35,7 @@ const initializeServer = async () => {
   );
   app.use('/api/projects', verifyToken(), projectRoutes);
   app.use('/api/issues', verifyToken(), issueRoutes);
+  app.use('/api/organizations', verifyToken(), organizationRoutes);
 
   // TODO: Error handling
   // const handleError: ErrorRequestHandler = (err, req, res, next) => {
