@@ -45,7 +45,7 @@ function Navbar({ onClose }: NavbarProps) {
           label="Dashboard"
           component={Link}
           to="/dashboard"
-          active={location.pathname === '/dashboard'}
+          active={location.pathname.startsWith('/dashboard')}
           mb={15}
           onClick={onClose}
         />
