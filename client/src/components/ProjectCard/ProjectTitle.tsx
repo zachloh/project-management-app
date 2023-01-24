@@ -1,16 +1,19 @@
-import { Anchor } from '@mantine/core';
+import { Anchor, Title } from '@mantine/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 type ProjectTitleProps = {
+  large?: boolean;
   title: string;
   projectId: string;
 };
 
-function ProjectTitle({ title, projectId }: ProjectTitleProps) {
+function ProjectTitle({ large, title, projectId }: ProjectTitleProps) {
   return (
-    <Anchor component={Link} to={`/projects/${projectId}`} color="dark">
-      <h3 style={{ fontSize: '1.1rem', fontWeight: '700' }}>{title}</h3>
+    <Anchor component={Link} to={`/projects/${projectId}`} color="dark" mt={-5}>
+      <Title order={3} size={large ? 20 : 18}>
+        {title}
+      </Title>
     </Anchor>
   );
 }

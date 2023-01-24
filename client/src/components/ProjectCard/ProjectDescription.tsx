@@ -8,8 +8,8 @@ type ProjectDescriptionProps = {
 
 function ProjectDescription({ large, description }: ProjectDescriptionProps) {
   return (
-    <Box sx={{ height: large ? '200px' : '100px', marginTop: '0.5rem' }}>
-      <Text lineClamp={large ? 6 : 3} color="dark.3" pt={large ? 12 : 0}>
+    <Box mt={8} mb={30} mih={large ? 140 : 70}>
+      <Text lineClamp={large ? 6 : 3} color="dark.3" pt={large ? 10 : 0}>
         {description}
       </Text>
     </Box>
