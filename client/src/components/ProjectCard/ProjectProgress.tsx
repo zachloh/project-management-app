@@ -43,7 +43,10 @@ function ProjectProgress({ project }: ProjectProgressProps) {
           ]}
         />
       </Grid.Col>
-      <Grid.Col span="content" sx={{ color: '#5c7cfa' }}>
+      <Grid.Col
+        span="content"
+        sx={(theme) => ({ color: theme.colors.indigo[7] })}
+      >
         {`${
           createdIssues === 0
             ? 0
