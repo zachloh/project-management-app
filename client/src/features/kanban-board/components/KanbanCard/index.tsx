@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Droppable } from 'react-beautiful-dnd';
 import { useSearchParams } from 'react-router-dom';
 
-import { Issue, Project } from 'types';
+import { Issue, Project, User } from 'types';
 
 import CreateIssueBtn from './CreateIssueBtn';
 import CreateIssueForm from './CreateIssueForm';
@@ -21,6 +21,8 @@ type KanbanCardProps = {
   issues: Issue[];
   id: ProjectIssues;
   projectId: string;
+  userId: string;
+  members: User<string>[];
 };
 
 const issueStatus: Record<ProjectIssues, Issue['status']> = {
@@ -30,7 +32,14 @@ const issueStatus: Record<ProjectIssues, Issue['status']> = {
   completedIssues: 'done',
 };
 
-function KanbanCard({ title, issues, id, projectId }: KanbanCardProps) {
+function KanbanCard({
+  title,
+  issues,
+  id,
+  projectId,
+  userId,
+  members,
+}: KanbanCardProps) {
   const setSearchParams = useSearchParams()[1];
   const isMutating = useIsMutating();
   const [openCreateIssueForm, setOpenCreateIssueForm] = useState(false);
@@ -64,6 +73,8 @@ function KanbanCard({ title, issues, id, projectId }: KanbanCardProps) {
                 title={issue.title}
                 type={issue.type}
                 priority={issue.priority}
+                assigneeId={issue.assignee}
+                members={members}
                 onClick={() => {
                   if (isMutating > 0) return;
                   setSearchParams({ selectedIssue: issue._id });
@@ -79,6 +90,7 @@ function KanbanCard({ title, issues, id, projectId }: KanbanCardProps) {
                 onCloseCreateIssueForm={onCloseCreateIssueForm}
                 status={issueStatus[id]}
                 projectId={projectId}
+                userId={userId}
               />
             )}
           </div>

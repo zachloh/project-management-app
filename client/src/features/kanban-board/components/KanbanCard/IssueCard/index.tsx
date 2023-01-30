@@ -11,7 +11,9 @@ import {
   StoryIcon,
   TaskIcon,
 } from 'assets/icons';
+import { User } from 'types';
 import { capitalizeFirstLetter } from 'utils/capitalizeFirstLetter';
+import { getInitials } from 'utils/getInitials';
 
 import styles from './IssueCard.module.css';
 
@@ -21,6 +23,8 @@ type IssueCardProps = {
   title: string;
   type: 'task' | 'story' | 'bug';
   priority: 'low' | 'medium' | 'high';
+  assigneeId: string | undefined;
+  members: User<string>[];
   onClick?: () => void;
 };
 
@@ -42,10 +46,21 @@ function IssueCard({
   title,
   type,
   priority,
+  assigneeId,
+  members,
   onClick,
 }: IssueCardProps) {
   const isMutating = useIsMutating();
   const isFetchingProject = useIsFetching({ queryKey: ['projects'] });
+
+  const getAssignee = () => {
+    if (!assigneeId) {
+      return null;
+    }
+    return members.find((member) => member._id === assigneeId);
+  };
+
+  const assignee = getAssignee();
 
   return (
     <Draggable
@@ -82,14 +97,17 @@ function IssueCard({
                     {priorityIcons[priority]}
                   </div>
                 </Tooltip>
-                <Tooltip label="John Doe" withArrow openDelay={300}>
-                  <Avatar
-                    radius="xl"
-                    size="sm"
-                    ml="auto"
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=250&q=80"
-                  />
-                </Tooltip>
+                {assignee && (
+                  <Tooltip
+                    label={`${assignee.firstName} ${assignee.lastName}`}
+                    withArrow
+                    openDelay={300}
+                  >
+                    <Avatar radius="xl" size={34} color="violet.9" ml="auto">
+                      {getInitials(assignee.firstName, assignee.lastName)}
+                    </Avatar>
+                  </Tooltip>
+                )}
               </div>
             </div>
           </Card>
