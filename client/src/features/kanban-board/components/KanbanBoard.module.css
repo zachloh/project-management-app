@@ -1,12 +1,24 @@
 .container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 350px));
+  grid-template-columns: 1fr;
   gap: 10px;
   justify-content: center;
 }
 
-/* @media screen and (min-width: 768px) and (max-width: 1460px) {
+@media (min-width: 426px) {
   .container {
-    grid-template-columns: repeat(2, minmax(280px, 350px));
+    grid-template-columns: repeat(auto-fit, 350px);
   }
-} */
+}
+
+@media (min-width: 1400px) {
+  .container {
+    grid-template-columns: 400px 400px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .container {
+    grid-template-columns: repeat(4, 350px);
+  }
+}
