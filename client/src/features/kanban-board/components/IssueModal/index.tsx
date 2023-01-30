@@ -3,9 +3,15 @@ import { useMediaQuery } from '@mantine/hooks';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import { User } from 'types';
+
 import IssueModalContent from './IssueModalContent';
 
-function IssueModal() {
+type IssueModalProps = {
+  members: User<string>[];
+};
+
+function IssueModal({ members }: IssueModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIssue = searchParams.get('selectedIssue');
   const isMobile = useMediaQuery('(max-width: 425px)');
@@ -45,6 +51,7 @@ function IssueModal() {
           openDeleteModal={openDeleteModal}
           onOpenDeleteModal={onOpenDeleteModal}
           onCloseDeleteModal={onCloseDeleteModal}
+          members={members}
         />
       ) : (
         <Box mih={isLaptop ? 383 : 800} />

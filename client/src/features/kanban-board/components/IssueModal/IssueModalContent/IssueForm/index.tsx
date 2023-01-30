@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import React from 'react';
 
 import { useUpdateIssue } from 'api/issues/updateIssue';
-import { Issue } from 'types';
+import { Issue, User } from 'types';
 
 import AssigneeOptions from './AssigneeOptions';
 import DescriptionInput from './DescriptionInput';
@@ -20,9 +20,10 @@ import { FormValues } from './types';
 type IssueFormProps = {
   issue: Issue;
   onCloseIssueModal: () => void;
+  members: User<string>[];
 };
 
-function IssueForm({ issue, onCloseIssueModal }: IssueFormProps) {
+function IssueForm({ issue, onCloseIssueModal, members }: IssueFormProps) {
   const form = useForm<FormValues>({
     initialValues: {
       title: issue.title,
@@ -80,8 +81,8 @@ function IssueForm({ issue, onCloseIssueModal }: IssueFormProps) {
         </div>
       </div>
       <div>
-        <AssigneeOptions form={form} />
-        <ReporterOptions form={form} />
+        <AssigneeOptions form={form} members={members} />
+        <ReporterOptions form={form} members={members} />
         <DueDateInput form={form} />
         <IssueDates
           createdAt={issue.createdAt}

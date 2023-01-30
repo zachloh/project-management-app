@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useGetIssue } from 'api/issues/getIssue';
+import { User } from 'types';
 
 import IssueForm from './IssueForm';
 import ModalTitle from './ModalTitle';
@@ -11,6 +12,7 @@ type IssueModalContentProps = {
   openDeleteModal: boolean;
   onOpenDeleteModal: () => void;
   onCloseDeleteModal: () => void;
+  members: User<string>[];
 };
 
 function IssueModalContent({
@@ -19,6 +21,7 @@ function IssueModalContent({
   openDeleteModal,
   onOpenDeleteModal,
   onCloseDeleteModal,
+  members,
 }: IssueModalContentProps) {
   const { data: issue, isLoading, isError } = useGetIssue(selectedIssue);
 
@@ -41,7 +44,11 @@ function IssueModalContent({
         onCloseDeleteModal={onCloseDeleteModal}
         issue={issue}
       />
-      <IssueForm issue={issue} onCloseIssueModal={onCloseIssueModal} />
+      <IssueForm
+        issue={issue}
+        onCloseIssueModal={onCloseIssueModal}
+        members={members}
+      />
     </>
   );
 }

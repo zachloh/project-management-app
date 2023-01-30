@@ -2,25 +2,20 @@ import { Avatar, Group, Text, Select } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import React, { forwardRef } from 'react';
 
-import { FormValues } from './types';
+import { User } from 'types';
+import { getInitials } from 'utils/getInitials';
 
-// TODO: Get members of a project
-const data = [
-  {
-    icon: (
-      <Avatar radius="xl" size="sm">
-        JD
-      </Avatar>
-    ),
-    label: 'John Doe',
-    value: '636a106ba2bf04ba0bea7a60',
-  },
-];
+import { FormValues } from './types';
 
 interface ItemProps extends React.ComponentPropsWithoutRef<'div'> {
   icon: React.ReactNode;
   label: string;
 }
+
+type ReporterOptionsProps = {
+  form: UseFormReturnType<FormValues>;
+  members: User<string>[];
+};
 
 const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   ({ icon, label, ...rest }: ItemProps, ref) => (
@@ -33,8 +28,18 @@ const SelectItem = forwardRef<HTMLDivElement, ItemProps>(
   )
 );
 
-function ReporterOptions({ form }: { form: UseFormReturnType<FormValues> }) {
+function ReporterOptions({ form, members }: ReporterOptionsProps) {
   const value = form.values.reporter;
+
+  const data = members.map((member) => ({
+    icon: (
+      <Avatar radius="xl" size="sm" color="violet">
+        {getInitials(member.firstName, member.lastName)}
+      </Avatar>
+    ),
+    label: `${member.firstName} ${member.lastName}`,
+    value: member._id,
+  }));
 
   return (
     <Select
