@@ -45,7 +45,7 @@ function IssuesFilter({
 
   return (
     <Group mt={10} mb={30}>
-      <MediaQuery smallerThan={425} styles={{ width: '100%' }}>
+      <MediaQuery smallerThan={426} styles={{ width: '100%' }}>
         <TextInput
           placeholder="Filter issues..."
           icon={<Search size={16} color="#373A40" />}
