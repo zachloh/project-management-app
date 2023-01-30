@@ -15,16 +15,15 @@ type CreateIssueFormProps = {
   onCloseCreateIssueForm: () => void;
   status: Issue['status'];
   projectId: string;
+  userId: string;
 };
 
 function CreateIssueForm({
   onCloseCreateIssueForm,
   status,
   projectId,
+  userId,
 }: CreateIssueFormProps) {
-  // TODO: Get userId instead of hardcoding
-  const user = '636a106ba2bf04ba0bea7a60';
-
   const ref = useClickOutside(() => onCloseCreateIssueForm());
 
   const form = useForm<CreateIssueFormValues>({
@@ -48,7 +47,7 @@ function CreateIssueForm({
       ...values,
       status,
       project: projectId,
-      reporter: user,
+      reporter: userId,
     });
   };
 
@@ -71,6 +70,7 @@ function CreateIssueForm({
               marginBottom: 10,
             },
           })}
+          autoFocus
           aria-label="Textarea for issue title"
         />
         <Group noWrap spacing={5}>
