@@ -1,0 +1,12 @@
+.avatar {
+  transition: transform 300ms ease;
+}
+
+.avatar:hover {
+  cursor: pointer;
+  transform: translateY(-5px);
+}
+
+.active {
+  box-shadow: 0px 0px 0px 2px #845ef7;
+}
