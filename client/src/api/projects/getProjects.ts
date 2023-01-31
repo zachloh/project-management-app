@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { customAxios } from 'lib/axios';
 import { Project, PopulatedIssue } from 'types';
 
-type GetProjectsResponse = {
+export type GetProjectsResponse = {
   projects: Project<PopulatedIssue>[];
   createdIssuesLast7Days: number[];
   completedIssuesLast7Days: number[];
