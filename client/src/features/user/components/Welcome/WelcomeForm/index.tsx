@@ -1,7 +1,9 @@
 import { Button, Card, Group, Stepper } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ExclamationMark } from 'tabler-icons-react';
 
 import { useCreateProject } from 'api/projects/createProject';
 import { useUpdateUserOrg } from 'api/users/updateUserOrg';
@@ -84,6 +86,14 @@ function WelcomeForm({ user }: WelcomeFormProps) {
             onSuccess: () => {
               setActive((current) => current + 1);
             },
+            onError: () => {
+              showNotification({
+                title: 'Error',
+                message: 'Failed to create organization. Please try again.',
+                color: 'red',
+                icon: <ExclamationMark />,
+              });
+            },
           }
         );
         return;
@@ -100,6 +110,14 @@ function WelcomeForm({ user }: WelcomeFormProps) {
           onSuccess: () => {
             navigate('/dashboard', { replace: true });
           },
+          onError: () => {
+            showNotification({
+              title: 'Error',
+              message: 'Failed to create project. Please try again.',
+              color: 'red',
+              icon: <ExclamationMark />,
+            });
+          },
         }
       );
     }
@@ -114,7 +132,7 @@ function WelcomeForm({ user }: WelcomeFormProps) {
       withBorder
       className={styles.card}
     >
-      <FormTitles active={active} />
+      <FormTitles active={active} name={`${user.firstName} ${user.lastName}`} />
       <Stepper size="md" active={active} breakpoint={580}>
         <Stepper.Step
           label="Step 1"
