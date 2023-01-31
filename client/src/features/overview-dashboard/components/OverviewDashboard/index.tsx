@@ -10,9 +10,9 @@ import DashboardTabs from 'components/DashboardTabs';
 import MainHeading from 'components/MainHeading';
 import ProjectCard from 'components/ProjectCard';
 
-import IssuesChart from './IssuesChart';
-import IssuesProgress from './IssuesProgress';
-import MembersTable from './MembersTable';
+import IssuesChart from '../IssuesChart';
+import IssuesProgress from '../IssuesProgress';
+import MembersTable from '../MembersTable';
 import styles from './OverviewDashboard.module.css';
 
 export function OverviewDashboard() {
