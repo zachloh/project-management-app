@@ -3,13 +3,14 @@ import React from 'react';
 
 type FormTitlesProps = {
   active: number;
+  name: string;
 };
 
-function FormTitles({ active }: FormTitlesProps) {
+function FormTitles({ active, name }: FormTitlesProps) {
   return (
     <>
       <Text color="dark.4" weight={700} size={32} mb={20}>
-        Welcome, John Doe!
+        {`Welcome, ${name}!`}
       </Text>
       {active === 0 && (
         <Text weight={500} size={20} mb={30}>
