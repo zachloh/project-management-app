@@ -3,6 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { customAxios } from 'lib/axios';
 import { Project, User } from 'types';
 
+import { GetProjectsResponse } from './getProjects';
+
 type CreateProjectData = {
   name: string;
   orgId: string | undefined;
@@ -27,7 +29,23 @@ export const useCreateProject = () => {
 
   return useMutation({
     mutationFn: createProject,
-    onSuccess: (data) => {
+    onSuccess: (data, variables) => {
+      if (variables.orgId) {
+        queryClient.setQueryData<GetProjectsResponse>(
+          ['org', variables.orgId, 'projects'],
+          (old) => {
+            if (old) {
+              const newProjects = [...old.projects, data];
+              return {
+                ...old,
+                projects: newProjects,
+              };
+            }
+            return old;
+          }
+        );
+      }
+
       queryClient.setQueryData(['projects', data._id], data);
       queryClient.setQueryData<User>(['auth-user'], (old) => {
         if (old) {
