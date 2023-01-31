@@ -1,11 +1,10 @@
-import { ActionIcon, Box, Group, Modal } from '@mantine/core';
+import { Box, Modal } from '@mantine/core';
 import React from 'react';
-import { X } from 'tabler-icons-react';
 
+import ModalHeader from 'components/ModalHeader';
 import { User } from 'types';
 
 import EditProfileForm from './EditProfileForm';
-import styles from './EditProfileModal.module.css';
 
 type EditProfileModalProps = {
   opened: boolean;
@@ -26,17 +25,11 @@ function EditProfileModal({ opened, onClose, user }: EditProfileModalProps) {
     >
       {opened ? (
         <>
-          <Group align="center" position="apart" mb={10}>
-            <h2 className={styles.title}>Edit Profile</h2>
-            <ActionIcon
-              color="dark"
-              className={styles.action}
-              onClick={onClose}
-              aria-label="Close edit profile modal"
-            >
-              <X size={20} />
-            </ActionIcon>
-          </Group>
+          <ModalHeader
+            title="Edit Profile"
+            onClose={onClose}
+            ariaLabel="Close edit profile modal"
+          />
           <EditProfileForm user={user} onClose={onClose} />
         </>
       ) : (
