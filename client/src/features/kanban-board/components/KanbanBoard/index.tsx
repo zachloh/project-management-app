@@ -12,10 +12,10 @@ import { useGetUser } from 'api/users/getUser';
 import MainHeading from 'components/MainHeading';
 import { Issue } from 'types';
 
-import IssueModal from './IssueModal';
-import IssuesFilter from './IssuesFilter';
+import IssueModal from '../IssueModal';
+import IssuesFilter from '../IssuesFilter';
+import KanbanCard from '../KanbanCard';
 import styles from './KanbanBoard.module.css';
-import KanbanCard from './KanbanCard';
 
 export function KanbanBoard() {
   const { projectId } = useParams();
