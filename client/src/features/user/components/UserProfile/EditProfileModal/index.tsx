@@ -1,4 +1,4 @@
-import { Box, Modal } from '@mantine/core';
+import { Modal } from '@mantine/core';
 import React from 'react';
 
 import ModalHeader from 'components/ModalHeader';
@@ -23,18 +23,12 @@ function EditProfileModal({ opened, onClose, user }: EditProfileModalProps) {
       transitionDuration={300}
       centered
     >
-      {opened ? (
-        <>
-          <ModalHeader
-            title="Edit Profile"
-            onClose={onClose}
-            ariaLabel="Close edit profile modal"
-          />
-          <EditProfileForm user={user} onClose={onClose} />
-        </>
-      ) : (
-        <Box mih={510} />
-      )}
+      <ModalHeader
+        title="Edit Profile"
+        onClose={onClose}
+        ariaLabel="Close edit profile modal"
+      />
+      <EditProfileForm user={user} onClose={onClose} />
     </Modal>
   );
 }
