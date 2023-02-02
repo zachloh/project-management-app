@@ -20,7 +20,7 @@ const createProject = async (
     return Promise.reject(new Error('Invalid orgId'));
   }
 
-  const { data } = await customAxios.post<Project>('projects', projectData);
+  const { data } = await customAxios.post<Project>('/projects', projectData);
   return data;
 };
 
