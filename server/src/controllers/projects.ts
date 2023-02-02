@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
+import Issue from 'models/issues';
 import Organization from 'models/organizations';
 import ProjectHistory from 'models/projectHistory';
 import Project from 'models/projects';
@@ -115,8 +116,75 @@ const getProjectById = async (req: Request, res: Response) => {
   }
 };
 
+type UpdateProjectReqBody = {
+  name: string;
+  description: string;
+  category: 'business' | 'marketing' | 'software';
+};
+
+const updateProject = async (
+  req: Request<ParamsDictionary, any, UpdateProjectReqBody>,
+  res: Response
+) => {
+  const { projectId } = req.params;
+
+  try {
+    const updatedProject = await Project.findOneAndUpdate(
+      { _id: projectId },
+      req.body,
+      { new: true, runValidators: true }
+    )
+      .populate({
+        path: 'members',
+        select: '-password',
+      })
+      .populate('todoIssues')
+      .populate('inReviewIssues')
+      .populate('inProgressIssues')
+      .populate('completedIssues');
+
+    if (!updatedProject) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    return res.json(updatedProject);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
+const deleteProject = async (req: Request, res: Response) => {
+  const { projectId } = req.params;
+  const { orgId } = req.query;
+
+  if (!orgId || typeof orgId !== 'string') {
+    return res.status(400).json({ message: 'Missing orgId' });
+  }
+
+  try {
+    const project = await Project.findByIdAndDelete(projectId);
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
+    }
+
+    const p1 = Issue.deleteMany({ project: projectId });
+    const p2 = Organization.updateOne(
+      { _id: orgId },
+      { $pull: { projects: projectId } }
+    );
+    const p3 = ProjectHistory.findOneAndDelete({ projectId });
+    await Promise.all([p1, p2, p3]);
+
+    return res.json(project);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 export default {
   getProjectsByOrgId,
   createProject,
   getProjectById,
+  updateProject,
+  deleteProject,
 };

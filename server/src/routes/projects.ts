@@ -17,4 +17,10 @@ router.get('/:projectId', projectsController.getProjectById);
 // GET /api/projects/:projectId/history
 router.get('/:projectId/history', projectHistoryController.getProjectHistory);
 
+// PATCH /api/projects/:projectId
+router.patch('/:projectId', projectsController.updateProject);
+
+// DELETE /api/projects/:projectId
+router.delete('/:projectId', projectsController.deleteProject);
+
 export default router;
