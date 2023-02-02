@@ -42,10 +42,10 @@ export type PopulatedIssue = {
   completedAt?: string;
 };
 
-export type Project<T = Issue> = {
+export type Project<T = Issue, U = User<string>> = {
   _id: string;
   name: string;
-  members: User<string>[];
+  members: U[];
   description: string;
   category: 'business' | 'marketing' | 'software';
   todoIssues: T[];
