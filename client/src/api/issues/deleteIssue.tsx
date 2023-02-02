@@ -79,6 +79,11 @@ export const useDeleteIssue = () => {
         color: 'teal',
         icon: <Check />,
       });
+
+      queryClient.removeQueries({
+        queryKey: ['issues', issue._id],
+        exact: true,
+      });
     },
     onError: (_, issue, context) => {
       queryClient.setQueryData(
