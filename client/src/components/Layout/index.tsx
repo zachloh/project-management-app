@@ -2,10 +2,16 @@ import { AppShell, Header, Navbar } from '@mantine/core';
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
+import { User } from 'types';
+
 import HeaderContent from './Header';
 import NavbarContent from './Navbar';
 
-function Layout() {
+type LayoutProps = {
+  user: User;
+};
+
+function Layout({ user }: LayoutProps) {
   const [opened, setOpened] = useState(false);
 
   return (
@@ -27,11 +33,11 @@ function Layout() {
           hidden={!opened}
           width={{ sm: 250, lg: 300 }}
         >
-          <NavbarContent onClose={() => setOpened(false)} />
+          <NavbarContent onClose={() => setOpened(false)} user={user} />
         </Navbar>
       }
     >
-      <Outlet />
+      <Outlet context={{ user }} />
     </AppShell>
   );
 }

@@ -3,17 +3,17 @@ import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGetProjects } from 'api/projects/getProjects';
-import { useGetUser } from 'api/users/getUser';
+import { useUser } from 'hooks/useUser';
 
 function DashboardTabs() {
-  const { data: user } = useGetUser();
+  const { user } = useUser();
   const {
     data = {
       projects: [],
       createdIssuesLast7Days: [],
       completedIssuesLast7Days: [],
     },
-  } = useGetProjects(user?.org?._id);
+  } = useGetProjects(user.org?._id);
   const { projectId } = useParams();
   const navigate = useNavigate();
 

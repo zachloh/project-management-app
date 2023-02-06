@@ -2,13 +2,13 @@ import { SimpleGrid } from '@mantine/core';
 import React from 'react';
 
 import { useGetProjects } from 'api/projects/getProjects';
-import { useGetUser } from 'api/users/getUser';
 import Card from 'components/Card/Card';
 import CardHeader from 'components/Card/CardHeader';
 import DashboardSkeleton from 'components/DashboardSkeleton';
 import DashboardTabs from 'components/DashboardTabs';
 import MainHeading from 'components/MainHeading';
 import ProjectCard from 'components/ProjectCard';
+import { useUser } from 'hooks/useUser';
 
 import IssuesChart from '../IssuesChart';
 import IssuesProgress from '../IssuesProgress';
@@ -16,7 +16,7 @@ import MembersTable from '../MembersTable';
 import styles from './OverviewDashboard.module.css';
 
 export function OverviewDashboard() {
-  const { data: user } = useGetUser();
+  const { user } = useUser();
   const {
     data = {
       projects: [],
@@ -24,7 +24,7 @@ export function OverviewDashboard() {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useGetProjects(user?.org?._id);
+  } = useGetProjects(user.org?._id);
 
   // return <DashboardSkeleton />;
 
@@ -63,7 +63,7 @@ export function OverviewDashboard() {
               { minWidth: 'sm', cols: 1 },
               { minWidth: 850, cols: 2 },
               { minWidth: 'lg', cols: 3 },
-              { minWidth: 'xl', cols: 4 },
+              { minWidth: 1600, cols: 4 },
               { minWidth: 2000, cols: 5 },
               { minWidth: 2560, cols: 6 },
             ]}
@@ -79,7 +79,7 @@ export function OverviewDashboard() {
         <div>
           <CardHeader>Organization Members</CardHeader>
           <Card>
-            <MembersTable orgId={user?.org?._id} />
+            <MembersTable orgId={user.org?._id} />
           </Card>
         </div>
       </div>

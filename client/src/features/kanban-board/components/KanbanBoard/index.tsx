@@ -8,8 +8,8 @@ import {
   useUpdateIssueStatus,
 } from 'api/issues/updateIssueStatus';
 import { useGetProject } from 'api/projects/getProject';
-import { useGetUser } from 'api/users/getUser';
 import MainHeading from 'components/MainHeading';
+import { useUser } from 'hooks/useUser';
 import { Issue } from 'types';
 
 import IssueModal from '../IssueModal';
@@ -20,17 +20,9 @@ import styles from './KanbanBoard.module.css';
 export function KanbanBoard() {
   const { projectId } = useParams();
 
-  const {
-    data: user,
-    isLoading: isLoadingUser,
-    isError: isUserError,
-  } = useGetUser();
+  const { user } = useUser();
 
-  const {
-    data: project,
-    isLoading: isLoadingProject,
-    isError: isProjectError,
-  } = useGetProject(projectId);
+  const { data: project, isLoading, isError } = useGetProject(projectId);
 
   const updateIssueStatusMutation = useUpdateIssueStatus(project?._id || '');
 
@@ -87,12 +79,12 @@ export function KanbanBoard() {
   };
 
   // TODO: Add skeleton
-  if (isLoadingUser || isLoadingProject) {
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
   // TODO: Add error component
-  if (isUserError || isProjectError || !user) {
+  if (isError) {
     return <div>Error...</div>;
   }
 
