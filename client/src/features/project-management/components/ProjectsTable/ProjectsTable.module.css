@@ -1,0 +1,25 @@
+.container {
+  overflow-x: auto;
+}
+
+.table thead tr th {
+  background-color: var(--mantine-color-gray-1);
+  border-bottom-width: 2px;
+}
+
+.table tr,
+.table td {
+  white-space: nowrap;
+}
+
+.action-column {
+  width: 200px;
+}
+
+.name-column {
+  width: 40%;
+}
+
+.table tbody {
+  background-color: #fbfbfb;
+}
