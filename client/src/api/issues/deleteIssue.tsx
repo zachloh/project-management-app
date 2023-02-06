@@ -7,6 +7,7 @@ import { Check, ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 import storage from 'utils/storage';
 
 type ProjectIssues = keyof Pick<
@@ -85,17 +86,20 @@ export const useDeleteIssue = () => {
         exact: true,
       });
     },
-    onError: (_, issue, context) => {
+    onError: (err, issue, context) => {
       queryClient.setQueryData(
         ['projects', issue.project],
         context?.previousProjectData
       );
+
       showNotification({
         title: 'Error',
         message: 'Delete failed. Please try again later.',
         color: 'red',
         icon: <ExclamationMark />,
       });
+
+      refetchUserOnError(err, queryClient);
     },
     onSettled: (_, __, issue) => {
       queryClient.invalidateQueries({

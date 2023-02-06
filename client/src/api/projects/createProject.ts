@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
 import { Project, User } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 import { GetProjectsResponse } from './getProjects';
 
@@ -56,6 +57,9 @@ export const useCreateProject = () => {
         }
         return old;
       });
+    },
+    onError: (err) => {
+      refetchUserOnError(err, queryClient);
     },
   });
 };

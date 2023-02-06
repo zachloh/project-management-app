@@ -1,7 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
 import { Project, PopulatedIssue } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 export type GetProjectsResponse = {
   projects: Project<PopulatedIssue>[];
@@ -22,9 +23,14 @@ const getProjects = async (
   return data;
 };
 
-export const useGetProjects = (orgId: string | undefined) =>
-  useQuery({
+export const useGetProjects = (orgId: string | undefined) => {
+  const queryClient = useQueryClient();
+
+  return useQuery({
     queryKey: ['org', orgId, 'projects'],
     queryFn: () => getProjects(orgId),
-    enabled: !!orgId,
+    onError: (err) => {
+      refetchUserOnError(err, queryClient);
+    },
   });
+};

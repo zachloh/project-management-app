@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
 import { Project } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 import { GetProjectsResponse } from './getProjects';
 
@@ -51,6 +52,9 @@ export const useDeleteProject = () => {
         queryKey: ['projects', variables.projectId],
         exact: true,
       });
+    },
+    onError: (err) => {
+      refetchUserOnError(err, queryClient);
     },
   });
 };

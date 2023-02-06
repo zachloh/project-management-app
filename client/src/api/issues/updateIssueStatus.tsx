@@ -7,6 +7,7 @@ import { ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 import storage from 'utils/storage';
 
 export type SourceOrDestination =
@@ -105,7 +106,7 @@ export const useUpdateIssueStatus = (projectId: string) => {
       queryClient.setQueryData(['issues', variables.issueId], data);
     },
 
-    onError: (_, __, context) => {
+    onError: (err, __, context) => {
       queryClient.setQueryData(
         ['projects', projectId],
         context?.previousProjectData
@@ -116,6 +117,8 @@ export const useUpdateIssueStatus = (projectId: string) => {
         color: 'red',
         icon: <ExclamationMark />,
       });
+
+      refetchUserOnError(err, queryClient);
     },
 
     onSettled: () => {

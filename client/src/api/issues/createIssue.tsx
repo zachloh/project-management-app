@@ -6,6 +6,7 @@ import { Check, ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue, Project } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 type CreateIssueData = {
   project: string;
@@ -66,13 +67,15 @@ export const useCreateIssue = (successCallback?: () => void) => {
         icon: <Check />,
       });
     },
-    onError: () => {
+    onError: (err) => {
       showNotification({
         title: 'Error',
         message: 'Failed to create issue. Please try again later.',
         color: 'red',
         icon: <ExclamationMark />,
       });
+
+      refetchUserOnError(err, queryClient);
     },
   });
 };

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
 import { User } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 type UserData = {
   org: string;
@@ -34,6 +35,9 @@ export const useUpdateUserOrg = () => {
     mutationFn: updateUserOrg,
     onSuccess: (data) => {
       queryClient.setQueryData(['auth-user'], data);
+    },
+    onError: (err) => {
+      refetchUserOnError(err, queryClient);
     },
   });
 };

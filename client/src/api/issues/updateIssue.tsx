@@ -7,6 +7,7 @@ import { Check, ExclamationMark } from 'tabler-icons-react';
 
 import { customAxios } from 'lib/axios';
 import { Issue } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 import storage from 'utils/storage';
 
 type IssueData = {
@@ -75,7 +76,7 @@ export const useUpdateIssue = () => {
         icon: <Check />,
       });
     },
-    onError: (_, variables) => {
+    onError: (err, variables) => {
       updateNotification({
         id: `update-issue-${variables.issueId}`,
         title: 'Error',
@@ -83,6 +84,8 @@ export const useUpdateIssue = () => {
         color: 'red',
         icon: <ExclamationMark />,
       });
+
+      refetchUserOnError(err, queryClient);
     },
   });
 };

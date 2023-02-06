@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
 import { Project } from 'types';
+import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 import { GetProjectsResponse } from './getProjects';
 
@@ -57,6 +58,9 @@ export const useUpdateProject = (orgId: string | undefined) => {
       }
 
       queryClient.setQueryData(['projects', variables.projectId], data);
+    },
+    onError: (err) => {
+      refetchUserOnError(err, queryClient);
     },
   });
 };
