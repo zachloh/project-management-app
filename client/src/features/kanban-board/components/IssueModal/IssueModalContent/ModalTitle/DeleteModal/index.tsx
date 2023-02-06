@@ -33,7 +33,6 @@ function DeleteModal({
       opened={openDeleteModal}
       onClose={onCloseDeleteModal}
       overlayOpacity={0.5}
-      overlayBlur={2}
       shadow="xs"
       withCloseButton={false}
       centered
@@ -61,7 +60,7 @@ function DeleteModal({
         <Button variant="default" onClick={onCloseDeleteModal}>
           Cancel
         </Button>
-        <Button color="red" onClick={handleClickDeleteBtn}>
+        <Button color="red.8" onClick={handleClickDeleteBtn}>
           Delete
         </Button>
       </Group>
