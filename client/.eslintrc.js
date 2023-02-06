@@ -50,6 +50,7 @@ module.exports = {
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     'object-curly-newline': 'off',
+    'react/jsx-curly-newline': 'off',
     'no-plusplus': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
