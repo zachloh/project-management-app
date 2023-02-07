@@ -28,5 +28,4 @@ export const useGetUser = () =>
   useQuery({
     queryKey: ['auth-user'],
     queryFn: ({ signal }) => getUser(signal),
-    retry: false,
   });
