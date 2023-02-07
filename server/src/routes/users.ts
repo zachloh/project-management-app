@@ -41,4 +41,7 @@ router.patch(
   usersController.updateUserProfile
 );
 
+// PATCH /api/users/:userId/role
+router.patch('/:userId/role', verifyToken(), usersController.updateUserRole);
+
 export default router;
