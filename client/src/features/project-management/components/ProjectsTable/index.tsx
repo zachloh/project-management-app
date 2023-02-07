@@ -42,7 +42,7 @@ function ProjectsTable({ projects, orgId }: ProjectsTableProps) {
                 <Anchor
                   component={Link}
                   to={`/projects/${project._id}`}
-                  color="dark"
+                  color="dark.4"
                   size={16}
                   weight={600}
                 >
