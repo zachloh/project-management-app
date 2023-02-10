@@ -1,12 +1,3 @@
-@font-face {
-  font-family: 'poppins';
-  src: url('../../../../assets/fonts/poppins-regular-webfont.woff2')
-      format('woff2'),
-    url('../../../../assets/fonts/poppins-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 .container {
   height: 100%;
   background-color: #e6eeff;
@@ -22,9 +13,8 @@
 }
 
 .logo {
-  font-family: 'poppins', sans-serif;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--violet);
 }
 
