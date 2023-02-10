@@ -4,6 +4,9 @@ import issuesController from 'controllers/issues';
 
 const router = express.Router();
 
+// GET /api/issues
+router.get('/', issuesController.getAllIssues);
+
 // POST /api/issues
 router.post('/', issuesController.createIssue);
 

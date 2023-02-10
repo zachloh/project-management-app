@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 
-import Issue from 'models/issues';
+import Issue, { IIssue } from 'models/issues';
+import Organization from 'models/organizations';
 import ProjectHistory, { History } from 'models/projectHistory';
-import Project from 'models/projects';
+import Project, { IProject } from 'models/projects';
 
 type CreateIssueReqBody = {
   project: string;
@@ -336,10 +337,70 @@ const updateIssueStatus = async (
   }
 };
 
+type PopulatedIssue = {
+  _id: Types.ObjectId;
+  type: IIssue['type'];
+  title: IIssue['title'];
+  project: Types.ObjectId;
+};
+
+type PopulatedProject = {
+  _id: Types.ObjectId;
+  name: IProject['name'];
+  members: IProject['members'];
+  description: IProject['description'];
+  category: IProject['category'];
+  todoIssues: PopulatedIssue[];
+  inReviewIssues: PopulatedIssue[];
+  inProgressIssues: PopulatedIssue[];
+  completedIssues: PopulatedIssue[];
+};
+
+const getAllIssues = async (req: Request, res: Response) => {
+  const { orgId } = req.query;
+
+  if (!orgId || typeof orgId !== 'string') {
+    return res.status(400).json({ message: 'Missing orgId' });
+  }
+
+  try {
+    const organization = await Organization.findOne({ _id: orgId }).populate<{
+      projects: PopulatedProject[];
+    }>({
+      path: 'projects',
+      populate: [
+        { path: 'todoIssues', select: 'type title project' },
+        { path: 'inProgressIssues', select: 'type title project' },
+        { path: 'inReviewIssues', select: 'type title project' },
+        { path: 'completedIssues', select: 'type title project' },
+      ],
+    });
+
+    if (!organization) {
+      return res.status(404).json({ message: 'Organization not found' });
+    }
+
+    let allIssues: PopulatedIssue[] = [];
+    organization.projects.forEach((project) => {
+      allIssues = allIssues.concat(
+        project.todoIssues,
+        project.inProgressIssues,
+        project.inReviewIssues,
+        project.completedIssues
+      );
+    });
+
+    return res.json(allIssues);
+  } catch (err) {
+    return res.status(400).json(err);
+  }
+};
+
 export default {
   createIssue,
   getIssueById,
   deleteIssue,
   updateIssue,
   updateIssueStatus,
+  getAllIssues,
 };
