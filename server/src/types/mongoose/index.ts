@@ -20,6 +20,7 @@ export interface PopulatedIssue {
 }
 
 export interface PopulatedProject {
+  _id: Types.ObjectId;
   name: string;
   members: PopulatedMembers[];
   description: string;
