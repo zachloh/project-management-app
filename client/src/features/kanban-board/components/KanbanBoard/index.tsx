@@ -1,5 +1,5 @@
 import { useDebouncedValue } from '@mantine/hooks';
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 
@@ -29,6 +29,11 @@ export function KanbanBoard() {
   const [titleFilter, setTitleFilter] = useState('');
   const [debouncedTitleFilter] = useDebouncedValue(titleFilter, 350);
   const [filteredAssignees, setFilteredAssignees] = useState<string[]>([]);
+
+  useLayoutEffect(() => {
+    setTitleFilter('');
+    setFilteredAssignees([]);
+  }, [projectId]);
 
   const filterIssues = (issues: Issue[]) => {
     if (titleFilter.length === 0 && filteredAssignees.length === 0) {
