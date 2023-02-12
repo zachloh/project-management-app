@@ -60,7 +60,16 @@ function Layout({ user }: LayoutProps) {
       <AppShell
         padding={24}
         header={
-          <Header height={{ base: 60, sm: 70 }} px="md">
+          <Header
+            height={{ base: 60, sm: 70 }}
+            px="md"
+            sx={{
+              '@media (max-width: 319px)': {
+                paddingLeft: 10,
+                paddingRight: 10,
+              },
+            }}
+          >
             <HeaderContent
               opened={opened}
               onToggleNavbar={() => setOpened((o) => !o)}
