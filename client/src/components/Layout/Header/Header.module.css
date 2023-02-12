@@ -1,15 +1,52 @@
-@font-face {
-  font-family: 'poppins';
-  src: url('../../../assets/fonts/poppins-regular-webfont.woff2')
-      format('woff2'),
-    url('../../../assets/fonts/poppins-regular-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+/* Prevent header from shifting on opening/closing modals */
+.header {
+  padding-right: var(--removed-scroll-width, 0px);
+}
+
+.link {
+  width: 135px;
+  margin: 0 auto;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .logo {
-  font-family: 'poppins', sans-serif;
   font-weight: bold;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: var(--violet);
+}
+
+@media (min-width: 320px) {
+  .link {
+    width: 145px;
+  }
+
+  .logo {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 425px) {
+  .link {
+    width: 155px;
+  }
+
+  .logo {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .link {
+    width: 185px;
+    margin: 0;
+  }
+
+  .logo {
+    font-size: 1.5rem;
+  }
 }
