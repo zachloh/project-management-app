@@ -1,9 +1,3 @@
-.container {
-  overflow: auto;
-  height: 340px;
-  padding: 1rem;
-}
-
 .table {
   border-collapse: separate;
   border-spacing: 0;
@@ -13,27 +7,29 @@
   border-bottom-width: 2px;
   position: sticky;
   top: 0;
-  background-color: #fff;
+  background-color: var(--mantine-color-gray-0);
 }
 
-.table thead th:nth-of-type(3) {
+.status {
+  color: var(--mantine-color-dark-4);
+  text-transform: uppercase;
+}
+
+.title {
   width: 60%;
-}
-
-.table td:nth-of-type(2) {
+  color: var(--mantine-color-dark-4);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
+  max-width: 0;
 }
 
-.table td:nth-of-type(3) {
+.table tr,
+.table td {
   white-space: nowrap;
 }
 
 .table tbody tr {
   cursor: pointer;
-}
-
-.type {
-  display: grid;
-  grid-template-columns: max-content max-content;
-  gap: 3px;
 }
