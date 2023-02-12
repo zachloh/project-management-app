@@ -34,7 +34,10 @@ const projectIssues: Record<Issue['status'], ProjectIssues> = {
   done: 'completedIssues',
 };
 
-export const useCreateIssue = (successCallback?: () => void) => {
+export const useCreateIssue = (
+  orgId: string | undefined,
+  successCallback?: () => void
+) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -56,6 +59,8 @@ export const useCreateIssue = (successCallback?: () => void) => {
         }
       );
 
+      queryClient.setQueryData(['issues', data._id], data);
+
       if (successCallback) {
         successCallback();
       }
@@ -66,6 +71,12 @@ export const useCreateIssue = (successCallback?: () => void) => {
         color: 'teal',
         icon: <Check />,
       });
+
+      if (orgId) {
+        queryClient.invalidateQueries({
+          queryKey: ['org', orgId, 'issues'],
+        });
+      }
     },
     onError: (err) => {
       showNotification({

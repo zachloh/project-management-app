@@ -40,7 +40,7 @@ const deleteIssue = async (issue: Issue): Promise<Issue> => {
   return data;
 };
 
-export const useDeleteIssue = () => {
+export const useDeleteIssue = (orgId: string | undefined) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -85,6 +85,12 @@ export const useDeleteIssue = () => {
         queryKey: ['issues', issue._id],
         exact: true,
       });
+
+      if (orgId) {
+        queryClient.invalidateQueries({
+          queryKey: ['org', orgId, 'issues'],
+        });
+      }
     },
     onError: (err, issue, context) => {
       queryClient.setQueryData(

@@ -48,7 +48,7 @@ const updateIssue = async ({
   return data;
 };
 
-export const useUpdateIssue = () => {
+export const useUpdateIssue = (orgId: string | undefined) => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -75,6 +75,12 @@ export const useUpdateIssue = () => {
         color: 'teal',
         icon: <Check />,
       });
+
+      if (orgId) {
+        queryClient.invalidateQueries({
+          queryKey: ['org', orgId, 'issues'],
+        });
+      }
     },
     onError: (err, variables) => {
       updateNotification({

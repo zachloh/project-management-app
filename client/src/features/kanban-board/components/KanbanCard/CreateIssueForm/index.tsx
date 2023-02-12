@@ -16,6 +16,7 @@ type CreateIssueFormProps = {
   status: Issue['status'];
   projectId: string;
   userId: string;
+  orgId: string | undefined;
 };
 
 function CreateIssueForm({
@@ -23,6 +24,7 @@ function CreateIssueForm({
   status,
   projectId,
   userId,
+  orgId,
 }: CreateIssueFormProps) {
   const ref = useClickOutside(() => onCloseCreateIssueForm());
 
@@ -38,7 +40,7 @@ function CreateIssueForm({
     },
   });
 
-  const createIssueMutation = useCreateIssue(() => {
+  const createIssueMutation = useCreateIssue(orgId, () => {
     onCloseCreateIssueForm();
   });
 

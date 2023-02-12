@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { customAxios } from 'lib/axios';
@@ -46,6 +47,10 @@ export const useDeleteProject = () => {
             return old;
           }
         );
+
+        queryClient.invalidateQueries({
+          queryKey: ['org', variables.orgId, 'issues'],
+        });
       }
 
       queryClient.removeQueries({

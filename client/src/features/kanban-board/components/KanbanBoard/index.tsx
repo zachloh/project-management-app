@@ -100,7 +100,7 @@ export function KanbanBoard() {
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.container}>
-          <IssueModal members={project.members} />
+          <IssueModal members={project.members} orgId={user.org?._id} />
           <KanbanCard
             title="TO DO"
             issues={filterIssues(project.todoIssues)}
@@ -108,6 +108,7 @@ export function KanbanBoard() {
             projectId={project._id}
             userId={user._id}
             members={project.members}
+            orgId={user.org?._id}
           />
           <KanbanCard
             title="IN PROGRESS"
@@ -116,6 +117,7 @@ export function KanbanBoard() {
             projectId={project._id}
             userId={user._id}
             members={project.members}
+            orgId={user.org?._id}
           />
           <KanbanCard
             title="IN REVIEW"
@@ -124,6 +126,7 @@ export function KanbanBoard() {
             projectId={project._id}
             userId={user._id}
             members={project.members}
+            orgId={user.org?._id}
           />
           <KanbanCard
             title="DONE"
@@ -132,6 +135,7 @@ export function KanbanBoard() {
             projectId={project._id}
             userId={user._id}
             members={project.members}
+            orgId={user.org?._id}
           />
         </div>
       </DragDropContext>

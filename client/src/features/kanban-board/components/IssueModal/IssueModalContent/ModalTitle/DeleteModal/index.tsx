@@ -12,6 +12,7 @@ type DeleteModalProps = {
   openDeleteModal: boolean;
   onCloseDeleteModal: () => void;
   issue: Issue;
+  orgId: string | undefined;
 };
 
 function DeleteModal({
@@ -19,8 +20,9 @@ function DeleteModal({
   openDeleteModal,
   onCloseDeleteModal,
   issue,
+  orgId,
 }: DeleteModalProps) {
-  const deleteIssueMutation = useDeleteIssue();
+  const deleteIssueMutation = useDeleteIssue(orgId);
 
   const handleClickDeleteBtn = () => {
     onCloseDeleteModal();

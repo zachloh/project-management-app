@@ -13,6 +13,7 @@ type ModalTitleProps = {
   onOpenDeleteModal: () => void;
   onCloseDeleteModal: () => void;
   issue: Issue;
+  orgId: string | undefined;
 };
 
 function ModalTitle({
@@ -21,6 +22,7 @@ function ModalTitle({
   onOpenDeleteModal,
   onCloseDeleteModal,
   issue,
+  orgId,
 }: ModalTitleProps) {
   return (
     <>
@@ -29,6 +31,7 @@ function ModalTitle({
         openDeleteModal={openDeleteModal}
         onCloseDeleteModal={onCloseDeleteModal}
         issue={issue}
+        orgId={orgId}
       />
       <div className={styles.container}>
         <h2 className={styles.title}>Issue Details</h2>

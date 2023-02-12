@@ -21,9 +21,15 @@ type IssueFormProps = {
   issue: Issue;
   onCloseIssueModal: () => void;
   members: User<string>[];
+  orgId: string | undefined;
 };
 
-function IssueForm({ issue, onCloseIssueModal, members }: IssueFormProps) {
+function IssueForm({
+  issue,
+  onCloseIssueModal,
+  members,
+  orgId,
+}: IssueFormProps) {
   const form = useForm<FormValues>({
     initialValues: {
       title: issue.title,
@@ -45,7 +51,7 @@ function IssueForm({ issue, onCloseIssueModal, members }: IssueFormProps) {
     },
   });
 
-  const updateIssueMutation = useUpdateIssue();
+  const updateIssueMutation = useUpdateIssue(orgId);
 
   const handleSubmit = (values: FormValues) => {
     onCloseIssueModal();

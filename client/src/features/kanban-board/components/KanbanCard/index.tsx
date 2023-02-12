@@ -23,6 +23,7 @@ type KanbanCardProps = {
   projectId: string;
   userId: string;
   members: User<string>[];
+  orgId: string | undefined;
 };
 
 const issueStatus: Record<ProjectIssues, Issue['status']> = {
@@ -39,6 +40,7 @@ function KanbanCard({
   projectId,
   userId,
   members,
+  orgId,
 }: KanbanCardProps) {
   const setSearchParams = useSearchParams()[1];
   const isMutating = useIsMutating();
@@ -91,6 +93,7 @@ function KanbanCard({
                 status={issueStatus[id]}
                 projectId={projectId}
                 userId={userId}
+                orgId={orgId}
               />
             )}
           </div>

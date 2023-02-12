@@ -13,6 +13,7 @@ type IssueModalContentProps = {
   onOpenDeleteModal: () => void;
   onCloseDeleteModal: () => void;
   members: User<string>[];
+  orgId: string | undefined;
 };
 
 function IssueModalContent({
@@ -22,6 +23,7 @@ function IssueModalContent({
   onOpenDeleteModal,
   onCloseDeleteModal,
   members,
+  orgId,
 }: IssueModalContentProps) {
   const { data: issue, isLoading, isError } = useGetIssue(selectedIssue);
 
@@ -43,11 +45,13 @@ function IssueModalContent({
         onOpenDeleteModal={onOpenDeleteModal}
         onCloseDeleteModal={onCloseDeleteModal}
         issue={issue}
+        orgId={orgId}
       />
       <IssueForm
         issue={issue}
         onCloseIssueModal={onCloseIssueModal}
         members={members}
+        orgId={orgId}
       />
     </>
   );
