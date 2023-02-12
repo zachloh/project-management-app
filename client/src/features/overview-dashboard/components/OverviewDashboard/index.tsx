@@ -78,9 +78,7 @@ export function OverviewDashboard() {
         </div>
         <div>
           <CardHeader>Organization Members</CardHeader>
-          <Card>
-            <MembersTable orgId={user.org?._id} />
-          </Card>
+          <MembersTable orgId={user.org?._id} />
         </div>
       </div>
     </>

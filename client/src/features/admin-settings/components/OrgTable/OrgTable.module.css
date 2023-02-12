@@ -1,9 +1,23 @@
 .container {
   overflow-x: auto;
+
+  /* 
+  Add horizontal scrolling shadows 
+  https://stackoverflow.com/questions/57682185/horizontal-scrolling-shadows-on-top-of-colored-elements 
+  */
+  background-image: linear-gradient(to right, white, white),
+    linear-gradient(to right, white, white),
+    linear-gradient(to right, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0)),
+    linear-gradient(to left, rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .table thead tr th {
-  background-color: var(--mantine-color-gray-1);
+  background-color: rgba(238, 240, 242, 0.8);
   border-bottom-width: 2px;
 }
 
@@ -13,7 +27,7 @@
 }
 
 .table tbody {
-  background-color: #fbfbfb;
+  background-color: rgba(250, 250, 250, 0.8);
 }
 
 .table tbody tr td {

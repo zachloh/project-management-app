@@ -25,7 +25,13 @@ function MembersTable({ orgId }: MembersTableProps) {
 
   return (
     <div className={styles.container}>
-      <Table verticalSpacing="md" fontSize={16} className={styles.table}>
+      <Table
+        verticalSpacing="md"
+        fontSize={16}
+        className={styles.table}
+        horizontalSpacing={20}
+        withBorder
+      >
         <thead>
           <tr>
             <th>Name</th>
