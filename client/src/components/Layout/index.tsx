@@ -74,7 +74,6 @@ function Layout({ user }: LayoutProps) {
               opened={opened}
               onToggleNavbar={() => setOpened((o) => !o)}
               onClose={() => setOpened(false)}
-              orgId={user.org?._id}
             />
           </Header>
         }
