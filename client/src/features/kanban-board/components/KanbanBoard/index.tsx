@@ -48,7 +48,9 @@ export function KanbanBoard() {
 
     if (debouncedTitleFilter.length > 0) {
       filteredIssues = filteredIssues.filter((issue) =>
-        issue.title.toLowerCase().includes(debouncedTitleFilter.toLowerCase())
+        issue.title
+          .toLowerCase()
+          .includes(debouncedTitleFilter.toLowerCase().trim())
       );
     }
 
