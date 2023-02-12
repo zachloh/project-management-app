@@ -1,72 +1,65 @@
-import { Table, Badge } from '@mantine/core';
+import { Table, ScrollArea, MediaQuery } from '@mantine/core';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { StoryIcon, TaskIcon, BugIcon } from 'assets/icons';
+import { useUser } from 'hooks/useUser';
+import { Issue, Project } from 'types';
 
 import styles from './AssignedTable.module.css';
 
-function AssignedTable() {
+type AssignedTableProps = {
+  project: Project;
+};
+
+const mapAssignedIssues = (
+  issues: Issue[],
+  userId: string,
+  onClick: (issueId: string) => void
+) =>
+  issues
+    .filter((issue) => issue.assignee === userId)
+    .map((issue) => (
+      <tr key={issue._id} onClick={() => onClick(issue._id)}>
+        <MediaQuery smallerThan={360} styles={{ display: 'none' }}>
+          <td className={styles.status}>{issue.status}</td>
+        </MediaQuery>
+        <td className={styles.title}>{issue.title}</td>
+      </tr>
+    ));
+
+function AssignedTable({ project }: AssignedTableProps) {
+  const { user } = useUser();
   const navigate = useNavigate();
 
-  const handleRowClick = () => {
-    navigate('/');
+  const handleRowClick = (issueId: string) => {
+    navigate(`/projects/${project._id}?selectedIssue=${issueId}`);
   };
 
+  // TODO: Check if no issue assigned
+
   return (
-    <div className={styles.container}>
+    <ScrollArea h={300} px={12} pb={12} mt={12}>
       <Table highlightOnHover className={styles.table}>
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Key</th>
+            <MediaQuery smallerThan={360} styles={{ display: 'none' }}>
+              <th>Status</th>
+            </MediaQuery>
             <th>Title</th>
-            <th>Priority</th>
           </tr>
         </thead>
         <tbody>
-          <tr onClick={() => handleRowClick()}>
-            <td>
-              <div className={styles.type}>
-                <TaskIcon />
-                <div>Task</div>
-              </div>
-            </td>
-            <td>PROJ-1</td>
-            <td>This is my first todo</td>
-            <td>
-              <Badge color="red.9">High</Badge>
-            </td>
-          </tr>
-          <tr onClick={() => handleRowClick()}>
-            <td>
-              <div className={styles.type}>
-                <StoryIcon />
-                <div>Story</div>
-              </div>
-            </td>
-            <td>PROJ-2</td>
-            <td>This is my second todo</td>
-            <td>
-              <Badge color="yellow.9">Medium</Badge>
-            </td>
-          </tr>
-          <tr onClick={() => handleRowClick()}>
-            <td>
-              <div className={styles.type}>
-                <BugIcon />
-                <div>Bug</div>
-              </div>
-            </td>
-            <td>PROJ-3</td>
-            <td>This is my third todo</td>
-            <td>
-              <Badge color="green.9">Low</Badge>
-            </td>
-          </tr>
+          {mapAssignedIssues(project.todoIssues, user._id, handleRowClick)}
+          {mapAssignedIssues(
+            project.inProgressIssues,
+            user._id,
+            handleRowClick
+          )}
+          {mapAssignedIssues(project.inReviewIssues, user._id, handleRowClick)}
+          {mapAssignedIssues(project.completedIssues, user._id, handleRowClick)}
         </tbody>
       </Table>
-    </div>
+    </ScrollArea>
   );
 }
 
