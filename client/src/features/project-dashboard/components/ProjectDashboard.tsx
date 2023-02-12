@@ -1,38 +1,51 @@
 import { SimpleGrid } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useGetProject } from 'api/projects/getProject';
 import Card from 'components/Card/Card';
 import DashboardTabs from 'components/DashboardTabs';
 import MainHeading from 'components/MainHeading';
 import ProjectCard from 'components/ProjectCard';
 
 import AssignedTable from './AssignedTable';
-import IssueStatusPieChart from './IssueStatusPieChart';
+import IssueStatusDoughnut from './IssueStatusDoughnut';
 import IssueTypesPieChart from './IssueTypesPieChart';
 import ProjectHistory from './ProjectHistory';
 
 export function ProjectDashboard() {
-  // All devices except mobile
-  const matches = useMediaQuery('(min-width: 425px)');
-
   const { projectId } = useParams();
+
+  const { data: project, isLoading, isError } = useGetProject(projectId);
+
+  // TODO: Add skeleton
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  // TODO: Add error component
+  if (isError) {
+    return <div>Error...</div>;
+  }
 
   return (
     <>
       <MainHeading title="Dashboard" />
       <DashboardTabs />
-      <SimpleGrid breakpoints={[{ minWidth: 768, cols: 2 }]} mb={16}>
-        {/* <ProjectCard large={!!matches} /> */}
-        <Card title="Issue Types">
-          <IssueTypesPieChart />
-        </Card>
+      <SimpleGrid
+        breakpoints={[{ minWidth: 1024, cols: 2 }]}
+        mb="lg"
+        spacing="lg"
+      >
+        <ProjectCard large project={project} />
         <Card title="Issue Status">
-          <IssueStatusPieChart />
+          <IssueStatusDoughnut project={project} />
+        </Card>
+        <Card title="Issue Types">
+          <IssueTypesPieChart project={project} />
         </Card>
         <Card title="Assigned to Me">
-          <AssignedTable />
+          <AssignedTable project={project} />
         </Card>
       </SimpleGrid>
       <Card title="Project History">
