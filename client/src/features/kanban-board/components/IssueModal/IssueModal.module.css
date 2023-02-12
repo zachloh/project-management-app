@@ -1,0 +1,17 @@
+.modal {
+  width: 400px;
+}
+
+.box {
+  min-height: 800px;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 800px;
+  }
+
+  .box {
+    min-height: 383px;
+  }
+}

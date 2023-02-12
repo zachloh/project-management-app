@@ -1,21 +1,20 @@
 import { Box, Modal } from '@mantine/core';
-import { useMediaQuery } from '@mantine/hooks';
 import React, { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { User } from 'types';
 
+import styles from './IssueModal.module.css';
 import IssueModalContent from './IssueModalContent';
 
 type IssueModalProps = {
   members: User<string>[];
+  orgId: string | undefined;
 };
 
-function IssueModal({ members }: IssueModalProps) {
+function IssueModal({ members, orgId }: IssueModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIssue = searchParams.get('selectedIssue');
-  const isMobile = useMediaQuery('(max-width: 425px)');
-  const isLaptop = useMediaQuery('(min-width: 768px)');
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const onOpenDeleteModal = () => {
@@ -37,12 +36,10 @@ function IssueModal({ members }: IssueModalProps) {
       overlayOpacity={0.5}
       shadow="xs"
       withCloseButton={false}
-      fullScreen={isMobile}
-      size={isLaptop ? 800 : 400}
       transitionDuration={300}
-      exitTransitionDuration={250}
       closeOnEscape={!openDeleteModal}
       centered
+      classNames={{ modal: styles.modal }}
     >
       {selectedIssue ? (
         <IssueModalContent
@@ -52,9 +49,10 @@ function IssueModal({ members }: IssueModalProps) {
           onOpenDeleteModal={onOpenDeleteModal}
           onCloseDeleteModal={onCloseDeleteModal}
           members={members}
+          orgId={orgId}
         />
       ) : (
-        <Box mih={isLaptop ? 383 : 800} />
+        <Box className={styles.box} />
       )}
     </Modal>
   );
