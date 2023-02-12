@@ -17,17 +17,17 @@ import {
 } from 'tabler-icons-react';
 
 import { useGetProjects } from 'api/projects/getProjects';
-import { useGetUser } from 'api/users/getUser';
 import UserProfile from 'features/user/components/UserProfile';
+import { User } from 'types';
 
 type NavbarProps = {
   onClose: () => void;
+  user: User;
 };
 
-function Navbar({ onClose }: NavbarProps) {
+function Navbar({ onClose, user }: NavbarProps) {
   const location = useLocation();
 
-  const { data: user } = useGetUser();
   const {
     data = {
       projects: [],
@@ -35,7 +35,7 @@ function Navbar({ onClose }: NavbarProps) {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useGetProjects(user?.org?._id);
+  } = useGetProjects(user.org?._id);
 
   return (
     <>
@@ -49,12 +49,7 @@ function Navbar({ onClose }: NavbarProps) {
           mb={15}
           onClick={onClose}
         />
-        <NavLink
-          icon={<List />}
-          label="Projects"
-          childrenOffset={24}
-          mb={data.projects.length > 0 ? 10 : 0}
-        >
+        <NavLink icon={<List />} label="Projects" childrenOffset={24}>
           <ScrollArea.Autosize maxHeight={270} scrollbarSize={10}>
             {data.projects.map((project) => (
               <NavLink
@@ -90,19 +85,25 @@ function Navbar({ onClose }: NavbarProps) {
         <NavLink
           icon={<FileSettings />}
           label="Project Management"
+          component={Link}
+          to="/project-management"
+          active={location.pathname === '/project-management'}
           my={15}
           onClick={onClose}
         />
-        <NavLink icon={<Settings />} label="Admin Settings" onClick={onClose} />
+        <NavLink
+          icon={<Settings />}
+          label="Admin Settings"
+          component={Link}
+          to="/admin-settings"
+          active={location.pathname === '/admin-settings'}
+          onClick={onClose}
+        />
       </MantineNavBar.Section>
-      {user && (
-        <>
-          <Divider my={15} />
-          <MantineNavBar.Section>
-            <UserProfile user={user} />
-          </MantineNavBar.Section>
-        </>
-      )}
+      <Divider my={15} />
+      <MantineNavBar.Section>
+        <UserProfile user={user} />
+      </MantineNavBar.Section>
     </>
   );
 }
