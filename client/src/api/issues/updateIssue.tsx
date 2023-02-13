@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
-import { updateNotification, showNotification } from '@mantine/notifications';
+import { showNotification } from '@mantine/notifications';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import jwt_decode, { JwtPayload } from 'jwt-decode';
 import React from 'react';
@@ -53,23 +53,13 @@ export const useUpdateIssue = (orgId: string | undefined) => {
 
   return useMutation({
     mutationFn: updateIssue,
-    onMutate: ({ issueId, issueData }) => {
-      showNotification({
-        id: `update-issue-${issueId}`,
-        title: 'Updating',
-        message: issueData.title,
-        loading: true,
-        color: 'blue',
-      });
-    },
     onSuccess: (data, variables) => {
       queryClient.setQueryData(['issues', variables.issueId], data);
       queryClient.invalidateQueries({
         queryKey: ['projects', data.project],
       });
 
-      updateNotification({
-        id: `update-issue-${variables.issueId}`,
+      showNotification({
         title: 'Success',
         message: `Updated: ${data.title}`,
         color: 'teal',
@@ -82,11 +72,10 @@ export const useUpdateIssue = (orgId: string | undefined) => {
         });
       }
     },
-    onError: (err, variables) => {
-      updateNotification({
-        id: `update-issue-${variables.issueId}`,
+    onError: (err) => {
+      showNotification({
         title: 'Error',
-        message: 'Update failed. Please try again later.',
+        message: 'Update failed. Please try again.',
         color: 'red',
         icon: <ExclamationMark />,
       });
