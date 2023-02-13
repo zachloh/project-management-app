@@ -1,11 +1,39 @@
-import { ScrollArea, Tabs } from '@mantine/core';
+import { Anchor, createStyles, Group, ScrollArea } from '@mantine/core';
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { useGetProjects } from 'api/projects/getProjects';
 import { useUser } from 'hooks/useUser';
 
+const useStyles = createStyles((theme) => ({
+  nav: {
+    borderBottom: `2px solid ${theme.colors.gray[3]}`,
+  },
+  tab: {
+    fontSize: 16,
+    color: theme.colors.gray[7],
+    padding: '6px 16px 5px',
+    borderBottom: '2px solid transparent',
+    marginBottom: -2,
+    whiteSpace: 'nowrap',
+    '&:hover': {
+      color: theme.black,
+      backgroundColor: theme.colors.gray[1],
+      textDecoration: 'none',
+      borderBottomColor: theme.colors.gray[3],
+      borderRadius: '4px 4px 0 0',
+    },
+  },
+  activeTab: {
+    '&, &:hover': {
+      color: theme.black,
+      borderBottomColor: theme.colors.violet[3],
+    },
+  },
+}));
+
 function DashboardTabs() {
+  const { classes, cx } = useStyles();
   const { user } = useUser();
   const {
     data = {
@@ -14,50 +42,36 @@ function DashboardTabs() {
       completedIssuesLast7Days: [],
     },
   } = useGetProjects(user.org?._id);
-  const { projectId } = useParams();
-  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <ScrollArea mb={25} mt={5} scrollbarSize={8} pb={12}>
-      <Tabs
-        color="violet.3"
-        radius="xs"
-        styles={(theme) => ({
-          tabLabel: {
-            fontSize: 16,
-          },
-          tabsList: {
-            flexWrap: 'nowrap',
-          },
-          tab: {
-            color: theme.colors.gray[7],
-            '&:hover': {
-              backgroundColor: theme.colors.gray[1],
-            },
-            '&[data-active]': {
-              color: theme.colors.gray[7],
-              fontWeight: 700,
-            },
-          },
-        })}
-        value={projectId || 'overview'}
-        onTabChange={(value) => {
-          if (value === 'overview') {
-            navigate('/dashboard');
-            return;
-          }
-          navigate(`/dashboard/${value || ''}`);
-        }}
-      >
-        <Tabs.List aria-label="Dashboard navigation">
-          <Tabs.Tab value="overview">Overview</Tabs.Tab>
+      <nav className={classes.nav} aria-label="Dashboard">
+        <Group noWrap spacing={0}>
+          <Anchor
+            component={Link}
+            to="/dashboard"
+            className={cx(classes.tab, {
+              [classes.activeTab]: location.pathname === '/dashboard',
+            })}
+          >
+            Overview
+          </Anchor>
           {data.projects.map((project) => (
-            <Tabs.Tab key={project._id} value={project._id}>
+            <Anchor
+              key={project._id}
+              component={Link}
+              to={`/dashboard/${project._id}`}
+              className={cx(classes.tab, {
+                [classes.activeTab]:
+                  location.pathname === `/dashboard/${project._id}`,
+              })}
+            >
               {project.name}
-            </Tabs.Tab>
+            </Anchor>
           ))}
-        </Tabs.List>
-      </Tabs>
+        </Group>
+      </nav>
     </ScrollArea>
   );
 }
