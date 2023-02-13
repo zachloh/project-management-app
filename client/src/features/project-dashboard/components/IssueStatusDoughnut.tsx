@@ -1,5 +1,5 @@
 import { Box } from '@mantine/core';
-import { useElementSize, useMediaQuery } from '@mantine/hooks';
+import { useElementSize } from '@mantine/hooks';
 import { Chart, ChartEvent, Plugin } from 'chart.js';
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
 import React from 'react';
@@ -42,7 +42,6 @@ function IssueStatusDoughnut({ project }: IssueStatusDoughnutProps) {
     project.completedIssues.length;
 
   const { ref, width } = useElementSize();
-  const matches = useMediaQuery('(max-width: 500px)');
 
   const doughnutData = {
     labels: ['TO DO', 'IN PROGRESS', 'IN REVIEW', 'DONE'],
@@ -78,7 +77,7 @@ function IssueStatusDoughnut({ project }: IssueStatusDoughnutProps) {
         labels: {
           font: {
             weight: '700',
-            size: matches ? 14 : 15,
+            size: 14,
           },
           usePointStyle: true,
           boxHeight: 14,
