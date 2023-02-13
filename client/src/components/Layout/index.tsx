@@ -83,6 +83,7 @@ function Layout({ user }: LayoutProps) {
             hiddenBreakpoint="sm"
             hidden={!opened}
             width={{ sm: 250, lg: 300 }}
+            aria-label="Main"
           >
             <NavbarContent onClose={() => setOpened(false)} user={user} />
           </Navbar>
