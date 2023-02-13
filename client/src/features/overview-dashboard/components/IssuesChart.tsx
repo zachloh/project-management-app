@@ -95,7 +95,11 @@ function IssuesChart({ createdIssues, completedIssues }: IssueChartProps) {
 
   return (
     <div style={{ height: '350px' }}>
-      <Bar data={data} options={options} />
+      <Bar
+        data={data}
+        options={options}
+        aria-label="Bar chart displaying the number of issues created and completed in the last 7 days"
+      />
     </div>
   );
 }

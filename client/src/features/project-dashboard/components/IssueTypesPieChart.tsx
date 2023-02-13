@@ -81,7 +81,12 @@ function IssueTypesPieChart({ project }: IssueTypesPieChartProps) {
   return (
     <Box mih={320} w="80%" maw={450} mx="auto" ref={ref}>
       {width > 0 && (
-        <Pie data={data} options={options} plugins={[ChartDataLabels]} />
+        <Pie
+          data={data}
+          options={options}
+          plugins={[ChartDataLabels]}
+          aria-label="Pie chart displaying issues categorized by their types"
+        />
       )}
     </Box>
   );

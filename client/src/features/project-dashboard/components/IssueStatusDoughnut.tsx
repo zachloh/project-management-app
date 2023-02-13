@@ -115,6 +115,7 @@ function IssueStatusDoughnut({ project }: IssueStatusDoughnutProps) {
           data={doughnutData}
           options={options}
           plugins={[textCenter, ChartDataLabels]}
+          aria-label="Doughnut chart displaying issues categorized by their status"
         />
       )}
     </Box>
