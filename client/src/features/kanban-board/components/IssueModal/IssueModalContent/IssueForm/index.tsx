@@ -54,7 +54,6 @@ function IssueForm({
   const updateIssueMutation = useUpdateIssue(orgId);
 
   const handleSubmit = (values: FormValues) => {
-    onCloseIssueModal();
     const { description, assignee, dueDate, ...rest } = values;
     const updatedFields = Object.keys(values).filter((value) => {
       if (form.isDirty(value)) {
@@ -63,16 +62,23 @@ function IssueForm({
       return false;
     });
 
-    updateIssueMutation.mutate({
-      issueId: issue._id,
-      issueData: {
-        ...rest,
-        description: description || undefined,
-        assignee: assignee || undefined,
-        dueDate: dueDate || undefined,
-        updatedFields,
+    updateIssueMutation.mutate(
+      {
+        issueId: issue._id,
+        issueData: {
+          ...rest,
+          description: description || undefined,
+          assignee: assignee || undefined,
+          dueDate: dueDate || undefined,
+          updatedFields,
+        },
       },
-    });
+      {
+        onSuccess: () => {
+          onCloseIssueModal();
+        },
+      }
+    );
   };
 
   return (
@@ -104,7 +110,9 @@ function IssueForm({
           type="submit"
           variant="filled"
           disabled={!form.isDirty()}
-          loading={updateIssueMutation.isLoading}
+          loading={
+            updateIssueMutation.isLoading || updateIssueMutation.isSuccess
+          }
         >
           Update
         </Button>
