@@ -11,7 +11,7 @@ type ProjectTitleProps = {
 function ProjectTitle({ large, title, projectId }: ProjectTitleProps) {
   return (
     <Anchor component={Link} to={`/projects/${projectId}`} color="dark" mt={-5}>
-      <Title order={3} size={large ? 20 : 18}>
+      <Title order={large ? 2 : 3} size={large ? 20 : 18}>
         {title}
       </Title>
     </Anchor>
