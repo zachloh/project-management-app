@@ -37,6 +37,7 @@ function IssueModal({ members, orgId }: IssueModalProps) {
       shadow="xs"
       withCloseButton={false}
       transitionDuration={300}
+      exitTransitionDuration={300}
       closeOnEscape={!openDeleteModal}
       centered
       classNames={{ modal: styles.modal }}
