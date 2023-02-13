@@ -49,7 +49,7 @@ function DashboardTabs() {
           navigate(`/dashboard/${value || ''}`);
         }}
       >
-        <Tabs.List>
+        <Tabs.List aria-label="Dashboard navigation">
           <Tabs.Tab value="overview">Overview</Tabs.Tab>
           {data.projects.map((project) => (
             <Tabs.Tab key={project._id} value={project._id}>
