@@ -56,10 +56,10 @@ function KanbanCard({
 
   return (
     <Card p={5} radius="md" className={styles.card}>
-      <div className={styles.title}>
+      <h2 className={styles.title}>
         <span>{title}</span>
         <span>{issues.length}</span>
-      </div>
+      </h2>
       <Droppable droppableId={id}>
         {(provided) => (
           <div
