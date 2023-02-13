@@ -30,14 +30,14 @@ function UserProfile({ user }: UserProfileProps) {
     <>
       <Box px={12}>
         <Center>
-          <Avatar radius="xl" color="violet" mb={5}>
+          <Avatar radius="xl" color="violet.7" mb={5}>
             {getInitials(user.firstName, user.lastName)}
           </Avatar>
         </Center>
         <Text weight={700} align="center" truncate>
           {`${user.firstName} ${user.lastName}`}
         </Text>
-        <Text color="gray.6" align="center" truncate>
+        <Text color="#767676" align="center" truncate>
           {user.email}
         </Text>
         <Group my={10} position="center">

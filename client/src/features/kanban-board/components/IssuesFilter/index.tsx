@@ -69,7 +69,7 @@ function IssuesFilter({
                 <Avatar
                   size="md"
                   radius="xl"
-                  color="violet"
+                  color="violet.7"
                   className={
                     filteredAssignees.includes(member._id)
                       ? `${styles.avatar} ${styles.active}`

@@ -48,6 +48,7 @@ function Navbar({ onClose, user }: NavbarProps) {
           active={location.pathname.startsWith('/dashboard')}
           mb={15}
           onClick={onClose}
+          color="violet.7"
         />
         <NavLink icon={<List />} label="Projects" childrenOffset={24}>
           <ScrollArea.Autosize maxHeight={270} scrollbarSize={10}>
@@ -63,6 +64,7 @@ function Navbar({ onClose, user }: NavbarProps) {
                   borderLeft: `1px solid ${theme.colors.gray[3]}`,
                 })}
                 onClick={onClose}
+                color="violet.7"
               />
             ))}
             {isLoading && (
@@ -90,6 +92,7 @@ function Navbar({ onClose, user }: NavbarProps) {
           active={location.pathname === '/project-management'}
           my={15}
           onClick={onClose}
+          color="violet.7"
         />
         <NavLink
           icon={<Settings />}
@@ -98,6 +101,7 @@ function Navbar({ onClose, user }: NavbarProps) {
           to="/admin-settings"
           active={location.pathname === '/admin-settings'}
           onClick={onClose}
+          color="violet.7"
         />
       </MantineNavBar.Section>
       <Divider my={15} />

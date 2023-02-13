@@ -1,4 +1,4 @@
-import { Card, Badge, Divider, Stack } from '@mantine/core';
+import { Card, Badge, Divider, Stack, Group } from '@mantine/core';
 import React from 'react';
 
 import { Project, PopulatedIssue } from 'types';
@@ -24,14 +24,11 @@ function ProjectCard({ large, project }: ProjectCardProps) {
         />
         <ProjectMembers large={large} members={project.members} />
         <ProjectDescription large={large} description={project.description} />
-        <Badge
-          color="violet"
-          size="lg"
-          mt="auto"
-          sx={{ alignSelf: 'flex-start' }}
-        >
-          {project.category}
-        </Badge>
+        <Group position="left">
+          <Badge color="violet.7" size="lg" mt="auto">
+            {project.category}
+          </Badge>
+        </Group>
         <Divider my="md" />
         <ProjectProgress project={project} />
       </Stack>

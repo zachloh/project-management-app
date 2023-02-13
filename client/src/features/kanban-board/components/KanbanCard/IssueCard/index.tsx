@@ -103,7 +103,7 @@ function IssueCard({
                     withArrow
                     openDelay={300}
                   >
-                    <Avatar radius="xl" size={34} color="violet.9" ml="auto">
+                    <Avatar radius="xl" size={34} color="violet.7" ml="auto">
                       {getInitials(assignee.firstName, assignee.lastName)}
                     </Avatar>
                   </Tooltip>

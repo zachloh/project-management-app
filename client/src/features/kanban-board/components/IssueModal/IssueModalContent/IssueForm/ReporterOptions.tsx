@@ -33,7 +33,7 @@ function ReporterOptions({ form, members }: ReporterOptionsProps) {
 
   const data = members.map((member) => ({
     icon: (
-      <Avatar radius="xl" size="sm" color="violet">
+      <Avatar radius="xl" size="sm" color="violet.7">
         {getInitials(member.firstName, member.lastName)}
       </Avatar>
     ),

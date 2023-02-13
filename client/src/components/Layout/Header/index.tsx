@@ -58,7 +58,6 @@ function Header({ opened, onToggleNavbar, onClose }: HeaderProps) {
         <MediaQuery smallerThan={768} styles={{ display: 'none' }}>
           <Button
             variant="outline"
-            color="gray.6"
             radius={6}
             fw={400}
             leftIcon={<Search size={16} color="#373A40" />}
@@ -66,6 +65,7 @@ function Header({ opened, onToggleNavbar, onClose }: HeaderProps) {
             styles={(theme) => ({
               root: {
                 borderColor: theme.colors.gray[4],
+                color: '#767676',
                 '&:active': {
                   transform: 'none',
                 },

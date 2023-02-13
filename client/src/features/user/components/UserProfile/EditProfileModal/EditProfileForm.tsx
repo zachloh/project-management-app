@@ -64,7 +64,7 @@ function EditProfileForm({ user, onClose }: EditProfileFormProps) {
     <form onSubmit={form.onSubmit(handleSubmit)}>
       <Stack>
         <Center>
-          <Avatar color="violet" size={80} radius={40}>
+          <Avatar color="violet.7" size={80} radius={40}>
             {initials}
           </Avatar>
         </Center>

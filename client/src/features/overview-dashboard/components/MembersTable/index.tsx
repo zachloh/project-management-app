@@ -46,7 +46,7 @@ function MembersTable({ orgId }: MembersTableProps) {
               <td>{`${member.firstName} ${member.lastName}`}</td>
               <td>{member.position}</td>
               <td>
-                <Badge color="violet" size="lg">
+                <Badge color="violet.7" size="lg">
                   {member.role}
                 </Badge>
               </td>

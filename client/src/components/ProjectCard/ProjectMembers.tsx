@@ -19,7 +19,7 @@ function ProjectMembers({ large, members }: ProjectMembersProps) {
             label={`${member.firstName} ${member.lastName}`}
             withArrow
           >
-            <Avatar size={large ? 44 : 'md'} radius="xl" color="violet">
+            <Avatar size={large ? 44 : 'md'} radius="xl" color="violet.7">
               {getInitials(member.firstName, member.lastName)}
             </Avatar>
           </Tooltip>
