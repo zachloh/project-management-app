@@ -4,6 +4,7 @@ import { useGetIssue } from 'api/issues/getIssue';
 import { User } from 'types';
 
 import IssueForm from './IssueForm';
+import IssueModalSkeleton from './IssueModalSkeleton';
 import ModalTitle from './ModalTitle';
 
 type IssueModalContentProps = {
@@ -27,9 +28,8 @@ function IssueModalContent({
 }: IssueModalContentProps) {
   const { data: issue, isLoading, isError } = useGetIssue(selectedIssue);
 
-  // TODO: Add skeleton
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <IssueModalSkeleton />;
   }
 
   // TODO: Show error when no issue found

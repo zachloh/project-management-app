@@ -1,0 +1,42 @@
+.container {
+  display: grid;
+  gap: 17px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.input {
+  margin-bottom: 17px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    grid-template-columns: 2.4fr 1fr;
+    gap: 20px;
+  }
+
+  .options {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .buttons {
+    grid-column: 1 / span 2;
+    margin-top: 0;
+  }
+
+  .input {
+    margin-bottom: 20px;
+  }
+}
