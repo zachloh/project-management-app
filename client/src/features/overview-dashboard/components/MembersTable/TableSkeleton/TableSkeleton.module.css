@@ -1,0 +1,30 @@
+.table-container {
+  overflow: hidden;
+  background-image: linear-gradient(to right, white, white),
+    linear-gradient(to right, white, white),
+    linear-gradient(to right, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1)),
+    linear-gradient(to left, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.table {
+  border-radius: 8px;
+  border-spacing: 0;
+  border-collapse: separate;
+  padding: 12px;
+}
+
+.table thead tr th {
+  border-bottom-width: 2px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.table tbody tr .badge {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}

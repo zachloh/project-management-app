@@ -5,6 +5,7 @@ import React from 'react';
 import { useGetOrg } from 'api/organizations/getOrg';
 
 import styles from './MembersTable.module.css';
+import TableSkeleton from './TableSkeleton';
 
 type MembersTableProps = {
   orgId: string | undefined;
@@ -14,8 +15,7 @@ function MembersTable({ orgId }: MembersTableProps) {
   const { data: org, isLoading, isError } = useGetOrg(orgId);
 
   if (isLoading) {
-    // TODO: Add skeleton
-    return <div>Loading...</div>;
+    return <TableSkeleton />;
   }
 
   if (isError) {
