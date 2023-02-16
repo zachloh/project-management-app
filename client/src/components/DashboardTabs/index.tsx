@@ -1,4 +1,10 @@
-import { Anchor, createStyles, Group, ScrollArea } from '@mantine/core';
+import {
+  Anchor,
+  createStyles,
+  Group,
+  ScrollArea,
+  Skeleton,
+} from '@mantine/core';
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -41,8 +47,28 @@ function DashboardTabs() {
       createdIssuesLast7Days: [],
       completedIssuesLast7Days: [],
     },
+    isLoading,
   } = useGetProjects(user.org?._id);
   const location = useLocation();
+
+  if (isLoading) {
+    return (
+      <div>
+        <Group
+          spacing={32}
+          mt={20}
+          mb={37}
+          pb={11}
+          pl={16}
+          noWrap
+          className={classes.nav}
+        >
+          <Skeleton height={10} width={80} />
+          <Skeleton height={10} maw={100} />
+        </Group>
+      </div>
+    );
+  }
 
   return (
     <ScrollArea mb={25} mt={5} scrollbarSize={8} pb={12}>
