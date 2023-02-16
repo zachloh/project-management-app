@@ -102,7 +102,7 @@ function PageSkeleton() {
           </Box>
         </Card>
       </SimpleGrid>
-      <Skeleton height={12} maw={200} mb={12} mt={25} />
+      <Skeleton height={12} maw={200} mb={14} mt={25} />
       <div className={styles['table-container']}>
         <Table className={styles.table} horizontalSpacing={20} withBorder>
           <thead>
