@@ -55,58 +55,56 @@ function IssuesFilter({
           w={300}
         />
       </MediaQuery>
-      <div>
-        <Group>
-          <Avatar.Group spacing={5}>
-            {members.map((member) => (
-              <Tooltip
-                key={member._id}
-                label={`${member.firstName} ${member.lastName}`}
-                withArrow
-                position="bottom"
-                openDelay={300}
+      <Group>
+        <Avatar.Group spacing={5}>
+          {members.map((member) => (
+            <Tooltip
+              key={member._id}
+              label={`${member.firstName} ${member.lastName}`}
+              withArrow
+              position="bottom"
+              openDelay={300}
+            >
+              <Avatar
+                size="md"
+                radius="xl"
+                color="violet.7"
+                className={
+                  filteredAssignees.includes(member._id)
+                    ? `${styles.avatar} ${styles.active}`
+                    : styles.avatar
+                }
+                onClick={() => handleAvatarClick(member._id)}
               >
-                <Avatar
-                  size="md"
-                  radius="xl"
-                  color="violet.7"
-                  className={
-                    filteredAssignees.includes(member._id)
-                      ? `${styles.avatar} ${styles.active}`
-                      : styles.avatar
-                  }
-                  onClick={() => handleAvatarClick(member._id)}
-                >
-                  {getInitials(member.firstName, member.lastName)}
-                </Avatar>
-              </Tooltip>
-            ))}
-          </Avatar.Group>
-          <MediaQuery smallerThan={320} styles={{ display: 'none' }}>
-            <Divider orientation="vertical" ml={6} />
-          </MediaQuery>
-          <Button
-            variant="subtle"
-            color="dark.3"
-            onClick={() => {
-              setTitleFilter('');
-              setFilteredAssignees([]);
-            }}
-            styles={(theme) => ({
-              root: {
-                paddingLeft: 5,
-                paddingRight: 5,
-                fontSize: 16,
-                '&:hover': {
-                  backgroundColor: theme.colors.gray[2],
-                },
+                {getInitials(member.firstName, member.lastName)}
+              </Avatar>
+            </Tooltip>
+          ))}
+        </Avatar.Group>
+        <MediaQuery smallerThan={320} styles={{ display: 'none' }}>
+          <Divider orientation="vertical" ml={6} />
+        </MediaQuery>
+        <Button
+          variant="subtle"
+          color="dark.3"
+          onClick={() => {
+            setTitleFilter('');
+            setFilteredAssignees([]);
+          }}
+          styles={(theme) => ({
+            root: {
+              paddingLeft: 5,
+              paddingRight: 5,
+              fontSize: 16,
+              '&:hover': {
+                backgroundColor: theme.colors.gray[2],
               },
-            })}
-          >
-            Clear filters
-          </Button>
-        </Group>
-      </div>
+            },
+          })}
+        >
+          Clear filters
+        </Button>
+      </Group>
     </Group>
   );
 }
