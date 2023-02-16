@@ -45,7 +45,7 @@ function AssignedTable({ project }: AssignedTableProps) {
             <MediaQuery smallerThan={360} styles={{ display: 'none' }}>
               <th>Status</th>
             </MediaQuery>
-            <th>Title</th>
+            <th className={styles['title-header']}>Title</th>
           </tr>
         </thead>
         <tbody>

@@ -10,6 +10,10 @@
   background-color: var(--mantine-color-gray-0);
 }
 
+.title-header {
+  width: 60%;
+}
+
 .status {
   color: var(--mantine-color-dark-4);
   text-transform: uppercase;
