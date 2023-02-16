@@ -2,10 +2,12 @@ import React from 'react';
 
 import { useGetOrg } from 'api/organizations/getOrg';
 import MainHeading from 'components/MainHeading';
+import NotFound from 'components/NotFound';
 import { useUser } from 'hooks/useUser';
 
 import OrgMembersTable from '../OrgMembersTable';
 import OrgTable from '../OrgTable';
+import PageSkeleton from '../PageSkeleton';
 import styles from './AdminSettings.module.css';
 
 export function AdminSettings() {
@@ -13,13 +15,11 @@ export function AdminSettings() {
   const { data: org, isLoading, isError } = useGetOrg(user.org?._id);
 
   if (isLoading) {
-    // TODO: Add skeleton
-    return <div>Loading...</div>;
+    return <PageSkeleton />;
   }
 
   if (isError) {
-    // TODO: Add error
-    return <div>Error...</div>;
+    return <NotFound />;
   }
 
   return (

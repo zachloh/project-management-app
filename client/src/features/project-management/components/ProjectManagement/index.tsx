@@ -3,9 +3,11 @@ import React, { useState } from 'react';
 
 import { useGetProjects } from 'api/projects/getProjects';
 import MainHeading from 'components/MainHeading';
+import NotFound from 'components/NotFound';
 import { useUser } from 'hooks/useUser';
 
 import CreateProjectModal from '../CreateProjectModal';
+import PageSkeleton from '../PageSkeleton';
 import ProjectsTable from '../ProjectsTable';
 import styles from './ProjectManagement.module.css';
 
@@ -15,14 +17,12 @@ export function ProjectManagement() {
 
   const [opened, setOpened] = useState(false);
 
-  // TODO: Add skeleton
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <PageSkeleton />;
   }
 
-  // TODO: Add error
   if (isError) {
-    return <div>Error...</div>;
+    return <NotFound />;
   }
 
   return (

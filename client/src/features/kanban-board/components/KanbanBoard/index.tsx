@@ -9,12 +9,14 @@ import {
 } from 'api/issues/updateIssueStatus';
 import { useGetProject } from 'api/projects/getProject';
 import MainHeading from 'components/MainHeading';
+import NotFound from 'components/NotFound';
 import { useUser } from 'hooks/useUser';
 import { Issue } from 'types';
 
 import IssueModal from '../IssueModal';
 import IssuesFilter from '../IssuesFilter';
 import KanbanCard from '../KanbanCard';
+import PageSkeleton from '../PageSkeleton';
 import styles from './KanbanBoard.module.css';
 
 export function KanbanBoard() {
@@ -85,14 +87,12 @@ export function KanbanBoard() {
     });
   };
 
-  // TODO: Add skeleton
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <PageSkeleton />;
   }
 
-  // TODO: Add error component
   if (isError) {
-    return <div>Error...</div>;
+    return <NotFound />;
   }
 
   return (
