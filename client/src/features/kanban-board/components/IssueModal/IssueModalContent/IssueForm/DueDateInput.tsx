@@ -31,7 +31,7 @@ function DueDateInput({ form }: { form: UseFormReturnType<FormValues> }) {
           </Indicator>
         );
       }}
-      mb={30}
+      mb={20}
     />
   );
 }

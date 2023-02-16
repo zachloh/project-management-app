@@ -1,4 +1,4 @@
-import { Text } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import React from 'react';
 
@@ -10,7 +10,7 @@ type IssueDatesProps = {
 
 function IssueDates({ createdAt, updatedAt, completedAt }: IssueDatesProps) {
   return (
-    <>
+    <Stack mih={65} spacing={0} justify="center">
       <Text size="sm" color="dark.3" fw={700}>
         {`Created: ${dayjs(createdAt).format('D MMM YYYY')}`}
       </Text>
@@ -22,7 +22,7 @@ function IssueDates({ createdAt, updatedAt, completedAt }: IssueDatesProps) {
           {`Completed: ${dayjs(completedAt).format('D MMM YYYY')}`}
         </Text>
       )}
-    </>
+    </Stack>
   );
 }
 
