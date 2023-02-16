@@ -91,11 +91,11 @@ function PageSkeleton() {
       <Card>
         <Skeleton height={12} width={130} mt={8} />
         <Box p={24} pt={31}>
-          <Group align="flex-start" position="center" mb={24}>
+          <Group noWrap align="flex-start" position="center" mb={24}>
             <Skeleton height={20} circle />
             <Skeleton height={75} maw={330} radius={4} />
           </Group>
-          <Group align="flex-start" position="center">
+          <Group noWrap align="flex-start" position="center">
             <Skeleton height={20} circle />
             <Skeleton height={75} maw={330} radius={4} />
           </Group>
