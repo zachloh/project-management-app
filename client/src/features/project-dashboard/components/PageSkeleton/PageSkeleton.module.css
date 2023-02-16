@@ -1,0 +1,29 @@
+.chart {
+  height: 180px;
+  width: 180px;
+  border-radius: 180px;
+}
+
+.table thead tr th {
+  border-bottom-width: 2px;
+  background-color: var(--mantine-color-gray-0);
+  padding-top: 13px;
+  padding-bottom: 14px;
+}
+
+.table tbody tr td {
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.title {
+  width: 60%;
+}
+
+@media (min-width: 360px) {
+  .chart {
+    height: 250px;
+    width: 250px;
+    border-radius: 250px;
+  }
+}

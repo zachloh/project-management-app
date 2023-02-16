@@ -1,0 +1,74 @@
+.statistics {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+
+.progress-container {
+  height: 258px;
+}
+
+.progress {
+  height: 160px;
+  width: 160px;
+  border-radius: 160px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.table-container {
+  overflow: hidden;
+  background-image: linear-gradient(to right, white, white),
+    linear-gradient(to right, white, white),
+    linear-gradient(to right, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1)),
+    linear-gradient(to left, rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.1));
+  background-position: left center, right center, left center, right center;
+  background-repeat: no-repeat;
+  background-color: white;
+  background-size: 20px 100%, 20px 100%, 10px 100%, 10px 100%;
+  background-attachment: local, local, scroll, scroll;
+}
+
+.table {
+  border-radius: 8px;
+  border-spacing: 0;
+  border-collapse: separate;
+  padding: 12px;
+}
+
+.table thead tr th {
+  border-bottom-width: 2px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.table tbody tr .badge {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+@media (min-width: 426px) {
+  .progress-container {
+    height: 338px;
+  }
+
+  .progress {
+    height: 200px;
+    width: 200px;
+    border-radius: 200px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .statistics {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+@media (min-width: 1440px) {
+  .statistics {
+    grid-template-columns: 2fr 1fr;
+  }
+}
