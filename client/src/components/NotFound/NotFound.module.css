@@ -1,0 +1,53 @@
+.status {
+  text-align: center;
+  font-weight: 900;
+  font-size: 130px;
+  line-height: 1;
+  color: var(--mantine-color-gray-3);
+}
+
+.title {
+  font-size: 28px;
+}
+
+.message {
+  font-size: 16px;
+}
+
+@media (min-width: 320px) {
+  .status {
+    font-size: 140px;
+  }
+}
+
+@media (min-width: 425px) {
+  .status {
+    font-size: 160px;
+  }
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .status {
+    font-size: 200px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .status {
+    font-size: 210px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+
+  .message {
+    font-size: 18px;
+  }
+}
