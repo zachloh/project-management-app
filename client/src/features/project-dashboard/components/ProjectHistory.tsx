@@ -1,4 +1,14 @@
-import { Timeline, Text, Anchor, Button, Stack, Card } from '@mantine/core';
+import {
+  Timeline,
+  Text,
+  Anchor,
+  Button,
+  Stack,
+  Card,
+  Skeleton,
+  Box,
+  Group,
+} from '@mantine/core';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
@@ -30,9 +40,19 @@ function ProjectHistory({ projectId }: ProjectHistoryProps) {
     isError,
   } = useGetProjectHistory(projectId);
 
-  // TODO: Add loader/skeleton
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Box p={24}>
+        <Group noWrap align="flex-start" position="center" mb={24}>
+          <Skeleton height={20} circle />
+          <Skeleton height={75} maw={330} radius={4} />
+        </Group>
+        <Group noWrap align="flex-start" position="center">
+          <Skeleton height={20} circle />
+          <Skeleton height={75} maw={330} radius={4} />
+        </Group>
+      </Box>
+    );
   }
 
   // TODO: Add error component
