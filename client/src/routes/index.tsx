@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import NotFound from 'components/NotFound';
 import { AdminSettings } from 'features/admin-settings';
 import { RegisterForm, LoginForm, RequireAuth } from 'features/auth';
 import { KanbanBoard } from 'features/kanban-board';
@@ -9,7 +10,6 @@ import { ProjectDashboard } from 'features/project-dashboard';
 import { ProjectManagement } from 'features/project-management';
 import { Welcome } from 'features/user';
 
-// TODO: Add catch all 404 routes component
 function AppRoutes() {
   return (
     <Routes>
@@ -23,8 +23,8 @@ function AppRoutes() {
         <Route path="/projects/:projectId" element={<KanbanBoard />} />
         <Route path="/project-management" element={<ProjectManagement />} />
         <Route path="/admin-settings" element={<AdminSettings />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<div>Not found</div>} />
     </Routes>
   );
 }
