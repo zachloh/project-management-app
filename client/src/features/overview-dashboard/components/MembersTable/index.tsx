@@ -3,6 +3,8 @@ import dayjs from 'dayjs';
 import React from 'react';
 
 import { useGetOrg } from 'api/organizations/getOrg';
+import Card from 'components/Card/Card';
+import FailedToLoad from 'components/FailedToLoad';
 
 import styles from './MembersTable.module.css';
 import TableSkeleton from './TableSkeleton';
@@ -19,8 +21,11 @@ function MembersTable({ orgId }: MembersTableProps) {
   }
 
   if (isError) {
-    // TODO: Add error
-    return <div>Error...</div>;
+    return (
+      <Card>
+        <FailedToLoad />
+      </Card>
+    );
   }
 
   return (

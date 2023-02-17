@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import { Plus, Minus, Pencil } from 'tabler-icons-react';
 
 import { useGetProjectHistory } from 'api/projects/getProjectHistory';
+import FailedToLoad from 'components/FailedToLoad';
 import { ProjectHistory as ProjectHistoryType } from 'types';
 
 type ProjectHistoryProps = {
@@ -55,9 +56,8 @@ function ProjectHistory({ projectId }: ProjectHistoryProps) {
     );
   }
 
-  // TODO: Add error component
   if (isError) {
-    return <div>Error...</div>;
+    return <FailedToLoad />;
   }
 
   // TODO: Check if its empty
