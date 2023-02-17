@@ -60,7 +60,13 @@ function ProjectHistory({ projectId }: ProjectHistoryProps) {
     return <FailedToLoad />;
   }
 
-  // TODO: Check if its empty
+  if (data.pages[0].data.length === 0) {
+    return (
+      <Text align="center" weight={600} color="dark.4" py={30} px={10}>
+        This project has no history.
+      </Text>
+    );
+  }
 
   return (
     <Stack align="center" spacing={30} p="xl">
