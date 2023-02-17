@@ -14,8 +14,6 @@ type ProjectsTableProps = {
 };
 
 function ProjectsTable({ projects, orgId }: ProjectsTableProps) {
-  // TODO: check when no project created
-
   return (
     <div className={styles.container}>
       <Table
