@@ -73,8 +73,14 @@ const createIssue = async (
 
 const getIssueById = async (req: Request, res: Response) => {
   try {
+    const { projectId } = req.query;
+    if (!projectId || typeof projectId !== 'string') {
+      return res.status(400).json({ message: 'Missing projectId' });
+    }
+
     const issue = await Issue.findOne({
       _id: req.params.issueId,
+      project: projectId,
     });
     if (!issue) {
       return res.status(404).json({ message: 'Issue not found' });
