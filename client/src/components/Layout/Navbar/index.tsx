@@ -5,6 +5,8 @@ import {
   Divider,
   Skeleton,
   Group,
+  Stack,
+  Text,
 } from '@mantine/core';
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
@@ -14,6 +16,7 @@ import {
   Subtask,
   FileSettings,
   Settings,
+  FolderOff,
 } from 'tabler-icons-react';
 
 import { useGetProjects } from 'api/projects/getProjects';
@@ -35,6 +38,7 @@ function Navbar({ onClose, user }: NavbarProps) {
       completedIssuesLast7Days: [],
     },
     isLoading,
+    isSuccess,
   } = useGetProjects(user.org?._id);
 
   return (
@@ -72,7 +76,6 @@ function Navbar({ onClose, user }: NavbarProps) {
                 spacing={12}
                 px={16}
                 py={10}
-                mt={8}
                 sx={(theme) => ({
                   borderLeft: `1px solid ${theme.colors.gray[3]}`,
                 })}
@@ -81,7 +84,14 @@ function Navbar({ onClose, user }: NavbarProps) {
                 <Skeleton height={10} width={120} radius="xl" />
               </Group>
             )}
-            {/* TODO: When no project created */}
+            {isSuccess && data.projects.length === 0 && (
+              <Stack align="center" spacing={10} py={5}>
+                <FolderOff size={18} />
+                <Text align="center" size={14}>
+                  No projects created
+                </Text>
+              </Stack>
+            )}
           </ScrollArea.Autosize>
         </NavLink>
         <NavLink

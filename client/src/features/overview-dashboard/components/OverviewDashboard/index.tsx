@@ -1,5 +1,6 @@
-import { SimpleGrid } from '@mantine/core';
+import { SimpleGrid, Stack, Text } from '@mantine/core';
 import React from 'react';
+import { FolderOff } from 'tabler-icons-react';
 
 import { useGetProjects } from 'api/projects/getProjects';
 import Card from 'components/Card/Card';
@@ -56,25 +57,34 @@ export function OverviewDashboard() {
           </div>
           <div>
             <CardHeader>Your Projects</CardHeader>
-            <SimpleGrid
-              spacing="lg"
-              breakpoints={[
-                { minWidth: 'xs', cols: 2 },
-                { minWidth: 'sm', cols: 1 },
-                { minWidth: 850, cols: 2 },
-                { minWidth: 'lg', cols: 3 },
-                { minWidth: 1600, cols: 4 },
-                { minWidth: 2000, cols: 5 },
-                { minWidth: 2560, cols: 6 },
-              ]}
-            >
-              {/* TODO: check if projects array is empty */}
-              {data.projects.map((project) => (
-                <div key={project._id}>
-                  <ProjectCard project={project} />
-                </div>
-              ))}
-            </SimpleGrid>
+            {data.projects.length === 0 && (
+              <Stack align="center" py={30} spacing={10}>
+                <FolderOff color="#373A40" size={32} />
+                <Text align="center" weight={600} color="dark.4">
+                  No projects created
+                </Text>
+              </Stack>
+            )}
+            {data.projects.length > 0 && (
+              <SimpleGrid
+                spacing="lg"
+                breakpoints={[
+                  { minWidth: 'xs', cols: 2 },
+                  { minWidth: 'sm', cols: 1 },
+                  { minWidth: 850, cols: 2 },
+                  { minWidth: 'lg', cols: 3 },
+                  { minWidth: 1600, cols: 4 },
+                  { minWidth: 2000, cols: 5 },
+                  { minWidth: 2560, cols: 6 },
+                ]}
+              >
+                {data.projects.map((project) => (
+                  <div key={project._id}>
+                    <ProjectCard project={project} />
+                  </div>
+                ))}
+              </SimpleGrid>
+            )}
           </div>
           <div>
             <CardHeader>Organization Members</CardHeader>

@@ -1,5 +1,6 @@
-import { Button } from '@mantine/core';
+import { Button, Stack, Text } from '@mantine/core';
 import React, { useState } from 'react';
+import { FolderOff } from 'tabler-icons-react';
 
 import { useGetProjects } from 'api/projects/getProjects';
 import MainHeading from 'components/MainHeading';
@@ -29,7 +30,17 @@ export function ProjectManagement() {
     <>
       <MainHeading title="Project Management" />
       <h2 className={styles.title}>All Projects</h2>
-      <ProjectsTable projects={data.projects} orgId={user.org?._id} />
+      {data.projects.length > 0 && (
+        <ProjectsTable projects={data.projects} orgId={user.org?._id} />
+      )}
+      {data.projects.length === 0 && (
+        <Stack align="center" py={30} spacing={10}>
+          <FolderOff color="#373A40" size={32} />
+          <Text align="center" weight={600} color="dark.4">
+            No projects created
+          </Text>
+        </Stack>
+      )}
       <Button size="md" mt={20} onClick={() => setOpened(true)}>
         Create Project
       </Button>
