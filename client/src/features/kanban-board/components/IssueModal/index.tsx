@@ -1,5 +1,5 @@
 import { Box, Modal } from '@mantine/core';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { User } from 'types';
@@ -10,9 +10,10 @@ import IssueModalContent from './IssueModalContent';
 type IssueModalProps = {
   members: User<string>[];
   orgId: string | undefined;
+  projectId: string;
 };
 
-function IssueModal({ members, orgId }: IssueModalProps) {
+function IssueModal({ members, orgId, projectId }: IssueModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const selectedIssue = searchParams.get('selectedIssue');
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
@@ -25,9 +26,9 @@ function IssueModal({ members, orgId }: IssueModalProps) {
     setOpenDeleteModal(false);
   };
 
-  const onCloseIssueModal = () => {
+  const onCloseIssueModal = useCallback(() => {
     setSearchParams();
-  };
+  }, [setSearchParams]);
 
   return (
     <Modal
@@ -51,6 +52,7 @@ function IssueModal({ members, orgId }: IssueModalProps) {
           onCloseDeleteModal={onCloseDeleteModal}
           members={members}
           orgId={orgId}
+          projectId={projectId}
         />
       ) : (
         <Box className={styles.box} />
