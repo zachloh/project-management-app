@@ -107,7 +107,11 @@ export function KanbanBoard() {
       />
       <DragDropContext onDragEnd={onDragEnd}>
         <div className={styles.container}>
-          <IssueModal members={project.members} orgId={user.org?._id} />
+          <IssueModal
+            members={project.members}
+            orgId={user.org?._id}
+            projectId={project._id}
+          />
           <KanbanCard
             title="TO DO"
             issues={filterIssues(project.todoIssues)}
