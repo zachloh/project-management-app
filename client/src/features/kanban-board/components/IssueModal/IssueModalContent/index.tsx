@@ -1,4 +1,6 @@
-import React from 'react';
+import { showNotification } from '@mantine/notifications';
+import React, { useEffect } from 'react';
+import { ExclamationMark } from 'tabler-icons-react';
 
 import { useGetIssue } from 'api/issues/getIssue';
 import { User } from 'types';
@@ -15,6 +17,7 @@ type IssueModalContentProps = {
   onCloseDeleteModal: () => void;
   members: User<string>[];
   orgId: string | undefined;
+  projectId: string;
 };
 
 function IssueModalContent({
@@ -25,16 +28,28 @@ function IssueModalContent({
   onCloseDeleteModal,
   members,
   orgId,
+  projectId,
 }: IssueModalContentProps) {
-  const { data: issue, isLoading, isError } = useGetIssue(selectedIssue);
+  const {
+    data: issue,
+    isLoading,
+    isError,
+  } = useGetIssue(selectedIssue, projectId);
 
-  if (isLoading) {
+  useEffect(() => {
+    if (isError) {
+      showNotification({
+        title: 'Unable to load issue',
+        message: '',
+        color: 'red',
+        icon: <ExclamationMark />,
+      });
+      onCloseIssueModal();
+    }
+  }, [isError, onCloseIssueModal]);
+
+  if (isLoading || isError) {
     return <IssueModalSkeleton />;
-  }
-
-  // TODO: Show error when no issue found
-  if (isError) {
-    return <div>Error...</div>;
   }
 
   return (
