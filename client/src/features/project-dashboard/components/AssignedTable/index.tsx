@@ -60,8 +60,8 @@ function AssignedTable({ project }: AssignedTableProps) {
         </tbody>
       </Table>
       {filteredIssues.length === 0 && (
-        <Text align="center" size={14} weight={600} color="dark.4" pt={10}>
-          No issues assigned to you.
+        <Text align="center" size={14} weight={600} color="dark.3" pt={10}>
+          No issues assigned to you
         </Text>
       )}
     </ScrollArea>
