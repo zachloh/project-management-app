@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Plus, Minus, Pencil } from 'tabler-icons-react';
+import { Plus, Minus, Pencil, History } from 'tabler-icons-react';
 
 import { useGetProjectHistory } from 'api/projects/getProjectHistory';
 import FailedToLoad from 'components/FailedToLoad';
@@ -62,9 +62,12 @@ function ProjectHistory({ projectId }: ProjectHistoryProps) {
 
   if (data.pages[0].data.length === 0) {
     return (
-      <Text align="center" weight={600} color="dark.4" py={30} px={10}>
-        This project has no history.
-      </Text>
+      <Stack align="center" spacing={10} py={40}>
+        <History color="#5C5F66" size={24} />
+        <Text align="center" weight={600} color="dark.3" px={10}>
+          This project has no history
+        </Text>
+      </Stack>
     );
   }
 
