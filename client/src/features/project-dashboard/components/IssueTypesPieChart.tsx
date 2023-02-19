@@ -1,9 +1,10 @@
-import { Box } from '@mantine/core';
+import { Box, Stack, Text } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { ChartEvent } from 'chart.js';
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
 import React from 'react';
 import { Pie } from 'react-chartjs-2';
+import { Ticket } from 'tabler-icons-react';
 
 import { Project } from 'types';
 import { getIssueTypes } from 'utils/getIssueTypes';
@@ -17,7 +18,16 @@ function IssueTypesPieChart({ project }: IssueTypesPieChartProps) {
 
   const { tasks, stories, bugs } = getIssueTypes(project);
 
-  // TODO: Check if tasks, stories and bugs = 0
+  if (tasks === 0 && stories === 0 && bugs === 0) {
+    return (
+      <Stack mih={320} align="center" justify="center" spacing={10} pb={40}>
+        <Ticket color="#5C5F66" size={24} />
+        <Text align="center" weight={600} color="dark.3" px={20}>
+          This project has no issues
+        </Text>
+      </Stack>
+    );
+  }
 
   const data = {
     labels: ['Tasks', 'Stories', 'Bugs'],

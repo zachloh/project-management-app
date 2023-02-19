@@ -1,9 +1,10 @@
-import { Box } from '@mantine/core';
+import { Box, Stack, Text } from '@mantine/core';
 import { useElementSize } from '@mantine/hooks';
 import { Chart, ChartEvent, Plugin } from 'chart.js';
 import ChartDataLabels, { Context } from 'chartjs-plugin-datalabels';
 import React from 'react';
 import { Doughnut } from 'react-chartjs-2';
+import { Ticket } from 'tabler-icons-react';
 
 import { Project } from 'types';
 
@@ -34,14 +35,24 @@ const textCenter: Plugin<'doughnut'> = {
 };
 
 function IssueStatusDoughnut({ project }: IssueStatusDoughnutProps) {
-  // TODO: If total issues is 0, dont render chart?
+  const { ref, width } = useElementSize();
+
   const totalIssues =
     project.todoIssues.length +
     project.inProgressIssues.length +
     project.inReviewIssues.length +
     project.completedIssues.length;
 
-  const { ref, width } = useElementSize();
+  if (totalIssues === 0) {
+    return (
+      <Stack mih={320} align="center" justify="center" spacing={10} pb={40}>
+        <Ticket color="#5C5F66" size={24} />
+        <Text align="center" weight={600} color="dark.3" px={20}>
+          This project has no issues
+        </Text>
+      </Stack>
+    );
+  }
 
   const doughnutData = {
     labels: ['TO DO', 'IN PROGRESS', 'IN REVIEW', 'DONE'],
