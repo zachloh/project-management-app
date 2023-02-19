@@ -48,7 +48,7 @@ function DashboardTabs() {
       completedIssuesLast7Days: [],
     },
     isLoading,
-  } = useGetProjects(user.org?._id);
+  } = useGetProjects(user.org?._id, user._id);
   const location = useLocation();
 
   if (isLoading) {

@@ -11,24 +11,25 @@ export type GetProjectsResponse = {
 };
 
 const getProjects = async (
-  orgId: string | undefined
+  orgId: string | undefined,
+  userId: string
 ): Promise<GetProjectsResponse> => {
   if (typeof orgId === 'undefined') {
     return Promise.reject(new Error('Invalid orgId'));
   }
 
   const { data } = await customAxios.get<GetProjectsResponse>(
-    `/org/${orgId}/projects`
+    `/org/${orgId}/projects?userId=${userId}`
   );
   return data;
 };
 
-export const useGetProjects = (orgId: string | undefined) => {
+export const useGetProjects = (orgId: string | undefined, userId: string) => {
   const queryClient = useQueryClient();
 
   return useQuery({
     queryKey: ['org', orgId, 'projects'],
-    queryFn: () => getProjects(orgId),
+    queryFn: () => getProjects(orgId, userId),
     onError: (err) => {
       refetchUserOnError(err, queryClient);
     },

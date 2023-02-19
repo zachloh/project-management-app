@@ -28,7 +28,7 @@ export function OverviewDashboard() {
     isLoading,
     isError,
     isSuccess,
-  } = useGetProjects(user.org?._id);
+  } = useGetProjects(user.org?._id, user._id);
 
   if (isError) {
     return <NotFound />;

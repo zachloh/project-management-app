@@ -24,7 +24,11 @@ export function KanbanBoard() {
 
   const { user } = useUser();
 
-  const { data: project, isLoading, isError } = useGetProject(projectId);
+  const {
+    data: project,
+    isLoading,
+    isError,
+  } = useGetProject(projectId, user._id);
 
   const updateIssueStatusMutation = useUpdateIssueStatus(project?._id || '');
 

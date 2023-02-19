@@ -8,6 +8,7 @@ import DashboardTabs from 'components/DashboardTabs';
 import MainHeading from 'components/MainHeading';
 import NotFound from 'components/NotFound';
 import ProjectCard from 'components/ProjectCard';
+import { useUser } from 'hooks/useUser';
 
 import AssignedTable from './AssignedTable';
 import IssueStatusDoughnut from './IssueStatusDoughnut';
@@ -18,12 +19,14 @@ import ProjectHistory from './ProjectHistory';
 export function ProjectDashboard() {
   const { projectId } = useParams();
 
+  const { user } = useUser();
+
   const {
     data: project,
     isLoading,
     isError,
     isSuccess,
-  } = useGetProject(projectId);
+  } = useGetProject(projectId, user._id);
 
   if (isError) {
     return <NotFound />;

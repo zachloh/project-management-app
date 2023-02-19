@@ -38,7 +38,10 @@ const getActions = (
 function Layout({ user }: LayoutProps) {
   const [opened, setOpened] = useState(false);
 
-  const { data, isSuccess, isFetching } = useGetAllIssues(user.org?._id);
+  const { data, isSuccess, isFetching } = useGetAllIssues(
+    user.org?._id,
+    user._id
+  );
   const navigate = useNavigate();
 
   return (
