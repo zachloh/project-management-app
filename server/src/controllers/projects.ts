@@ -12,6 +12,11 @@ import { getIssuesLast7Days } from 'utils/getIssuesLast7Days';
 const getProjectsByOrgId = async (req: Request, res: Response) => {
   const { orgId } = req;
 
+  const { userId } = req.query;
+  if (!userId || typeof userId !== 'string') {
+    return res.status(400).json({ message: 'Missing userId' });
+  }
+
   try {
     if (!orgId) {
       return res.status(400).json({ message: 'Missing organization ID' });
@@ -32,9 +37,13 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Organization not found' });
     }
 
-    const issuesLast7Days = getIssuesLast7Days(organization.projects);
+    const filteredProjects = organization.projects.filter((project) =>
+      project.members.some((member) => member._id.toString() === userId)
+    );
+
+    const issuesLast7Days = getIssuesLast7Days(filteredProjects);
     return res.json({
-      projects: organization.projects,
+      projects: filteredProjects,
       createdIssuesLast7Days: issuesLast7Days.createdIssuesLast7Days,
       completedIssuesLast7Days: issuesLast7Days.completedIssuesLast7Days,
     });
@@ -95,9 +104,15 @@ const createProject = async (
 };
 
 const getProjectById = async (req: Request, res: Response) => {
+  const { userId } = req.query;
+  if (!userId || typeof userId !== 'string') {
+    return res.status(400).json({ message: 'Missing userId' });
+  }
+
   try {
     const project = await Project.findOne({
       _id: req.params.projectId,
+      members: userId,
     })
       .populate({
         path: 'members',

@@ -363,10 +363,14 @@ type PopulatedProject = {
 };
 
 const getAllIssues = async (req: Request, res: Response) => {
-  const { orgId } = req.query;
+  const { orgId, userId } = req.query;
 
   if (!orgId || typeof orgId !== 'string') {
     return res.status(400).json({ message: 'Missing orgId' });
+  }
+
+  if (!userId || typeof userId !== 'string') {
+    return res.status(400).json({ message: 'Missing userId' });
   }
 
   try {
@@ -386,8 +390,12 @@ const getAllIssues = async (req: Request, res: Response) => {
       return res.status(404).json({ message: 'Organization not found' });
     }
 
+    const filteredProjects = organization.projects.filter((project) =>
+      project.members.includes(new mongoose.Types.ObjectId(userId))
+    );
+
     let allIssues: PopulatedIssue[] = [];
-    organization.projects.forEach((project) => {
+    filteredProjects.forEach((project) => {
       allIssues = allIssues.concat(
         project.todoIssues,
         project.inProgressIssues,
