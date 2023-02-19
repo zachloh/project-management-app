@@ -39,7 +39,7 @@ function Navbar({ onClose, user }: NavbarProps) {
     },
     isLoading,
     isSuccess,
-  } = useGetProjects(user.org?._id);
+  } = useGetProjects(user.org?._id, user._id);
 
   return (
     <>
@@ -86,33 +86,37 @@ function Navbar({ onClose, user }: NavbarProps) {
             )}
             {isSuccess && data.projects.length === 0 && (
               <Stack align="center" spacing={10} py={5}>
-                <FolderOff size={18} />
-                <Text align="center" size={14}>
+                <FolderOff size={18} color="#5C5F66" />
+                <Text align="center" size={14} color="dark.3">
                   No projects created
                 </Text>
               </Stack>
             )}
           </ScrollArea.Autosize>
         </NavLink>
-        <NavLink
-          icon={<FileSettings />}
-          label="Project Management"
-          component={Link}
-          to="/project-management"
-          active={location.pathname === '/project-management'}
-          my={15}
-          onClick={onClose}
-          color="violet.7"
-        />
-        <NavLink
-          icon={<Settings />}
-          label="Admin Settings"
-          component={Link}
-          to="/admin-settings"
-          active={location.pathname === '/admin-settings'}
-          onClick={onClose}
-          color="violet.7"
-        />
+        {(user.role === 'admin' || user.role === 'project manager') && (
+          <NavLink
+            icon={<FileSettings />}
+            label="Project Management"
+            component={Link}
+            to="/project-management"
+            active={location.pathname === '/project-management'}
+            my={15}
+            onClick={onClose}
+            color="violet.7"
+          />
+        )}
+        {user.role === 'admin' && (
+          <NavLink
+            icon={<Settings />}
+            label="Admin Settings"
+            component={Link}
+            to="/admin-settings"
+            active={location.pathname === '/admin-settings'}
+            onClick={onClose}
+            color="violet.7"
+          />
+        )}
       </MantineNavBar.Section>
       <Divider my={15} />
       <MantineNavBar.Section>

@@ -14,9 +14,13 @@ import styles from './ProjectManagement.module.css';
 
 export function ProjectManagement() {
   const { user } = useUser();
-  const { data, isLoading, isError } = useGetProjects(user.org?._id);
+  const { data, isLoading, isError } = useGetProjects(user.org?._id, user._id);
 
   const [opened, setOpened] = useState(false);
+
+  if (user.role === 'member') {
+    return <NotFound />;
+  }
 
   if (isLoading) {
     return <PageSkeleton />;
@@ -35,8 +39,8 @@ export function ProjectManagement() {
       )}
       {data.projects.length === 0 && (
         <Stack align="center" py={30} spacing={10}>
-          <FolderOff color="#373A40" size={32} />
-          <Text align="center" weight={600} color="dark.4">
+          <FolderOff color="#5C5F66" size={32} />
+          <Text align="center" weight={600} color="dark.3">
             No projects created
           </Text>
         </Stack>

@@ -14,6 +14,10 @@ export function AdminSettings() {
   const { user } = useUser();
   const { data: org, isLoading, isError } = useGetOrg(user.org?._id);
 
+  if (user.role === 'member' || user.role === 'project manager') {
+    return <NotFound />;
+  }
+
   if (isLoading) {
     return <PageSkeleton />;
   }
