@@ -1,5 +1,7 @@
 import { Types } from 'mongoose';
 
+import { IIssue } from 'models/issues';
+
 interface PopulatedMembers {
   _id: Types.ObjectId;
   firstName: string;
@@ -13,10 +15,10 @@ interface PopulatedMembers {
   completedWelcome: boolean;
 }
 
-export interface PopulatedIssue {
+export interface PopulatedIssue extends IIssue {
   _id: Types.ObjectId;
   createdAt: Date;
-  completedAt?: Date;
+  updatedAt: Date;
 }
 
 export interface PopulatedProject {

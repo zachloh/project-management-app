@@ -27,10 +27,10 @@ const getProjectsByOrgId = async (req: Request, res: Response) => {
       path: 'projects',
       populate: [
         { path: 'members', select: '-password' },
-        { path: 'todoIssues', select: 'createdAt' },
-        { path: 'inProgressIssues', select: 'createdAt' },
-        { path: 'inReviewIssues', select: 'createdAt' },
-        { path: 'completedIssues', select: 'createdAt completedAt' },
+        { path: 'todoIssues' },
+        { path: 'inProgressIssues' },
+        { path: 'inReviewIssues' },
+        { path: 'completedIssues' },
       ],
     });
     if (!organization) {
