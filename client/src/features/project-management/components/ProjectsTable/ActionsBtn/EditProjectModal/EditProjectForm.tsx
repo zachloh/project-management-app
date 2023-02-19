@@ -6,11 +6,11 @@ import { ExclamationMark } from 'tabler-icons-react';
 import { z } from 'zod';
 
 import { useUpdateProject } from 'api/projects/updateProject';
-import { PopulatedIssue, Project } from 'types';
+import { Project } from 'types';
 
 type EditProjectFormProps = {
   onClose: () => void;
-  project: Project<PopulatedIssue>;
+  project: Project;
   orgId: string | undefined;
 };
 

@@ -2,10 +2,10 @@ import { Progress, Grid, Tooltip } from '@mantine/core';
 import React from 'react';
 import { ClipboardCheck } from 'tabler-icons-react';
 
-import { Project, PopulatedIssue } from 'types';
+import { Project } from 'types';
 
 type ProjectProgressProps = {
-  project: Project<PopulatedIssue>;
+  project: Project;
 };
 
 function ProjectProgress({ project }: ProjectProgressProps) {

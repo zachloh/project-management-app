@@ -3,14 +3,14 @@ import { showNotification } from '@mantine/notifications';
 import React, { useState } from 'react';
 import { ChevronDown, Edit, Minus, Trash, Users } from 'tabler-icons-react';
 
-import { PopulatedIssue, Project } from 'types';
+import { Project } from 'types';
 
 import styles from './ActionsBtn.module.css';
 import DeleteProjectModal from './DeleteProjectModal';
 import EditProjectModal from './EditProjectModal';
 
 type ActionsBtnProps = {
-  project: Project<PopulatedIssue>;
+  project: Project;
   orgId: string | undefined;
 };
 

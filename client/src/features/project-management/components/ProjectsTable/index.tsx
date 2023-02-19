@@ -2,14 +2,14 @@ import { Anchor, Avatar, Badge, Table, Tooltip } from '@mantine/core';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { PopulatedIssue, Project } from 'types';
+import { Project } from 'types';
 import { getInitials } from 'utils/getInitials';
 
 import ActionsBtn from './ActionsBtn';
 import styles from './ProjectsTable.module.css';
 
 type ProjectsTableProps = {
-  projects: Project<PopulatedIssue>[];
+  projects: Project[];
   orgId: string | undefined;
 };
 

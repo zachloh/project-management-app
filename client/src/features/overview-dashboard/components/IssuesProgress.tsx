@@ -1,10 +1,10 @@
 import { MediaQuery, RingProgress, Stack, Text } from '@mantine/core';
 import React from 'react';
 
-import { Project, PopulatedIssue } from 'types';
+import { Project } from 'types';
 
 type IssuesProgressProps = {
-  projects: Project<PopulatedIssue>[];
+  projects: Project[];
 };
 
 function IssuesProgress({ projects }: IssuesProgressProps) {

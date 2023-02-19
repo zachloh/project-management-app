@@ -2,14 +2,14 @@ import { Modal } from '@mantine/core';
 import React from 'react';
 
 import ModalHeader from 'components/ModalHeader';
-import { PopulatedIssue, Project } from 'types';
+import { Project } from 'types';
 
 import EditProjectForm from './EditProjectForm';
 
 type EditProjectModalProps = {
   opened: boolean;
   onClose: () => void;
-  project: Project<PopulatedIssue>;
+  project: Project;
   orgId: string | undefined;
 };
 

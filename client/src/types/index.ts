@@ -36,12 +36,6 @@ export type Issue = {
   updatedAt: string;
 };
 
-export type PopulatedIssue = {
-  _id: string;
-  createdAt: string;
-  completedAt?: string;
-};
-
 export type Project<T = Issue, U = User<string>> = {
   _id: string;
   name: string;
