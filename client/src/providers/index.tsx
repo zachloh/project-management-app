@@ -37,6 +37,11 @@ function AppProviders({ children }: AppProviderProps) {
               },
             }),
           },
+          Skeleton: {
+            defaultProps: {
+              radius: 'xl',
+            },
+          },
         },
       }}
     >
