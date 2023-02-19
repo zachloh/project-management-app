@@ -59,8 +59,8 @@ export function OverviewDashboard() {
             <CardHeader>Your Projects</CardHeader>
             {data.projects.length === 0 && (
               <Stack align="center" py={30} spacing={10}>
-                <FolderOff color="#373A40" size={32} />
-                <Text align="center" weight={600} color="dark.4">
+                <FolderOff color="#5C5F66" size={32} />
+                <Text align="center" weight={600} color="dark.3">
                   No projects created
                 </Text>
               </Stack>
