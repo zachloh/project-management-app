@@ -1,9 +1,18 @@
-import { AppShell, Header, Loader, Navbar } from '@mantine/core';
+import {
+  Affix,
+  AppShell,
+  Button,
+  Header,
+  Loader,
+  Navbar,
+  Transition,
+} from '@mantine/core';
+import { useWindowScroll } from '@mantine/hooks';
 import { SpotlightProvider } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
 import React, { useState } from 'react';
 import { NavigateFunction, Outlet, useNavigate } from 'react-router-dom';
-import { Search } from 'tabler-icons-react';
+import { ArrowUp, Search } from 'tabler-icons-react';
 
 import { SearchedIssue, useGetAllIssues } from 'api/issues/getAllIssues';
 import { BugIcon, StoryIcon, TaskIcon } from 'assets/icons';
@@ -43,6 +52,8 @@ function Layout({ user }: LayoutProps) {
     user._id
   );
   const navigate = useNavigate();
+
+  const [scroll, scrollTo] = useWindowScroll();
 
   return (
     <SpotlightProvider
@@ -93,6 +104,19 @@ function Layout({ user }: LayoutProps) {
         }
       >
         <Outlet context={{ user }} />
+        <Affix position={{ bottom: 20, right: 20 }}>
+          <Transition transition="slide-up" mounted={scroll.y > 800}>
+            {(transitionStyles) => (
+              <Button
+                leftIcon={<ArrowUp size={16} />}
+                style={transitionStyles}
+                onClick={() => scrollTo({ y: 0 })}
+              >
+                Scroll to Top
+              </Button>
+            )}
+          </Transition>
+        </Affix>
       </AppShell>
     </SpotlightProvider>
   );
