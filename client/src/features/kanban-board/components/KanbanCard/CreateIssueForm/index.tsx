@@ -1,6 +1,6 @@
 import { Button, Group, Textarea } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useClickOutside } from '@mantine/hooks';
+import { useClickOutside, useHotkeys, getHotkeyHandler } from '@mantine/hooks';
 import React from 'react';
 
 import { useCreateIssue } from 'api/issues/createIssue';
@@ -27,6 +27,14 @@ function CreateIssueForm({
   orgId,
 }: CreateIssueFormProps) {
   const ref = useClickOutside(() => onCloseCreateIssueForm());
+  useHotkeys([
+    [
+      'Escape',
+      () => {
+        onCloseCreateIssueForm();
+      },
+    ],
+  ]);
 
   const form = useForm<CreateIssueFormValues>({
     initialValues: {
@@ -74,6 +82,14 @@ function CreateIssueForm({
           })}
           autoFocus
           aria-label="Textarea for issue title"
+          onKeyDown={getHotkeyHandler([
+            [
+              'Escape',
+              () => {
+                onCloseCreateIssueForm();
+              },
+            ],
+          ])}
         />
         <Group noWrap spacing={5}>
           <TypeOptions form={form} />
