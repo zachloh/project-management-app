@@ -16,6 +16,10 @@
   background-color: #dee2e6;
 }
 
+.dragging {
+  background-color: #f3f0ff;
+}
+
 .issue-container {
   display: flex;
   flex-direction: column;
