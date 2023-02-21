@@ -22,6 +22,7 @@ const useStyles = createStyles((theme) => ({
     borderBottom: '2px solid transparent',
     marginBottom: -2,
     whiteSpace: 'nowrap',
+    outlineOffset: '-2px !important',
     '&:hover': {
       color: theme.black,
       backgroundColor: theme.colors.gray[1],
