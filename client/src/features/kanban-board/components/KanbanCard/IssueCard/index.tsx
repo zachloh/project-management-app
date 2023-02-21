@@ -1,6 +1,6 @@
 import { Avatar, Card, Tooltip } from '@mantine/core';
 import { useIsMutating, useIsFetching } from '@tanstack/react-query';
-import React from 'react';
+import React, { KeyboardEvent } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import {
@@ -62,20 +62,41 @@ function IssueCard({
 
   const assignee = getAssignee();
 
+  const handleKeyDown = (e: KeyboardEvent) => {
+    /*
+    event has already been used for drag and drop:
+    https://github.com/atlassian/react-beautiful-dnd/blob/master/docs/guides/how-we-use-dom-events.md
+    */
+    if (e.defaultPrevented) {
+      return;
+    }
+
+    if (e.key === 'Enter' && onClick) {
+      onClick();
+    }
+  };
+
   return (
     <Draggable
       draggableId={id}
       index={index}
       isDragDisabled={isMutating > 0 || isFetchingProject > 0}
     >
-      {(provided) => (
+      {(provided, snapshot) => (
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
         <div
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
           className={styles.draggable}
+          onClick={onClick}
+          onKeyDown={handleKeyDown}
         >
-          <Card shadow="xs" p={12} className={styles.card} onClick={onClick}>
+          <Card
+            shadow="xs"
+            p={12}
+            className={snapshot.isDragging ? styles.dragging : styles.card}
+          >
             <div className={styles['issue-container']}>
               <p className={styles['issue-title']}>{title}</p>
               <div className={styles['issue-info']}>
