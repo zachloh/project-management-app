@@ -23,6 +23,8 @@ import { useGetProjects } from 'api/projects/getProjects';
 import UserProfile from 'features/user/components/UserProfile';
 import { User } from 'types';
 
+import styles from './Navbar.module.css';
+
 type NavbarProps = {
   onClose: () => void;
   user: User;
@@ -53,8 +55,14 @@ function Navbar({ onClose, user }: NavbarProps) {
           mb={15}
           onClick={onClose}
           color="violet.7"
+          className={styles.link}
         />
-        <NavLink icon={<List />} label="Projects" childrenOffset={24}>
+        <NavLink
+          icon={<List />}
+          label="Projects"
+          childrenOffset={24}
+          className={styles.link}
+        >
           <ScrollArea.Autosize maxHeight={270} scrollbarSize={10}>
             {data.projects.map((project) => (
               <NavLink
@@ -69,6 +77,7 @@ function Navbar({ onClose, user }: NavbarProps) {
                 })}
                 onClick={onClose}
                 color="violet.7"
+                className={styles.link}
               />
             ))}
             {isLoading && (
@@ -104,6 +113,7 @@ function Navbar({ onClose, user }: NavbarProps) {
             my={15}
             onClick={onClose}
             color="violet.7"
+            className={styles.link}
           />
         )}
         {user.role === 'admin' && (
@@ -115,6 +125,7 @@ function Navbar({ onClose, user }: NavbarProps) {
             active={location.pathname === '/admin-settings'}
             onClick={onClose}
             color="violet.7"
+            className={styles.link}
           />
         )}
       </MantineNavBar.Section>
