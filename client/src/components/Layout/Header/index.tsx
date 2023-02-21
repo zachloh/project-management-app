@@ -24,24 +24,23 @@ function Header({ opened, onToggleNavbar, onClose }: HeaderProps) {
   return (
     <Grid align="center" h="100%" m={0} className={styles.header}>
       <Grid.Col span={8} sm="content" p={0} order={2} orderSm={1}>
-        <div className={styles.link}>
-          <Anchor
-            component={Link}
-            to="/dashboard"
-            underline={false}
-            onClick={onClose}
-          >
-            <div className={styles['logo-container']}>
-              <MediaQuery largerThan={768} styles={{ display: 'none' }}>
-                <Box size={34} color="#845EF7" />
-              </MediaQuery>
-              <MediaQuery smallerThan={768} styles={{ display: 'none' }}>
-                <Box size={48} color="#845EF7" />
-              </MediaQuery>
-              <Text className={styles.logo}>ProjectHub</Text>
-            </div>
-          </Anchor>
-        </div>
+        <Anchor
+          component={Link}
+          to="/dashboard"
+          underline={false}
+          onClick={onClose}
+          className={styles.link}
+        >
+          <div className={styles['logo-container']}>
+            <MediaQuery largerThan={768} styles={{ display: 'none' }}>
+              <Box size={34} color="#845EF7" />
+            </MediaQuery>
+            <MediaQuery smallerThan={768} styles={{ display: 'none' }}>
+              <Box size={48} color="#845EF7" />
+            </MediaQuery>
+            <Text className={styles.logo}>ProjectHub</Text>
+          </div>
+        </Anchor>
       </Grid.Col>
       <Grid.Col span={2} sm="auto" p={0} order={1} orderSm={2}>
         <MediaQuery largerThan={768} styles={{ display: 'none' }}>
