@@ -40,6 +40,7 @@ export const generateDemoData = () => {
       completedWelcome: true,
       isDemo: true,
       expireAt: new Date(Date.now() + 1000 * 60 * 60 * 12.5),
+      createdAt: new Date(new Date().setDate(new Date().getDate() - 6)),
     },
     {
       _id: userId2,
@@ -53,6 +54,7 @@ export const generateDemoData = () => {
       completedWelcome: true,
       isDemo: true,
       expireAt: new Date(Date.now() + 1000 * 60 * 60 * 12.5),
+      createdAt: new Date(new Date().setDate(new Date().getDate() - 6)),
     },
     {
       _id: userId3,
@@ -66,6 +68,7 @@ export const generateDemoData = () => {
       completedWelcome: true,
       isDemo: true,
       expireAt: new Date(Date.now() + 1000 * 60 * 60 * 12.5),
+      createdAt: new Date(new Date().setDate(new Date().getDate() - 6)),
     },
   ];
 

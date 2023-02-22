@@ -11,6 +11,7 @@ export interface IUser {
   completedWelcome: boolean;
   isDemo?: boolean;
   expireAt?: Date;
+  createdAt?: Date;
 }
 
 const userSchema = new Schema<IUser>(
