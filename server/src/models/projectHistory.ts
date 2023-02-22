@@ -10,9 +10,10 @@ export interface History {
   isDeleted: boolean;
 }
 
-interface IProjectHistory {
+export interface IProjectHistory {
   projectId: Types.ObjectId;
   history: History[];
+  expireAt?: Date;
 }
 
 const projectHistorySchema = new Schema<IProjectHistory>({
@@ -69,6 +70,10 @@ const projectHistorySchema = new Schema<IProjectHistory>({
       },
     },
   ],
+  expireAt: {
+    type: Date,
+    expires: 0,
+  },
 });
 
 const ProjectHistory = model<IProjectHistory>(

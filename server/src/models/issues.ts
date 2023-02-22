@@ -11,6 +11,8 @@ export interface IIssue {
   assignee?: Types.ObjectId;
   dueDate?: Date;
   completedAt?: Date;
+  createdAt?: Date;
+  expireAt?: Date;
 }
 
 const issueSchema = new Schema<IIssue>(
@@ -65,6 +67,10 @@ const issueSchema = new Schema<IIssue>(
     },
     completedAt: {
       type: Date,
+    },
+    expireAt: {
+      type: Date,
+      expires: 0,
     },
   },
   {

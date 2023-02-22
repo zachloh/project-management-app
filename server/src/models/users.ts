@@ -1,6 +1,6 @@
 import { Schema, model, Types } from 'mongoose';
 
-interface IUser {
+export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
@@ -9,6 +9,8 @@ interface IUser {
   position?: string;
   org?: Types.ObjectId;
   completedWelcome: boolean;
+  isDemo?: boolean;
+  expireAt?: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -52,6 +54,14 @@ const userSchema = new Schema<IUser>(
     completedWelcome: {
       type: Boolean,
       default: false,
+    },
+    isDemo: {
+      type: Boolean,
+      default: false,
+    },
+    expireAt: {
+      type: Date,
+      expires: 0,
     },
   },
   {

@@ -12,6 +12,7 @@ export interface IProject {
   inReviewIssues: Types.ObjectId[];
   inProgressIssues: Types.ObjectId[];
   completedIssues: Types.ObjectId[];
+  expireAt?: Date;
 }
 
 const projectSchema = new Schema<IProject>({
@@ -73,6 +74,10 @@ const projectSchema = new Schema<IProject>({
       ref: Issue,
     },
   ],
+  expireAt: {
+    type: Date,
+    expires: 0,
+  },
 });
 
 const Project = model<IProject>('Project', projectSchema);
