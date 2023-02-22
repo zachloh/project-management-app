@@ -2,8 +2,12 @@ import bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { ParamsDictionary } from 'express-serve-static-core';
 
+import Issue from 'models/issues';
 import Organization from 'models/organizations';
+import ProjectHistory from 'models/projectHistory';
+import Project from 'models/projects';
 import User from 'models/users';
+import { generateDemoData } from 'utils/generateDemoData';
 import { signToken } from 'utils/signToken';
 
 type RegisterUserReqBody = {
@@ -188,6 +192,36 @@ const updateUserRole = async (
   }
 };
 
+const createDemoAccount = async (req: Request, res: Response) => {
+  try {
+    const { users, organization, projects, issues, projectsHistory } =
+      generateDemoData();
+
+    const p1 = User.insertMany(users);
+    const p2 = Organization.create(organization);
+    const p3 = Project.insertMany(projects);
+    const p4 = Issue.insertMany(issues);
+    const p5 = ProjectHistory.insertMany(projectsHistory);
+
+    await Promise.all([p1, p2, p3, p4, p5]);
+
+    const userWithoutPassword = await User.findOne({ _id: users[0]._id })
+      .select('-password')
+      .populate('org');
+    if (!userWithoutPassword) {
+      return res
+        .status(500)
+        .json({ message: 'Failed to generate demo account' });
+    }
+
+    const token = signToken({ _id: userWithoutPassword._id.toString() });
+
+    return res.json({ token, user: userWithoutPassword });
+  } catch (err) {
+    return res.status(500).json(err);
+  }
+};
+
 export default {
   registerUser,
   loginUser,
@@ -195,4 +229,5 @@ export default {
   updateUserOrg,
   updateUserProfile,
   updateUserRole,
+  createDemoAccount,
 };

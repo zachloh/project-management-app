@@ -44,4 +44,7 @@ router.patch(
 // PATCH /api/users/:userId/role
 router.patch('/:userId/role', verifyToken(), usersController.updateUserRole);
 
+// POST /api/users/demo
+router.post('/demo', usersController.createDemoAccount);
+
 export default router;
