@@ -18,6 +18,7 @@ export type User<T = PopulatedOrganization> = {
   createdAt: string;
   updatedAt: string;
   completedWelcome: boolean;
+  isDemo?: boolean;
 };
 
 export type Issue = {

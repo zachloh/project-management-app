@@ -180,6 +180,7 @@ export function KanbanBoard() {
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
+            isDemoUser={user.isDemo || false}
           />
           <KanbanCard
             title="IN PROGRESS"
@@ -189,6 +190,7 @@ export function KanbanBoard() {
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
+            isDemoUser={user.isDemo || false}
           />
           <KanbanCard
             title="IN REVIEW"
@@ -198,6 +200,7 @@ export function KanbanBoard() {
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
+            isDemoUser={user.isDemo || false}
           />
           <KanbanCard
             title="DONE"
@@ -207,6 +210,7 @@ export function KanbanBoard() {
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
+            isDemoUser={user.isDemo || false}
           />
         </div>
       </DragDropContext>

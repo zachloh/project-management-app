@@ -14,6 +14,7 @@ type CreateIssueReqBody = {
   priority: 'low' | 'medium' | 'high';
   status: 'to do' | 'in progress' | 'in review' | 'done';
   reporter: string;
+  isDemo?: boolean;
 };
 
 const createIssue = async (
@@ -35,6 +36,9 @@ const createIssue = async (
     const newIssue = new Issue({
       ...issueData,
       completedAt: issueStatus === 'done' ? new Date() : undefined,
+      expireAt: issueData.isDemo
+        ? new Date(Date.now() + 1000 * 60 * 60 * 12.5)
+        : undefined,
     });
     const savedIssue = await newIssue.save();
 

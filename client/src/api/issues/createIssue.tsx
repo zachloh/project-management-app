@@ -15,6 +15,7 @@ type CreateIssueData = {
   priority: 'low' | 'medium' | 'high';
   status: 'to do' | 'in progress' | 'in review' | 'done';
   reporter: string;
+  isDemo?: boolean;
 };
 
 const createIssue = async (issueData: CreateIssueData): Promise<Issue> => {

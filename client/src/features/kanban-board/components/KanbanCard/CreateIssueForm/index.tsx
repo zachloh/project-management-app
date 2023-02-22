@@ -17,6 +17,7 @@ type CreateIssueFormProps = {
   projectId: string;
   userId: string;
   orgId: string | undefined;
+  isDemoUser: boolean;
 };
 
 function CreateIssueForm({
@@ -25,6 +26,7 @@ function CreateIssueForm({
   projectId,
   userId,
   orgId,
+  isDemoUser,
 }: CreateIssueFormProps) {
   const ref = useClickOutside(() => onCloseCreateIssueForm());
   useHotkeys([
@@ -58,6 +60,7 @@ function CreateIssueForm({
       status,
       project: projectId,
       reporter: userId,
+      isDemo: isDemoUser,
     });
   };
 
@@ -94,7 +97,7 @@ function CreateIssueForm({
         <Group noWrap spacing={5} className={styles.group}>
           <TypeOptions form={form} />
           <PriorityOptions form={form} />
-          {!createIssueMutation.isLoading && (
+          {!createIssueMutation.isLoading && !createIssueMutation.isSuccess && (
             <Button
               type="button"
               variant="subtle"
@@ -115,8 +118,14 @@ function CreateIssueForm({
             type="submit"
             variant="subtle"
             px={6}
-            ml={!createIssueMutation.isLoading ? 0 : 'auto'}
-            loading={createIssueMutation.isLoading}
+            ml={
+              !createIssueMutation.isLoading && !createIssueMutation.isSuccess
+                ? 0
+                : 'auto'
+            }
+            loading={
+              createIssueMutation.isLoading || createIssueMutation.isSuccess
+            }
             styles={{
               root: {
                 height: 28,
