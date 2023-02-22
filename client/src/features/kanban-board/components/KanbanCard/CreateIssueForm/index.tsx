@@ -91,28 +91,31 @@ function CreateIssueForm({
             ],
           ])}
         />
-        <Group noWrap spacing={5}>
+        <Group noWrap spacing={5} className={styles.group}>
           <TypeOptions form={form} />
           <PriorityOptions form={form} />
-          <Button
-            type="button"
-            variant="subtle"
-            px={6}
-            ml="auto"
-            color="gray"
-            styles={{
-              root: {
-                height: 28,
-              },
-            }}
-            onClick={onCloseCreateIssueForm}
-          >
-            Cancel
-          </Button>
+          {!createIssueMutation.isLoading && (
+            <Button
+              type="button"
+              variant="subtle"
+              px={6}
+              ml="auto"
+              color="gray"
+              styles={{
+                root: {
+                  height: 28,
+                },
+              }}
+              onClick={onCloseCreateIssueForm}
+            >
+              Cancel
+            </Button>
+          )}
           <Button
             type="submit"
             variant="subtle"
             px={6}
+            ml={!createIssueMutation.isLoading ? 0 : 'auto'}
             loading={createIssueMutation.isLoading}
             styles={{
               root: {
