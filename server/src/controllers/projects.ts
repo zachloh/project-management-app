@@ -58,13 +58,14 @@ type CreateProjectReqBody = {
   userId: string;
   description: string;
   category: 'business' | 'marketing' | 'software';
+  isDemo?: boolean;
 };
 
 const createProject = async (
   req: Request<ParamsDictionary, any, CreateProjectReqBody>,
   res: Response
 ) => {
-  const { name, description, category, orgId, userId } = req.body;
+  const { name, description, category, orgId, userId, isDemo } = req.body;
 
   try {
     const newProject = new Project({
@@ -72,12 +73,18 @@ const createProject = async (
       members: [userId],
       description,
       category,
+      expireAt: isDemo
+        ? new Date(Date.now() + 1000 * 60 * 60 * 12.5)
+        : undefined,
     });
     const savedProject = await newProject.save();
 
     const newProjectHistory = new ProjectHistory({
       projectId: savedProject._id,
       history: [],
+      expireAt: isDemo
+        ? new Date(Date.now() + 1000 * 60 * 60 * 12.5)
+        : undefined,
     });
     await newProjectHistory.save();
 

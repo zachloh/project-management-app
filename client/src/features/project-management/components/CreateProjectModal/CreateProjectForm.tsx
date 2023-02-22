@@ -49,6 +49,7 @@ function CreateProjectForm({ onClose, user }: CreateProjectFormProps) {
         category,
         orgId: user.org?._id,
         userId: user._id,
+        isDemo: user.isDemo,
       },
       {
         onSuccess: () => {

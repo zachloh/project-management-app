@@ -12,6 +12,7 @@ type CreateProjectData = {
   userId: string;
   description: string;
   category: 'business' | 'marketing' | 'software';
+  isDemo?: boolean;
 };
 
 const createProject = async (
