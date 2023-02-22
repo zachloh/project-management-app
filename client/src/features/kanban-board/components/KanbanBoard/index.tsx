@@ -1,5 +1,5 @@
 import { useDebouncedValue } from '@mantine/hooks';
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useParams } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ import { useGetProject } from 'api/projects/getProject';
 import MainHeading from 'components/MainHeading';
 import NotFound from 'components/NotFound';
 import { useUser } from 'hooks/useUser';
-import { Issue } from 'types';
+import { Issue, Project } from 'types';
 
 import IssueModal from '../IssueModal';
 import IssuesFilter from '../IssuesFilter';
@@ -24,17 +24,42 @@ export function KanbanBoard() {
 
   const { user } = useUser();
 
-  const {
-    data: project,
-    isLoading,
-    isError,
-  } = useGetProject(projectId, user._id);
+  const { data, isLoading, isError, isSuccess } = useGetProject(
+    projectId,
+    user._id
+  );
+
+  const [project, setProject] = useState<Project>(
+    data || {
+      _id: '',
+      name: '',
+      members: [],
+      description: '',
+      category: 'business',
+      todoIssues: [],
+      inReviewIssues: [],
+      inProgressIssues: [],
+      completedIssues: [],
+    }
+  );
+  const [isProjectLoaded, setIsProjectLoaded] = useState(false);
 
   const updateIssueStatusMutation = useUpdateIssueStatus(project?._id || '');
 
   const [titleFilter, setTitleFilter] = useState('');
   const [debouncedTitleFilter] = useDebouncedValue(titleFilter, 350);
   const [filteredAssignees, setFilteredAssignees] = useState<string[]>([]);
+
+  /*
+  Anti-pattern in React Query, but required for dnd to work:
+  https://github.com/hello-pangea/dnd/issues/424
+  */
+  useEffect(() => {
+    if (isSuccess) {
+      setProject(data);
+      setIsProjectLoaded(true);
+    }
+  }, [data, isSuccess]);
 
   useLayoutEffect(() => {
     setTitleFilter('');
@@ -82,6 +107,33 @@ export function KanbanBoard() {
       return;
     }
 
+    setProject((prev) => {
+      const copiedSourceIssues = [
+        ...prev[source.droppableId as SourceOrDestination],
+      ];
+      const updatedIssue = copiedSourceIssues[source.index];
+
+      if (source.droppableId === destination.droppableId) {
+        copiedSourceIssues.splice(source.index, 1);
+        copiedSourceIssues.splice(destination.index, 0, updatedIssue);
+        return {
+          ...prev,
+          [source.droppableId]: copiedSourceIssues,
+        };
+      }
+
+      const copiedDestinationIssues = [
+        ...prev[destination.droppableId as SourceOrDestination],
+      ];
+      copiedSourceIssues.splice(source.index, 1);
+      copiedDestinationIssues.splice(destination.index, 0, updatedIssue);
+      return {
+        ...prev,
+        [source.droppableId]: copiedSourceIssues,
+        [destination.droppableId]: copiedDestinationIssues,
+      };
+    });
+
     updateIssueStatusMutation.mutate({
       issueId,
       source: source.droppableId as SourceOrDestination,
@@ -97,6 +149,10 @@ export function KanbanBoard() {
 
   if (isError) {
     return <NotFound />;
+  }
+
+  if (isSuccess && !isProjectLoaded) {
+    return <PageSkeleton />;
   }
 
   return (
