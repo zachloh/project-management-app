@@ -29,7 +29,7 @@ function EditProfileForm({ user, onClose }: EditProfileFormProps) {
     initialValues: {
       firstName: user.firstName,
       lastName: user.lastName,
-      email: user.email,
+      email: user.isDemo ? 'guest@gmail.com' : user.email,
       position: user.position || '',
     },
     validate: zodResolver(editProfileSchema),

@@ -38,7 +38,7 @@ function UserProfile({ user }: UserProfileProps) {
           {`${user.firstName} ${user.lastName}`}
         </Text>
         <Text color="#767676" align="center" truncate>
-          {user.email}
+          {user.isDemo ? 'guest@gmail.com' : user.email}
         </Text>
         <Group my={10} position="center">
           <Tooltip label="Edit Profile" withArrow position="left">
