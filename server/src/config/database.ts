@@ -4,7 +4,7 @@ import env from 'config/env';
 
 const connectDB = async () => {
   const { username, password } = env.mongo;
-  const uri = `mongodb+srv://${username}:${password}@main-cluster.r7asynq.mongodb.net/?retryWrites=true&w=majority`;
+  const uri = `mongodb+srv://${username}:${password}@main-cluster.r7asynq.mongodb.net/project_hub?retryWrites=true&w=majority`;
 
   try {
     await mongoose.connect(uri);
