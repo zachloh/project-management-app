@@ -6,6 +6,7 @@ import passport from 'passport';
 import connectDB from 'config/database';
 import env from 'config/env';
 import { jwtStrategy } from 'lib/passport';
+import { errorHandler } from 'middleware/errorHandler';
 import { verifyToken } from 'middleware/verifyToken';
 import issueRoutes from 'routes/issues';
 import organizationRoutes from 'routes/organizations';
@@ -37,12 +38,7 @@ const initializeServer = async () => {
   app.use('/api/issues', verifyToken(), issueRoutes);
   app.use('/api/organizations', verifyToken(), organizationRoutes);
 
-  // TODO: Error handling
-  // const handleError: ErrorRequestHandler = (err, req, res, next) => {
-  //   console.log(err);
-  //   res.status(500).send('Server error!');
-  // };
-  // app.use(handleError);
+  app.use(errorHandler);
 
   const { port } = env;
   app.listen(port, () => {
