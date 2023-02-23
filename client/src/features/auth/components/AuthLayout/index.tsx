@@ -22,6 +22,10 @@ function AuthLayout({ title, children }: AuthLayoutProps) {
   }
 
   if (user) {
+    if (user.isDemo) {
+      return <Navigate to="/dashboard" replace />;
+    }
+
     const state = location.state as { path: string };
     return <Navigate to={state?.path || '/dashboard'} replace />;
   }

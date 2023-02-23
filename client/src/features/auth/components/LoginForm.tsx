@@ -34,7 +34,7 @@ const loginSchema = z.object({
 });
 
 export function LoginForm() {
-  const { login, isLoggingIn } = useAuth();
+  const { login, isLoggingIn, loginAsGuest, isLoggingInAsGuest } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const form = useForm<LoginFormValues>({
@@ -69,8 +69,42 @@ export function LoginForm() {
     });
   };
 
+  const handleLoginAsGuest = () => {
+    loginAsGuest(undefined, {
+      onSuccess: () => {
+        navigate('/dashboard', { replace: true });
+      },
+      onError: () => {
+        showNotification({
+          title: 'Server Error',
+          message: 'Please try again later',
+          color: 'red',
+          icon: <ExclamationMark />,
+        });
+      },
+    });
+  };
+
   return (
     <AuthLayout title="Sign In">
+      <Button
+        size="md"
+        color="violet.6"
+        variant="outline"
+        onClick={handleLoginAsGuest}
+        loading={isLoggingInAsGuest}
+      >
+        Sign In as Guest
+      </Button>
+      <Divider
+        my={20}
+        label={
+          <Text size={14} color="dark.3">
+            or
+          </Text>
+        }
+        labelPosition="center"
+      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         {showFormError && (
           <Alert
@@ -83,7 +117,7 @@ export function LoginForm() {
               },
             }}
           >
-            <Group>
+            <Group noWrap>
               <Text color="red.9">Incorrect email or password</Text>
               <CloseButton
                 color="red.9"

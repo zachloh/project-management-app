@@ -37,6 +37,13 @@ const register = async (registerData: RegisterData): Promise<UserResponse> => {
   return data;
 };
 
+const loginAsGuest = async (): Promise<UserResponse> => {
+  const { data } = await customAxios.post<UserResponse>('/users/demo', {
+    mode: 'demo',
+  });
+  return data;
+};
+
 export const useAuth = () => {
   const queryClient = useQueryClient();
 
@@ -63,11 +70,22 @@ export const useAuth = () => {
     queryClient.clear();
   };
 
+  const loginAsGuestMutation = useMutation({
+    mutationFn: loginAsGuest,
+    onSuccess: (data) => {
+      const { token, user } = data;
+      storage.setToken(token);
+      queryClient.setQueryData(['auth-user'], user);
+    },
+  });
+
   return {
     login: loginMutation.mutate,
     isLoggingIn: loginMutation.isLoading,
     register: registerMutation.mutate,
     isRegistering: registerMutation.isLoading,
     logout,
+    loginAsGuest: loginAsGuestMutation.mutate,
+    isLoggingInAsGuest: loginAsGuestMutation.isLoading,
   };
 };
