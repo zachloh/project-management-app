@@ -5,8 +5,7 @@ dotenv.config();
 const env = {
   port: process.env.PORT || 3000,
   mongo: {
-    username: process.env.MONGO_USERNAME as string,
-    password: process.env.MONGO_PASSWORD as string,
+    uri: process.env.MONGO_URI as string,
   },
   token: {
     accessSecret: process.env.ACCESS_TOKEN_SECRET as string,
