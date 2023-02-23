@@ -26,7 +26,7 @@ const initializeServer = async () => {
   // TODO: Set allow origin
   app.use(
     cors({
-      origin: 'http://localhost:3000',
+      origin: env.cors.origin,
     })
   );
   app.use(helmet());
