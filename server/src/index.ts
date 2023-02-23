@@ -1,5 +1,7 @@
+import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import 'module-alias/register';
 import passport from 'passport';
 
@@ -18,11 +20,13 @@ const initializeServer = async () => {
 
   const app = express();
 
+  await connectDB();
+
   app.use(express.json());
   // TODO: Set allow origin
   app.use(cors());
-
-  await connectDB();
+  app.use(helmet());
+  app.use(compression());
 
   app.use('/api/users', userRoutes);
   app.use(
