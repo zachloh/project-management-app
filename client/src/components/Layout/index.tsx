@@ -105,7 +105,7 @@ function Layout({ user }: LayoutProps) {
       >
         <Outlet context={{ user }} />
         <Affix position={{ bottom: 20, right: 20 }}>
-          <Transition transition="slide-up" mounted={scroll.y > 800}>
+          <Transition transition="slide-up" mounted={scroll.y > 800 && !opened}>
             {(transitionStyles) => (
               <Button
                 leftIcon={<ArrowUp size={16} />}
