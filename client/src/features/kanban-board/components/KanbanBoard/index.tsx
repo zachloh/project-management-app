@@ -107,6 +107,14 @@ export function KanbanBoard() {
       return;
     }
 
+    updateIssueStatusMutation.mutate({
+      issueId,
+      source: source.droppableId as SourceOrDestination,
+      sourceIndex: source.index,
+      destination: destination.droppableId as SourceOrDestination,
+      destinationIndex: destination.index,
+    });
+
     setProject((prev) => {
       const copiedSourceIssues = [
         ...prev[source.droppableId as SourceOrDestination],
@@ -132,14 +140,6 @@ export function KanbanBoard() {
         [source.droppableId]: copiedSourceIssues,
         [destination.droppableId]: copiedDestinationIssues,
       };
-    });
-
-    updateIssueStatusMutation.mutate({
-      issueId,
-      source: source.droppableId as SourceOrDestination,
-      sourceIndex: source.index,
-      destination: destination.droppableId as SourceOrDestination,
-      destinationIndex: destination.index,
     });
   };
 
