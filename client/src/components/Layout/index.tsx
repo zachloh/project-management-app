@@ -19,6 +19,7 @@ import { BugIcon, StoryIcon, TaskIcon } from 'assets/icons';
 import { Issue, User } from 'types';
 
 import HeaderContent from './Header';
+import styles from './Layout.module.css';
 import NavbarContent from './Navbar';
 
 type LayoutProps = {
@@ -98,6 +99,7 @@ function Layout({ user }: LayoutProps) {
             hidden={!opened}
             width={{ sm: 250, lg: 300 }}
             aria-label="Main"
+            className={styles.nav}
           >
             <NavbarContent onClose={() => setOpened(false)} user={user} />
           </Navbar>

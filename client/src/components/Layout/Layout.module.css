@@ -1,0 +1,5 @@
+.nav {
+  height: calc(
+    100% - var(--mantine-header-height, 0px) - var(--mantine-footer-height, 0px)
+  );
+}
