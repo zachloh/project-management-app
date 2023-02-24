@@ -7,7 +7,7 @@ import {
   Navbar,
   Transition,
 } from '@mantine/core';
-import { useWindowScroll } from '@mantine/hooks';
+import { useScrollLock, useWindowScroll } from '@mantine/hooks';
 import { SpotlightProvider } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
 import React, { useState } from 'react';
@@ -55,6 +55,7 @@ function Layout({ user }: LayoutProps) {
   const navigate = useNavigate();
 
   const [scroll, scrollTo] = useWindowScroll();
+  const setScrollLocked = useScrollLock()[1];
 
   return (
     <SpotlightProvider
@@ -87,8 +88,14 @@ function Layout({ user }: LayoutProps) {
           >
             <HeaderContent
               opened={opened}
-              onToggleNavbar={() => setOpened((o) => !o)}
-              onClose={() => setOpened(false)}
+              onToggleNavbar={() => {
+                setOpened((o) => !o);
+                setScrollLocked((l) => !l);
+              }}
+              onClose={() => {
+                setOpened(false);
+                setScrollLocked(false);
+              }}
             />
           </Header>
         }
@@ -101,7 +108,13 @@ function Layout({ user }: LayoutProps) {
             aria-label="Main"
             className={styles.nav}
           >
-            <NavbarContent onClose={() => setOpened(false)} user={user} />
+            <NavbarContent
+              onClose={() => {
+                setOpened(false);
+                setScrollLocked(false);
+              }}
+              user={user}
+            />
           </Navbar>
         }
       >
