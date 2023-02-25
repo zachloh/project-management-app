@@ -1,3 +1,4 @@
+import { inject } from '@vercel/analytics';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -13,3 +14,5 @@ root.render(
   <App />
   // </React.StrictMode>
 );
+
+inject();
