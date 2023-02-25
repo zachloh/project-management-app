@@ -94,8 +94,11 @@ export function LoginForm() {
         onClick={handleLoginAsGuest}
         loading={isLoggingInAsGuest}
       >
-        Sign In as Guest
+        Quick Demo
       </Button>
+      <Text color="dark.3" size={14}>
+        * An account is not required
+      </Text>
       <Divider
         my={20}
         label={
