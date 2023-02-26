@@ -23,10 +23,10 @@ const initializeServer = async () => {
   await connectDB();
 
   app.use(express.json());
-  // TODO: Set allow origin
   app.use(
     cors({
       origin: env.cors.origin,
+      optionsSuccessStatus: 200,
     })
   );
   app.use(helmet());
