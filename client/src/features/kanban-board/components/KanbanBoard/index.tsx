@@ -170,13 +170,13 @@ export function KanbanBoard() {
           <IssueModal
             members={project.members}
             orgId={user.org?._id}
-            projectId={project._id}
+            projectId={projectId || ''}
           />
           <KanbanCard
             title="TO DO"
             issues={filterIssues(project.todoIssues)}
             id="todoIssues"
-            projectId={project._id}
+            projectId={projectId}
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
@@ -186,7 +186,7 @@ export function KanbanBoard() {
             title="IN PROGRESS"
             issues={filterIssues(project.inProgressIssues)}
             id="inProgressIssues"
-            projectId={project._id}
+            projectId={projectId}
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
@@ -196,7 +196,7 @@ export function KanbanBoard() {
             title="IN REVIEW"
             issues={filterIssues(project.inReviewIssues)}
             id="inReviewIssues"
-            projectId={project._id}
+            projectId={projectId}
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}
@@ -206,7 +206,7 @@ export function KanbanBoard() {
             title="DONE"
             issues={filterIssues(project.completedIssues)}
             id="completedIssues"
-            projectId={project._id}
+            projectId={projectId}
             userId={user._id}
             members={project.members}
             orgId={user.org?._id}

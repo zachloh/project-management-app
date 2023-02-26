@@ -14,7 +14,7 @@ import { CreateIssueFormValues } from './types';
 type CreateIssueFormProps = {
   onCloseCreateIssueForm: () => void;
   status: Issue['status'];
-  projectId: string;
+  projectId: string | undefined;
   userId: string;
   orgId: string | undefined;
   isDemoUser: boolean;

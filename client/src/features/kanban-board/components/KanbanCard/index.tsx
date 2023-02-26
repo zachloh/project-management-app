@@ -20,7 +20,7 @@ type KanbanCardProps = {
   title: string;
   issues: Issue[];
   id: ProjectIssues;
-  projectId: string;
+  projectId: string | undefined;
   userId: string;
   members: User<string>[];
   orgId: string | undefined;

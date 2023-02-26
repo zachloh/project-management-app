@@ -9,7 +9,7 @@ import { Issue, Project } from 'types';
 import { refetchUserOnError } from 'utils/refetchUserOnError';
 
 type CreateIssueData = {
-  project: string;
+  project: string | undefined;
   title: string;
   type: 'task' | 'story' | 'bug';
   priority: 'low' | 'medium' | 'high';
@@ -19,6 +19,10 @@ type CreateIssueData = {
 };
 
 const createIssue = async (issueData: CreateIssueData): Promise<Issue> => {
+  if (typeof issueData.project === 'undefined') {
+    return Promise.reject(new Error('Invalid projectId'));
+  }
+
   const { data } = await customAxios.post<Issue>('/issues', issueData);
   return data;
 };
