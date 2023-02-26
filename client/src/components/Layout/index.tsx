@@ -7,11 +7,16 @@ import {
   Navbar,
   Transition,
 } from '@mantine/core';
-import { useScrollLock, useWindowScroll } from '@mantine/hooks';
-import { SpotlightProvider } from '@mantine/spotlight';
+import { useHotkeys, useScrollLock, useWindowScroll } from '@mantine/hooks';
+import { openSpotlight, SpotlightProvider } from '@mantine/spotlight';
 import type { SpotlightAction } from '@mantine/spotlight';
 import React, { useState } from 'react';
-import { NavigateFunction, Outlet, useNavigate } from 'react-router-dom';
+import {
+  NavigateFunction,
+  Outlet,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 import { ArrowUp, Search } from 'tabler-icons-react';
 
 import { SearchedIssue, useGetAllIssues } from 'api/issues/getAllIssues';
@@ -57,6 +62,19 @@ function Layout({ user }: LayoutProps) {
   const [scroll, scrollTo] = useWindowScroll();
   const setScrollLocked = useScrollLock()[1];
 
+  const [searchParams] = useSearchParams();
+  const selectedIssue = searchParams.get('selectedIssue');
+
+  useHotkeys([
+    [
+      'mod + K',
+      () => {
+        if (selectedIssue) return;
+        openSpotlight();
+      },
+    ],
+  ]);
+
   return (
     <SpotlightProvider
       actions={isSuccess ? getActions(data, navigate) : []}
@@ -72,6 +90,7 @@ function Layout({ user }: LayoutProps) {
           flexShrink: 0,
         },
       }}
+      shortcut={null}
     >
       <AppShell
         padding={24}
