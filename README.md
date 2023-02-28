@@ -1,13 +1,15 @@
 # ProjectHub
 
-### [Live Demo](https://project--hub.vercel.app)
-
 #### A responsive project management web app inspired by Jira.
 
 - **Client**: TypeScript, React, React Query, Mantine
 - **Server**: TypeScript, Node, Express, MongoDB/Mongoose
 
 ## Demo
+
+### [Live Demo](https://project--hub.vercel.app) 
+
+- Click "Quick Demo" to skip login
 
 ![overview-dashboard](https://user-images.githubusercontent.com/91587325/221419343-1d11b7ae-88ac-463b-aef4-e9dcb128fb0b.png)
 ![project-dashboard](https://user-images.githubusercontent.com/91587325/221419423-bcc44726-8c12-45b5-a82b-7ee330cdfb6e.png)
