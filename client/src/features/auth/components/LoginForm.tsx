@@ -87,27 +87,6 @@ export function LoginForm() {
 
   return (
     <AuthLayout title="Sign In">
-      <Button
-        size="md"
-        color="violet.6"
-        variant="outline"
-        onClick={handleLoginAsGuest}
-        loading={isLoggingInAsGuest}
-      >
-        Quick Demo
-      </Button>
-      <Text color="dark.3" size={14}>
-        * An account is not required
-      </Text>
-      <Divider
-        my={20}
-        label={
-          <Text size={14} color="dark.3">
-            or
-          </Text>
-        }
-        labelPosition="center"
-      />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         {showFormError && (
           <Alert
@@ -132,12 +111,39 @@ export function LoginForm() {
           </Alert>
         )}
         <TextInput label="Email" mb={20} {...form.getInputProps('email')} />
-        <PasswordInput label="Password" {...form.getInputProps('password')} />
+        <PasswordInput
+          label="Password"
+          mb={30}
+          {...form.getInputProps('password')}
+        />
+        <Button
+          type="button"
+          size="md"
+          color="violet.6"
+          variant="outline"
+          w="100%"
+          onClick={handleLoginAsGuest}
+          loading={isLoggingInAsGuest}
+        >
+          Quick Demo
+        </Button>
+        <Text color="dark.3" size={14}>
+          * An account is not required
+        </Text>
+        <Divider
+          mt={15}
+          mb={20}
+          label={
+            <Text size={14} color="dark.3">
+              or
+            </Text>
+          }
+          labelPosition="center"
+        />
         <Button
           type="submit"
           loading={isLoggingIn}
           w="100%"
-          mt={30}
           size="md"
           color="violet.5"
         >
