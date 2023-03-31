@@ -29,6 +29,20 @@
   - Create/edit/delete a project
 - Admin Settings
   - Edit a member's role (Admin, Project Manager, or Member)
+  
+## What I learned
+
+- Using React Query for data fetching and its features:
+  - Infinite queries
+  - Optimistic updates
+  - Query invalidation from mutations
+  - Updates from mutation responses
+- Using a component library, Mantine to speed up development
+- Add drag and drop using `react-beautiful-dnd`
+- Create charts using Chart.js
+- Basic user authentication with Passport.js and JWT
+- Basic form validation with Zod
+- Working with MongoDB & Mongoose
 
 ## Further Improvements
 
